@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Globe, Save, CheckCircle, RefreshCw, Eye, Sparkles, AlertCircle } from 'lucide-react';
+import { Globe, Save, CheckCircle, RefreshCw, Eye, Sparkles, AlertCircle, Upload, Image, User, Camera } from 'lucide-react';
 
 export default function AdminContent({ siteContent = {}, updateSiteContent, resetStoreToDefault }) {
   const [activeLangTab, setActiveLangTab] = useState('en');
@@ -7,15 +7,15 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
   
   const [formData, setFormData] = useState(() => ({
     hero: {
-      badge_en: siteContent?.hero?.badge_en || 'Putalisadak, Kathmandu • Hands-on Lab & Studio',
-      badge_ne: siteContent?.hero?.badge_ne || 'पुतलीसडक, काठमाडौं • प्रयोगात्मक ल्याब र स्टुडियो',
+      badge_en: siteContent?.hero?.badge_en || 'Bagbazar, Kathmandu • Strategic Learning Hub',
+      badge_ne: siteContent?.hero?.badge_ne || 'बागबजार, काठमाडौं • प्रयोगात्मक ल्याब तथा हब',
       title_en: siteContent?.hero?.title_en || 'Practical AI, Media & Digital Skills for Nepal',
       title_ne: siteContent?.hero?.title_ne || 'नेपालका लागि व्यावहारिक एआई, मिडिया तथा डिजिटल सीप',
-      subtitle_en: siteContent?.hero?.subtitle_en || 'Learn practical digital tools on your own laptop, record podcasts in our Putalisadak studio, and grow your institution with targeted marketing.',
-      subtitle_ne: siteContent?.hero?.subtitle_ne || 'आफ्नै ल्यापटपमा व्यावहारिक डिजिटल टुल्स सिक्नुहोस्, हाम्रो पुतलीसडक स्टुडियोमा पोडकास्ट रेकर्ड गर्नुहोस् र संस्थाको व्यवसाय बढाउनुहोस्।',
+      subtitle_en: siteContent?.hero?.subtitle_en || 'Learn practical digital tools on your own laptop at our Bagbazar campus, and grow your institution with targeted AI and marketing workflows.',
+      subtitle_ne: siteContent?.hero?.subtitle_ne || 'आफ्नै ल्यापटपमा व्यावहारिक डिजिटल टुल्स सिक्नुहोस्, हाम्रो बागबजार ल्याबमा अभ्यास गर्नुहोस् र संस्थाको व्यवसाय बढाउनुहोस्।',
       searchPlaceholder_en: siteContent?.hero?.searchPlaceholder_en || 'Search courses (e.g. AI tools, video editing, social ads)...',
       searchPlaceholder_ne: siteContent?.hero?.searchPlaceholder_ne || 'कोर्स खोज्नुहोस् (जस्तै: एआई टुल्स, भिडियो सम्पादन, डिजिटल मार्केटिङ)...',
-      ctaPrimary_en: siteContent?.hero?.ctaPrimary_en || 'Explore Training Programs',
+      ctaPrimary_en: siteContent?.hero?.ctaPrimary_en || 'View Training Programs',
       ctaPrimary_ne: siteContent?.hero?.ctaPrimary_ne || 'तालिम कार्यक्रमहरू हेर्नुहोस्',
       ctaSecondary_en: siteContent?.hero?.ctaSecondary_en || 'Talk to Our Team',
       ctaSecondary_ne: siteContent?.hero?.ctaSecondary_ne || 'हाम्रो टिमसँग कुरा गर्नुहोस्'
@@ -23,30 +23,41 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
     stats: siteContent?.stats || [
       { id: 'stat-1', value: '4,500+', label_en: 'Learners & Professionals Reached', label_ne: 'तालिमप्राप्त विद्यार्थी तथा कर्मचारी' },
       { id: 'stat-2', value: '28+', label_en: 'Partner Schools & Colleges', label_ne: 'सहकार्य गरिएका विद्यालय तथा कलेजहरू' },
-      { id: 'stat-3', value: '50+', label_en: 'Studio Podcasts & Videos Produced', label_ne: 'रेकर्ड गरिएका पोडकास्ट तथा भिडियो' },
+      { id: 'stat-3', value: '50+', label_en: 'Workshops & Seminars Conducted', label_ne: 'सञ्चालित कार्यशाला तथा सेमिनारहरू' },
       { id: 'stat-4', value: '15', label_en: 'Max Students Per Batch Guarantee', label_ne: 'प्रति ब्याच अधिकतम १५ जना मात्र' }
     ],
     pillars: {
       learning_title_en: siteContent?.pillars?.learning_title_en || '1. Learning (Hands-on Training)',
       learning_title_ne: siteContent?.pillars?.learning_title_ne || '१. सिकाइ (व्यावहारिक तालिम)',
-      learning_desc_en: siteContent?.pillars?.learning_desc_en || 'Small batches (max 15), guided practice on your own laptop in Putalisadak, and school workshops.',
-      learning_desc_ne: siteContent?.pillars?.learning_desc_ne || 'सानो ब्याच (अधिकतम १५ जना), पुतलीसडकमा आफ्नै ल्यापटपमा अभ्यास र विद्यालय कार्यशाला।',
-      production_title_en: siteContent?.pillars?.production_title_en || '2. Production (Acoustic Studio)',
-      production_title_ne: siteContent?.pillars?.production_title_ne || '२. निर्माण (अडियो/भिडियो स्टुडियो)',
-      production_desc_en: siteContent?.pillars?.production_desc_en || 'Clean podcast recording, corporate interviews, documentaries, and social media reels.',
-      production_desc_ne: siteContent?.pillars?.production_desc_ne || 'उच्च गुणस्तरीय पोडकास्ट रेकर्डिङ, संस्थागत अन्तर्वार्ता, वृत्तचित्र र सामाजिक सञ्जाल रिल्स।',
+      learning_desc_en: siteContent?.pillars?.learning_desc_en || 'Small batches (max 15), guided practice on your own laptop in Bagbazar, and school workshops.',
+      learning_desc_ne: siteContent?.pillars?.learning_desc_ne || 'सानो ब्याच (अधिकतम १५ जना), बागबजारमा आफ्नै ल्यापटपमा अभ्यास र विद्यालय कार्यशाला।',
+      institution_title_en: siteContent?.pillars?.institution_title_en || siteContent?.pillars?.production_title_en || '2. Institutional Bootcamps',
+      institution_title_ne: siteContent?.pillars?.institution_title_ne || siteContent?.pillars?.production_title_ne || '२. संस्थागत बुटक्याम्प (विद्यालय तथा कलेज)',
+      institution_desc_en: siteContent?.pillars?.institution_desc_en || siteContent?.pillars?.production_desc_en || 'Customized AI tools, digital safety, and prompt engineering workshops for school and college faculties.',
+      institution_desc_ne: siteContent?.pillars?.institution_desc_ne || siteContent?.pillars?.production_desc_ne || 'शिक्षक तथा विद्यार्थीहरूका लागि प्रयोगात्मक एआई, तथ्य-जाँच र अनलाइन सुरक्षा कार्यशाला।',
       collaboration_title_en: siteContent?.pillars?.collaboration_title_en || '3. Collaboration (Agency Growth)',
       collaboration_title_ne: siteContent?.pillars?.collaboration_title_ne || '३. सहकार्य (डिजिटल वृद्धि)',
       collaboration_desc_en: siteContent?.pillars?.collaboration_desc_en || 'Facebook & Instagram ad funnels directly connected to WhatsApp for colleges and local businesses.',
       collaboration_desc_ne: siteContent?.pillars?.collaboration_desc_ne || 'कलेज तथा स्थानीय व्यवसायहरूका लागि ह्वाट्सएपसँग जोडिएका लक्षित विज्ञापन अभियान।'
     },
     about: {
-      story_en: siteContent?.about?.story_en || 'We started Vedanta Strategies in Putalisadak with a simple conviction: technology training in Nepal shouldn\'t be about dry slideshows or confusing buzzwords. It should be hands-on, practical, and immediately useful for your daily job, college studies, or local business.',
-      story_ne: siteContent?.about?.story_ne || 'हामीले पुतलीसडकमा एउटा स्पष्ट उद्देश्यका साथ वेदान्त स्ट्राटेजिज सुरु गरेका हौँ: नेपालमा प्रविधि तालिम केवल जटिल सैद्धान्तिक स्लाइडहरूमा सीमित हुनुहुँदैन। यो व्यावहारिक, हातैले गर्ने अभ्यास र दैनिक कार्यालय वा व्यवसायमा तत्काल उपयोगी हुनुपर्छ।'
+      story_en: siteContent?.about?.story_en || 'We started Vedanta Strategies in Kathmandu with a simple conviction: technology training in Nepal shouldn\'t be about dry slideshows or confusing buzzwords. It should be hands-on, practical, and immediately useful for your daily job, college studies, or local business.',
+      story_ne: siteContent?.about?.story_ne || 'हामीले काठमाडौंमा एउटा स्पष्ट उद्देश्यका साथ वेदान्त स्ट्राटेजिज सुरु गरेका हौँ: नेपालमा प्रविधि तालिम केवल जटिल सैद्धान्तिक स्लाइडहरूमा सीमित हुनुहुँदैन। यो व्यावहारिक, हातैले गर्ने अभ्यास र दैनिक कार्यालय वा व्यवसायमा तत्काल उपयोगी हुनुपर्छ।',
+      whoWeAre_en: siteContent?.about?.whoWeAre_en || 'Vedanta Strategies is a premier strategic learning academy and digital consulting firm located in Bagbazar, Kathmandu. We equip students, working professionals, and educational institutions with hands-on capabilities across Artificial Intelligence tools, performance digital marketing, and modern institutional management.',
+      whoWeAre_ne: siteContent?.about?.whoWeAre_ne || 'वेदान्त स्ट्राटेजिज काठमाडौंको बागबजारस्थित एक अग्रणी व्यावहारिक सिकाइ एकेडेमी तथा डिजिटल परामर्श संस्था हो। हामी विद्यार्थी, कार्यरत जनशक्ति र शैक्षिक संस्थाहरूलाई व्यावहारिक एआई टुल्स, नतिजामुखी डिजिटल मार्केटिङ र संस्थागत विकासमा पोख्त बनाउँछौँ।',
+      ceoName_en: siteContent?.about?.ceoName_en || 'Er. Suman Adhikari',
+      ceoName_ne: siteContent?.about?.ceoName_ne || 'इ. सुमन अधिकारी',
+      ceoTitle_en: siteContent?.about?.ceoTitle_en || 'Founder & Chief Executive Officer',
+      ceoTitle_ne: siteContent?.about?.ceoTitle_ne || 'संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
+      ceoPhoto: siteContent?.about?.ceoPhoto || '/images/ceo.jpg',
+      ceoBio_en: siteContent?.about?.ceoBio_en || 'Technology strategist, education innovator, and founder of Vedanta Strategies.',
+      ceoBio_ne: siteContent?.about?.ceoBio_ne || 'प्रविधि रणनीतिकार, शैक्षिक नवप्रवर्तक तथा वेदान्त स्ट्राटेजिजका संस्थापक।',
+      ceoMessage_en: siteContent?.about?.ceoMessage_en || 'At Vedanta Strategies, our founding purpose has always been crystal clear: to close the painful gap between academic credentials and real, productive workplace skills in Nepal. For too long, students and organizations have invested time in outdated syllabi and hollow buzzwords. We founded Vedanta to create an environment where every trainee learns on their own machine, works through actual live case studies, and leaves with skills they can deploy the very next day.',
+      ceoMessage_ne: siteContent?.about?.ceoMessage_ne || 'वेदान्त स्ट्राटेजिजमा हाम्रो मूल उद्देश्य सधैं स्पष्ट छ: नेपालमा औपचारिक शिक्षा र वास्तविक कार्यस्थलका सीपहरूबीचको खाडल पुर्नु। हामीले एउटा यस्तो सिकाइ वातावरण निर्माण गरेका छौँ जहाँ प्रत्येक प्रशिक्षार्थीले आफ्नै ल्यापटपमा वास्तविक परियोजनाहरूमा काम गरेर सीप हासिल गर्छन्।'
     },
     cta: {
-      title_en: siteContent?.cta?.title_en || 'Visit Our Putalisadak Campus or Discuss Your Project',
-      title_ne: siteContent?.cta?.title_ne || 'हाम्रो पुतलीसडक कार्यालय आउनुहोस् वा परियोजनाबारे छलफल गर्नुहोस्',
+      title_en: siteContent?.cta?.title_en || 'Visit Our Bagbazar Campus or Discuss Your Project',
+      title_ne: siteContent?.cta?.title_ne || 'हाम्रो बागबजार कार्यालय आउनुहोस् वा परियोजनाबारे छलफल गर्नुहोस्',
       desc_en: siteContent?.cta?.desc_en || 'Have a cup of tea with our mentors, check out the computer lab and recording studio, and see which program fits your goals.',
       desc_ne: siteContent?.cta?.desc_ne || 'हाम्रा प्रशिक्षकहरूसँग चिया पिउँदै कम्प्युटर ल्याब तथा स्टुडियो अवलोकन गर्नुहोस् र तपाईंको लक्ष्यअनुसारको कार्यक्रम रोज्नुहोस्।',
       btn_en: siteContent?.cta?.btn_en || 'Schedule a Free Discussion',
@@ -81,6 +92,21 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
       ...prev,
       about: { ...prev.about, [field]: val }
     }));
+  };
+
+  const handleCeoPhotoUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 3 * 1024 * 1024) {
+        alert('Please choose an image smaller than 3MB for optimal browser performance.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        handleAboutChange('ceoPhoto', reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleCtaChange = (field, val) => {
@@ -186,7 +212,7 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
                 className="form-input"
                 value={activeLangTab === 'en' ? formData.hero.badge_en : formData.hero.badge_ne}
                 onChange={(e) => handleHeroChange(activeLangTab === 'en' ? 'badge_en' : 'badge_ne', e.target.value)}
-                placeholder={activeLangTab === 'en' ? 'e.g. Putalisadak, Kathmandu • Hands-on Lab & Studio' : 'जस्तै: पुतलीसडक, काठमाडौं • प्रयोगात्मक ल्याब र स्टुडियो'}
+                placeholder={activeLangTab === 'en' ? 'e.g. Bagbazar, Kathmandu • Strategic Learning Hub' : 'जस्तै: बागबजार, काठमाडौं • प्रयोगात्मक ल्याब तथा हब'}
               />
             </div>
 
@@ -312,14 +338,14 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
 
             {/* Pillar 2 */}
             <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-              <h3 style={{ fontSize: '1rem', color: '#C59A3F', marginBottom: '10px' }}>Pillar 2: Production Studio</h3>
+              <h3 style={{ fontSize: '1rem', color: '#C59A3F', marginBottom: '10px' }}>Pillar 2: Institutional Bootcamps</h3>
               <div className="form-group" style={{ marginBottom: '10px' }}>
                 <label className="form-label">Title ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
                 <input
                   type="text"
                   className="form-input"
-                  value={activeLangTab === 'en' ? formData.pillars.production_title_en : formData.pillars.production_title_ne}
-                  onChange={(e) => handlePillarChange(activeLangTab === 'en' ? 'production_title_en' : 'production_title_ne', e.target.value)}
+                  value={activeLangTab === 'en' ? formData.pillars.institution_title_en : formData.pillars.institution_title_ne}
+                  onChange={(e) => handlePillarChange(activeLangTab === 'en' ? 'institution_title_en' : 'institution_title_ne', e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -327,8 +353,8 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
                 <textarea
                   rows={2}
                   className="form-input"
-                  value={activeLangTab === 'en' ? formData.pillars.production_desc_en : formData.pillars.production_desc_ne}
-                  onChange={(e) => handlePillarChange(activeLangTab === 'en' ? 'production_desc_en' : 'production_desc_ne', e.target.value)}
+                  value={activeLangTab === 'en' ? formData.pillars.institution_desc_en : formData.pillars.institution_desc_ne}
+                  onChange={(e) => handlePillarChange(activeLangTab === 'en' ? 'institution_desc_en' : 'institution_desc_ne', e.target.value)}
                 />
               </div>
             </div>
@@ -358,26 +384,180 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
           </div>
         </div>
 
-        {/* SECTION 4: ABOUT STORY */}
+        {/* SECTION 4: ABOUT PAGE (WHO WE ARE & MESSAGE FROM CEO) */}
         <div className="admin-card" style={{ marginBottom: '28px' }}>
           <h2 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '16px' }}>
-            About Our Company ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
+            About Us Sections ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
           </h2>
-          <div className="form-group">
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label className="form-label">Who We Are Narrative</label>
+            <textarea
+              rows={3}
+              className="form-input"
+              value={activeLangTab === 'en' ? formData.about.whoWeAre_en : formData.about.whoWeAre_ne}
+              onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'whoWeAre_en' : 'whoWeAre_ne', e.target.value)}
+              placeholder="Authoritative description of Vedanta Strategies' identity, mission, and scope..."
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
             <label className="form-label">Founding Story & Practical Philosophy</label>
             <textarea
-              rows={4}
+              rows={3}
               className="form-input"
               value={activeLangTab === 'en' ? formData.about.story_en : formData.about.story_ne}
               onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'story_en' : 'story_ne', e.target.value)}
             />
+          </div>
+
+          <div style={{ padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', marginTop: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Sparkles size={18} color="#C59A3F" />
+                <h3 style={{ fontSize: '1.1rem', color: '#C59A3F', margin: 0 }}>
+                  Executive Leadership & CEO's Message
+                </h3>
+              </div>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                Appears on dedicated CEO's Message page with animated luxury portrait frame
+              </span>
+            </div>
+
+            {/* CEO Photo Upload & Live Animated Frame Preview */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginBottom: '20px', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 154, 63, 0.2)' }}>
+              {/* Photo Frame Preview */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ fontSize: '0.78rem', color: '#C59A3F', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '10px' }}>
+                  Live Animated Preview
+                </div>
+                <div 
+                  className="ceo-portrait-frame" 
+                  style={{ 
+                    width: '130px', 
+                    height: '160px', 
+                    borderRadius: '16px', 
+                    overflow: 'hidden',
+                    background: '#172642',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <img
+                    src={formData.about?.ceoPhoto || '/images/ceo.jpg'}
+                    alt="CEO Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      const fallback = e.target.parentElement.querySelector('.admin-ceo-fallback');
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                  <div className="admin-ceo-fallback" style={{ display: 'none', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', padding: '10px', textAlign: 'center', fontSize: '0.75rem' }}>
+                    <User size={32} color="#C59A3F" />
+                    <span>No image</span>
+                  </div>
+                </div>
+                <span style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '8px' }}>Pulsing gold shimmer active</span>
+              </div>
+
+              {/* Photo Input Controls */}
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Upload size={14} color="#C59A3F" /> Upload New CEO Portrait (File)
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCeoPhotoUpload}
+                    className="form-input"
+                    style={{ padding: '6px 10px', fontSize: '0.82rem' }}
+                  />
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '4px' }}>
+                    Uploads a local image directly into browser database storage (PNG, JPG, WebP &lt; 3MB).
+                  </span>
+                </div>
+
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Image size={14} color="#C59A3F" /> Or Image URL / Public Path
+                  </label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={formData.about?.ceoPhoto || ''}
+                      onChange={(e) => handleAboutChange('ceoPhoto', e.target.value)}
+                      placeholder="/images/ceo.jpg or https://..."
+                      style={{ fontSize: '0.85rem' }}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleAboutChange('ceoPhoto', '/images/ceo.jpg')}
+                      title="Reset to default generated portrait"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CEO Identity Inputs */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginBottom: '14px' }}>
+              <div className="form-group">
+                <label className="form-label">CEO Full Name ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={activeLangTab === 'en' ? formData.about.ceoName_en : formData.about.ceoName_ne}
+                  onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoName_en' : 'ceoName_ne', e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">CEO Title / Designation ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={activeLangTab === 'en' ? formData.about.ceoTitle_en : formData.about.ceoTitle_ne}
+                  onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoTitle_en' : 'ceoTitle_ne', e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* CEO Short Bio / Credentials */}
+            <div className="form-group" style={{ marginBottom: '14px' }}>
+              <label className="form-label">CEO Short Bio & Credentials ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
+              <input
+                type="text"
+                className="form-input"
+                value={activeLangTab === 'en' ? (formData.about.ceoBio_en || '') : (formData.about.ceoBio_ne || '')}
+                onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoBio_en' : 'ceoBio_ne', e.target.value)}
+                placeholder="e.g. Technology strategist, education innovator, and founder of Vedanta Strategies."
+              />
+            </div>
+
+            {/* CEO Statement / Message */}
+            <div className="form-group">
+              <label className="form-label">Full Statement / Message ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
+              <textarea
+                rows={6}
+                className="form-input"
+                value={activeLangTab === 'en' ? formData.about.ceoMessage_en : formData.about.ceoMessage_ne}
+                onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoMessage_en' : 'ceoMessage_ne', e.target.value)}
+                placeholder="Personal message from CEO on vision, hands-on learning, and career impact..."
+              />
+            </div>
           </div>
         </div>
 
         {/* SECTION 5: CTA BANNER */}
         <div className="admin-card" style={{ marginBottom: '28px' }}>
           <h2 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '16px' }}>
-            Putalisadak Invitation CTA Banner ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
+            Bagbazar Invitation CTA Banner ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
           </h2>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>

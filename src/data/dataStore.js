@@ -1,21 +1,59 @@
 import { useState, useEffect } from 'react';
 import { initialData } from './initialData';
 
-const STORAGE_KEY = 'vedanta_strategies_data_v2';
+const STORAGE_KEY = 'vedanta_strategies_data_v5';
+const PREV_KEYS = ['vedanta_strategies_data_v4', 'vedanta_strategies_data_v3', 'vedanta_strategies_data_v2'];
 const EVENT_NAME = 'vedanta-data-update';
+
+function sanitizePutalisadak(str) {
+  if (typeof str !== 'string') return str;
+  return str.replace(/Putalisadak/gi, 'Bagbazar').replace(/पुतलीसडक/g, 'बागबजार');
+}
 
 export function getStore() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    let saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) {
+      for (const prevKey of PREV_KEYS) {
+        const oldSaved = localStorage.getItem(prevKey);
+        if (oldSaved) {
+          try {
+            const cleaned = sanitizePutalisadak(oldSaved);
+            localStorage.setItem(STORAGE_KEY, cleaned);
+            saved = cleaned;
+            break;
+          } catch (e) {
+            // continue
+          }
+        }
+      }
+    }
     if (saved) {
       const parsed = JSON.parse(saved);
+      const siteSettings = { 
+        ...initialData.siteSettings, 
+        ...(parsed.siteSettings || {}),
+        latitude: initialData.siteSettings.latitude,
+        longitude: initialData.siteSettings.longitude,
+        mapsUrl: initialData.siteSettings.mapsUrl,
+        mapsEmbed: initialData.siteSettings.mapsEmbed
+      };
+      if (siteSettings.address_en?.includes('Putalisadak') || siteSettings.address?.includes('Putalisadak')) {
+        siteSettings.address_en = initialData.siteSettings.address_en;
+        siteSettings.address_ne = initialData.siteSettings.address_ne;
+        siteSettings.address = initialData.siteSettings.address_en;
+      }
       return {
         ...initialData,
         ...parsed,
         partners: (parsed.partners && parsed.partners.length > 0) ? parsed.partners : initialData.partners,
         adminUsers: (parsed.adminUsers && parsed.adminUsers.length > 0) ? parsed.adminUsers : initialData.adminUsers,
-        siteContent: parsed.siteContent ? { ...initialData.siteContent, ...parsed.siteContent } : initialData.siteContent,
-        siteSettings: { ...initialData.siteSettings, ...(parsed.siteSettings || {}) }
+        siteContent: parsed.siteContent ? {
+          ...initialData.siteContent,
+          ...parsed.siteContent,
+          about: { ...initialData.siteContent.about, ...(parsed.siteContent.about || {}) }
+        } : initialData.siteContent,
+        siteSettings
       };
     }
   } catch (err) {

@@ -14,8 +14,10 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
     whatsappNumber: siteSettings.whatsappNumber || '9779801234567',
     
     // Bilingual Campus Address
-    address_en: siteSettings.address_en || siteSettings.address || 'Putalisadak (Near Star Mall), Kathmandu 44600, Nepal',
-    address_ne: siteSettings.address_ne || 'पुतलीसडक (स्टार मल नजिकै), काठमाडौं ४४६००, नेपाल',
+    address_en: siteSettings.address_en || siteSettings.address || 'Bagbazar, Kathmandu 44600, Nepal',
+    address_ne: siteSettings.address_ne || 'बागबजार, काठमाडौं ४४६००, नेपाल',
+    mapsUrl: siteSettings.mapsUrl || 'https://maps.google.com/?cid=2818761487808049031',
+    mapsEmbed: siteSettings.mapsEmbed || 'https://maps.google.com/maps?cid=2818761487808049031&output=embed',
     
     // Bilingual Office Hours
     officeHours_en: siteSettings.officeHours_en || siteSettings.officeHours || 'Sunday to Friday: 9:00 AM – 6:00 PM',
@@ -145,7 +147,18 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
                   ...formData,
                   [activeLangTab === 'en' ? 'address_en' : 'address_ne']: e.target.value
                 })}
-                placeholder={activeLangTab === 'en' ? 'e.g. Putalisadak (Near Star Mall), Kathmandu 44600, Nepal' : 'जस्तै: पुतलीसडक (स्टार मल नजिकै), काठमाडौं ४४६००, नेपाल'}
+                placeholder={activeLangTab === 'en' ? 'e.g. Bagbazar, Kathmandu 44600, Nepal' : 'जस्तै: बागबजार, काठमाडौं ४४६००, नेपाल'}
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Google Maps Link / CID URL</label>
+              <input
+                type="text"
+                className="form-input"
+                value={formData.mapsUrl}
+                onChange={(e) => setFormData({ ...formData, mapsUrl: e.target.value })}
+                placeholder="https://maps.google.com/?cid=2818761487808049031"
               />
             </div>
 

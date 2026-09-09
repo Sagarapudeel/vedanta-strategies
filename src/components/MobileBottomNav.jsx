@@ -25,8 +25,8 @@ export default function MobileBottomNav({ activePage, setActivePage, openLeadMod
         </button>
 
         <button 
-          className={`mobile-bottom-item ${activePage === 'training' ? 'active' : ''}`}
-          onClick={() => handleNav('training')}
+          className={`mobile-bottom-item ${['individual-training', 'institutional-training', 'training'].includes(activePage) ? 'active' : ''}`}
+          onClick={() => handleNav('individual-training')}
         >
           <BookOpen size={18} />
           <span>Courses</span>

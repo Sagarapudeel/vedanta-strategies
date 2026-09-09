@@ -6,14 +6,15 @@ import WhatsAppWidget from './components/WhatsAppWidget';
 import LeadModal from './components/LeadModal';
 import CourseDetailModal from './components/CourseDetailModal';
 import ErrorBoundary from './components/ErrorBoundary';
-import LogoIntroAnimation from './components/LogoIntroAnimation';
 
 // Public Pages
 import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import TrainingPage from './pages/TrainingPage';
+import WhoWeArePage from './pages/WhoWeArePage';
+import CeoMessagePage from './pages/CeoMessagePage';
+import TeamPage from './pages/TeamPage';
+import IndividualTrainingPage from './pages/IndividualTrainingPage';
+import InstitutionalTrainingPage from './pages/InstitutionalTrainingPage';
 import ServicesPage from './pages/ServicesPage';
-import ProductionPage from './pages/ProductionPage';
 import PortfolioPage from './pages/PortfolioPage';
 import BlogPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
@@ -26,7 +27,6 @@ import AdminLeads from './admin/AdminLeads';
 import AdminCourses from './admin/AdminCourses';
 import AdminServices from './admin/AdminServices';
 import AdminPortfolio from './admin/AdminPortfolio';
-import AdminProduction from './admin/AdminProduction';
 import AdminTestimonials from './admin/AdminTestimonials';
 import AdminTeam from './admin/AdminTeam';
 import AdminBlog from './admin/AdminBlog';
@@ -50,25 +50,35 @@ export default function App() {
   });
   const [adminTab, setAdminTab] = useState('dashboard');
 
-  // Modals & Cinematic Intro
+  // Modals
   const [leadModal, setLeadModal] = useState({ isOpen: false, purpose: 'general', courseId: '' });
   const [courseModal, setCourseModal] = useState({ isOpen: false, course: null });
-  const [showIntro, setShowIntro] = useState(() => {
-    return !sessionStorage.getItem('vedanta_intro_seen');
-  });
 
-  const replayIntro = () => {
-    setShowIntro(true);
-  };
-
-  // Handle Hash URLs (e.g. #/admin or #training)
+  // Handle Hash URLs (e.g. #/admin, #who-we-are, #ceo-message, #team, #individual-training, #institutional-training)
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#/', '').replace('#', '');
       if (hash === 'admin') {
         setActivePage('admin');
-      } else if (hash && ['home', 'about', 'training', 'services', 'production', 'portfolio', 'blog', 'contact'].includes(hash)) {
+      } else if (hash === 'about') {
+        setActivePage('who-we-are');
+      } else if (hash === 'training') {
+        setActivePage('individual-training');
+      } else if (hash && [
+        'home',
+        'who-we-are',
+        'ceo-message',
+        'team',
+        'individual-training',
+        'institutional-training',
+        'services',
+        'portfolio',
+        'blog',
+        'contact'
+      ].includes(hash)) {
         setActivePage(hash);
+      } else if (hash === 'production') {
+        setActivePage('services');
       }
     };
     handleHashChange();
@@ -186,14 +196,6 @@ export default function App() {
             deletePortfolio={store.deletePortfolio}
           />
         )}
-        {adminTab === 'production' && (
-          <AdminProduction
-            productionGallery={store.productionGallery}
-            addProductionItem={store.addProductionItem}
-            updateProductionItem={store.updateProductionItem}
-            deleteProductionItem={store.deleteProductionItem}
-          />
-        )}
         {adminTab === 'testimonials' && (
           <AdminTestimonials
             testimonials={store.testimonials}
@@ -239,14 +241,6 @@ export default function App() {
   // Public Website Render
   return (
     <div>
-      {/* Cinematic Logo Opening Animation */}
-      {showIntro && (
-        <LogoIntroAnimation 
-          onComplete={() => setShowIntro(false)} 
-          forceShow={showIntro}
-        />
-      )}
-
       {/* Top Announcement Bar */}
       {getLangText(store.siteSettings, 'announcementText', currentLang) && (
         <div style={{ background: 'linear-gradient(90deg, #b45309 0%, #f59e0b 50%, #b45309 100%)', color: '#000', padding: '7px 20px', fontSize: '0.82rem', fontWeight: '700', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
@@ -268,7 +262,7 @@ export default function App() {
         activePage={activePage}
         setActivePage={setActivePage}
         openLeadModal={openLeadModal}
-        replayIntro={replayIntro}
+        siteSettings={store.siteSettings}
       />
 
       {/* Dynamic Main Page Content */}
@@ -291,22 +285,50 @@ export default function App() {
             />
           )}
 
-          {activePage === 'about' && (
-            <AboutPage
+          {(activePage === 'who-we-are' || activePage === 'about') && (
+            <WhoWeArePage
               currentLang={currentLang}
               siteContent={store.siteContent}
+              openLeadModal={openLeadModal}
+              setActivePage={setActivePage}
+            />
+          )}
+
+          {activePage === 'ceo-message' && (
+            <CeoMessagePage
+              currentLang={currentLang}
+              siteContent={store.siteContent}
+              openLeadModal={openLeadModal}
+              setActivePage={setActivePage}
+            />
+          )}
+
+          {activePage === 'team' && (
+            <TeamPage
+              currentLang={currentLang}
               teamMembers={store.teamMembers}
               openLeadModal={openLeadModal}
               setActivePage={setActivePage}
             />
           )}
 
-          {activePage === 'training' && (
-            <TrainingPage
+          {(activePage === 'individual-training' || activePage === 'training') && (
+            <IndividualTrainingPage
               currentLang={currentLang}
               courses={store.courses}
               openCourseModal={openCourseModal}
               openLeadModal={openLeadModal}
+              setActivePage={setActivePage}
+            />
+          )}
+
+          {activePage === 'institutional-training' && (
+            <InstitutionalTrainingPage
+              currentLang={currentLang}
+              courses={store.courses}
+              openCourseModal={openCourseModal}
+              openLeadModal={openLeadModal}
+              setActivePage={setActivePage}
             />
           )}
 
@@ -316,14 +338,6 @@ export default function App() {
               services={store.services}
               openLeadModal={openLeadModal}
               setActivePage={setActivePage}
-            />
-          )}
-
-          {activePage === 'production' && (
-            <ProductionPage
-              currentLang={currentLang}
-              productionGallery={store.productionGallery}
-              openLeadModal={openLeadModal}
             />
           )}
 
@@ -359,7 +373,6 @@ export default function App() {
         setActivePage={setActivePage}
         openLeadModal={openLeadModal}
         siteSettings={store.siteSettings}
-        replayIntro={replayIntro}
       />
 
       {/* Floating WhatsApp Quick Chat */}

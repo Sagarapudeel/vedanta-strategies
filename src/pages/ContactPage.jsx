@@ -11,7 +11,8 @@ import {
   CheckCircle, 
   Sparkles,
   Building2,
-  Calendar
+  Calendar,
+  ExternalLink
 } from 'lucide-react';
 
 export default function ContactPage({ currentLang, siteSettings, onLeadSubmit }) {
@@ -45,6 +46,9 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
     }, 400);
   };
 
+  const mapUrl = siteSettings?.mapsUrl || "https://www.google.com/maps?q=27.7033949,85.3177065";
+  const mapEmbed = siteSettings?.mapsEmbed || "https://maps.google.com/maps?q=27.7033949,85.3177065&z=17&output=embed";
+
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
       <div className="container">
@@ -75,7 +79,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                       {currentLang === 'ne' ? 'कार्यालय ठेगाना' : 'Address'}
                     </div>
                     <div style={{ color: 'var(--text-muted)' }}>
-                      {getLangText(siteSettings, 'address', currentLang) || 'Putalisadak, Kathmandu 44600, Bagmati, Nepal'}
+                      {getLangText(siteSettings, 'address', currentLang) || siteSettings?.address || 'Bagbazar, Kathmandu 44600, Nepal'}
                     </div>
                   </div>
                 </div>
@@ -88,7 +92,9 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                     <div style={{ fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '2px' }}>
                       {currentLang === 'ne' ? 'फोन तथा सहयोग' : 'Phone & Support'}
                     </div>
-                    <div style={{ color: 'var(--text-muted)' }}>{siteSettings?.primaryPhone} / {siteSettings?.mobilePhone}</div>
+                    <div style={{ color: 'var(--text-muted)' }}>
+                      {siteSettings?.primaryPhone || '+977 1-4421098'}{siteSettings?.mobilePhone ? ` / ${siteSettings.mobilePhone}` : ''}
+                    </div>
                   </div>
                 </div>
 
@@ -100,7 +106,9 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                     <div style={{ fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '2px' }}>
                       {currentLang === 'ne' ? 'इमेल सम्पर्क' : 'Email Inquiries'}
                     </div>
-                    <div style={{ color: 'var(--text-muted)' }}>{siteSettings?.officialEmail}</div>
+                    <div style={{ color: 'var(--text-muted)' }}>
+                      {siteSettings?.officialEmail || 'info@vedantastrategies.com'}
+                    </div>
                   </div>
                 </div>
 
@@ -113,7 +121,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                       {currentLang === 'ne' ? 'खुला रहने समय' : 'Office Hours'}
                     </div>
                     <div style={{ color: 'var(--text-muted)' }}>
-                      {getLangText(siteSettings, 'officeHours', currentLang) || 'Sun – Fri: 9:00 AM – 6:00 PM'}
+                      {getLangText(siteSettings, 'officeHours', currentLang) || siteSettings?.officeHours || 'Sun – Fri: 9:00 AM – 6:00 PM'}
                     </div>
                   </div>
                 </div>
@@ -122,11 +130,11 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
               {/* Direct WhatsApp CTA */}
               <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
                 <a
-                  href={`https://wa.me/9779801234567?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Putalisadak campus.')}`}
+                  href={`https://wa.me/${siteSettings?.whatsappNumber || '9779801234567'}?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Bagbazar campus or enquire about programs.')}`}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-primary"
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', justifyContent: 'center' }}
                 >
                   <MessageCircle size={18} />
                   <span>{t.contact.chatDirectly}</span>
@@ -134,16 +142,28 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
               </div>
             </div>
 
-            {/* Interactive Map Visual */}
+            {/* Interactive Map Visual with Bagbazar CID */}
             <div className="mindrisers-card" style={{ overflow: 'hidden', padding: 0 }}>
-              <div style={{ padding: '16px 20px', background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: 'var(--brand-navy)', fontWeight: '600' }}>
-                <MapPin size={16} color="var(--brand-maroon)" /> Putalisadak Location Map
+              <div style={{ padding: '16px 20px', background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', color: 'var(--brand-navy)', fontWeight: '700' }}>
+                  <MapPin size={16} color="var(--brand-maroon)" />
+                  <span>Bagbazar, Kathmandu Location</span>
+                </div>
+                <a
+                  href={mapUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.82rem', color: 'var(--brand-maroon)', fontWeight: '700', textDecoration: 'none' }}
+                >
+                  <span>Open in Google Maps</span>
+                  <ExternalLink size={13} />
+                </a>
               </div>
               <iframe
-                title="Vedanta Strategies Kathmandu Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14129.743194097486!2d85.31688585!3d27.7038167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19a4e21a2c6d%3A0x6a0a7c49fca37a1a!2sPutalisadak%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2snp"
+                title="Vedanta Strategies Bagbazar Kathmandu Location"
+                src={mapEmbed}
                 width="100%"
-                height="240"
+                height="280"
                 style={{ border: 0, display: 'block' }}
                 allowFullScreen=""
                 loading="lazy"
@@ -231,7 +251,6 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                       <option value="training">{t.contact.purposeOpts.training}</option>
                       <option value="institution">{t.contact.purposeOpts.institution}</option>
                       <option value="services">{t.contact.purposeOpts.services}</option>
-                      <option value="production">{t.contact.purposeOpts.production}</option>
                       <option value="partnership">{t.contact.purposeOpts.partnership}</option>
                       <option value="other">{t.contact.purposeOpts.other}</option>
                     </select>

@@ -8,11 +8,10 @@ import {
   Clock, 
   ArrowRight, 
   CheckCircle, 
-  Share2,
-  Sparkles
+  Share2
 } from 'lucide-react';
 
-export default function Footer({ currentLang, setActivePage, openLeadModal, siteSettings, replayIntro }) {
+export default function Footer({ currentLang, setActivePage, openLeadModal, siteSettings }) {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const t = translations[currentLang] || translations.en;
@@ -21,34 +20,36 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
     e.preventDefault();
     if (newsletterEmail) {
       setSubscribed(true);
+      setTimeout(() => setSubscribed(false), 4000);
       setNewsletterEmail('');
-      setTimeout(() => setSubscribed(false), 5000);
     }
   };
 
-  const navigateTo = (page) => {
-    setActivePage(page);
+  const navigateTo = (pageId) => {
+    setActivePage(pageId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer style={{ background: '#172642', color: '#e2e8f0', borderTop: '3px solid #851C2C', paddingTop: '56px', paddingBottom: '32px' }}>
+    <footer className="main-footer" style={{ background: '#172642', color: '#e2e8f0', borderTop: '3px solid #851C2C', paddingTop: '56px', paddingBottom: '32px' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '40px', marginBottom: '44px' }}>
+        
+        {/* Main Footer Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '40px', marginBottom: '48px' }}>
           
-          {/* Column 1: Brand Info & Official Logo */}
-          <div>
-            <div style={{ marginBottom: '18px' }}>
+          {/* Column 1: Brand Info */}
+          <div style={{ maxWidth: '320px' }}>
+            <div style={{ marginBottom: '16px' }}>
               <img 
                 src="/images/logo.png" 
                 alt="Vedanta Strategies" 
-                style={{ height: '54px', width: 'auto', background: '#ffffff', padding: '4px 8px', borderRadius: '8px', display: 'block', objectFit: 'contain' }}
+                style={{ height: '42px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} 
               />
             </div>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: '1.65', marginBottom: '20px' }}>
-              {currentLang === 'ne' 
-                ? 'काठमाडौंस्थित व्यावहारिक सूचना प्रविधि, मिडिया उत्पादन र डिजिटल मार्केटिङ संस्था।'
-                : 'Practical IT & AI training, studio media production, and digital marketing agency based in Putalisadak, Kathmandu.'}
+            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '20px' }}>
+              {currentLang === 'ne'
+                ? 'काठमाडौंस्थित व्यावहारिक सूचना प्रविधि, डिजिटल रणनीति तथा संस्थागत सीप विकास केन्द्र।'
+                : 'Practical IT & AI training, institutional workshops, and digital growth agency based in Kathmandu, Nepal.'}
             </p>
             <div style={{ display: 'flex', gap: '10px' }}>
               <a href={siteSettings?.facebookUrl || "#"} target="_blank" rel="noreferrer" style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', padding: '8px', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Facebook">
@@ -61,32 +62,6 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
                 <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </a>
             </div>
-
-            {replayIntro && (
-              <div style={{ marginTop: '16px' }}>
-                <button
-                  onClick={replayIntro}
-                  style={{
-                    background: 'rgba(197, 154, 63, 0.12)',
-                    border: '1px solid rgba(197, 154, 63, 0.35)',
-                    color: '#C59A3F',
-                    padding: '6px 14px',
-                    borderRadius: 'var(--radius-full)',
-                    fontSize: '0.78rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    transition: 'all 0.2s ease'
-                  }}
-                  title="Watch Opening Logo Animation"
-                >
-                  <Sparkles size={13} color="#C59A3F" />
-                  <span>Replay Logo Animation</span>
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Column 2: Quick Links */}
@@ -97,10 +72,12 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { id: 'home', label: t.nav.home },
-                { id: 'about', label: t.nav.about },
-                { id: 'training', label: t.nav.training },
+                { id: 'who-we-are', label: t.nav.whoWeAre || (currentLang === 'ne' ? 'हाम्रो परिचय' : 'Who We Are') },
+                { id: 'ceo-message', label: t.nav.ceoMessage || (currentLang === 'ne' ? 'प्रमुख कार्यकारीको सन्देश' : "CEO's Message") },
+                { id: 'team', label: t.nav.team || (currentLang === 'ne' ? 'हाम्रो टिम' : 'Our Team') },
+                { id: 'individual-training', label: t.nav.individualTraining || (currentLang === 'ne' ? 'व्यक्तिगत तालिम' : 'Individual Training') },
+                { id: 'institutional-training', label: t.nav.institutionalTraining || (currentLang === 'ne' ? 'संस्थागत कार्यक्रम' : 'Institutional Programs') },
                 { id: 'services', label: t.nav.services },
-                { id: 'production', label: t.nav.production },
                 { id: 'portfolio', label: t.nav.portfolio },
                 { id: 'blog', label: t.nav.blog },
                 { id: 'contact', label: t.nav.contact }
@@ -135,10 +112,10 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
               </li>
               <li>
                 <div style={{ fontWeight: '700', color: '#ffffff', fontSize: '0.9rem' }}>
-                  {currentLang === 'ne' ? '२. मिडिया निर्माण' : '2. Media Production'}
+                  {currentLang === 'ne' ? '२. संस्थागत बुटक्याम्प' : '2. Institutional Bootcamps'}
                 </div>
                 <div style={{ color: '#94a3b8', fontSize: '0.82rem' }}>
-                  {currentLang === 'ne' ? 'पुतलीसडकमा पोडकास्ट, वृत्तचित्र तथा व्यावसायिक भिडियो रेकर्डिङ' : 'Podcasts, video documentaries, and studio recording in Putalisadak'}
+                  {currentLang === 'ne' ? 'कलेज, विद्यालय र संघसंस्थाहरूका लागि विशेष एआई र डिजिटल साक्षरता' : 'Customized AI & digital literacy workshops for colleges and schools'}
                 </div>
               </li>
               <li>
@@ -160,11 +137,11 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem', color: '#cbd5e1' }}>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <MapPin size={16} color="#C59A3F" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <span>{getLangText(siteSettings, 'address', currentLang) || 'Putalisadak (near Star Mall), Kathmandu 44600, Nepal'}</span>
+                <span>{getLangText(siteSettings, 'address', currentLang) || siteSettings?.address || 'Bagbazar, Kathmandu 44600, Nepal'}</span>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <Phone size={16} color="#C59A3F" style={{ flexShrink: 0 }} />
-                <span>{siteSettings?.primaryPhone || '01-4421098'} / {siteSettings?.mobilePhone || '+977 9801234567'}</span>
+                <span>{siteSettings?.primaryPhone || '+977 1-4421098'}{siteSettings?.mobilePhone ? ` / ${siteSettings.mobilePhone}` : ''}</span>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <Mail size={16} color="#C59A3F" style={{ flexShrink: 0 }} />
@@ -213,12 +190,12 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
         {/* Bottom Bar - Clean & Professional */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', fontSize: '0.82rem', color: '#94a3b8' }}>
           <div>
-            © {new Date().getFullYear()} Vedanta Strategies Pvt. Ltd. Putalisadak, Kathmandu, Nepal. {currentLang === 'ne' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
+            © {new Date().getFullYear()} Vedanta Strategies Pvt. Ltd. {siteSettings?.address ? siteSettings.address.split(',')[0] : 'Bagbazar'}, Kathmandu, Nepal. {currentLang === 'ne' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
           </div>
           <div style={{ display: 'flex', gap: '16px' }}>
-            <span style={{ cursor: 'pointer' }} onClick={() => navigateTo('about')}>{t.nav.about}</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => navigateTo('who-we-are')}>{t.nav.whoWeAre || (currentLang === 'ne' ? 'हाम्रो परिचय' : 'Who We Are')}</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => navigateTo('individual-training')}>{t.nav.individualTraining || (currentLang === 'ne' ? 'तालिम' : 'Training')}</span>
             <span style={{ cursor: 'pointer' }} onClick={() => navigateTo('contact')}>{t.nav.contact}</span>
-            <span style={{ cursor: 'pointer' }} onClick={() => navigateTo('training')}>{t.nav.training}</span>
           </div>
         </div>
 

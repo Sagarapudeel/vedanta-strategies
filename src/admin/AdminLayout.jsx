@@ -36,7 +36,6 @@ export default function AdminLayout({
     { id: 'courses', label: 'Courses & Programs', icon: <BookOpen size={18} />, allowedRoles: ['super_admin', 'content_editor'] },
     { id: 'services', label: 'Services & Packages', icon: <Briefcase size={18} />, allowedRoles: ['super_admin', 'content_editor'] },
     { id: 'portfolio', label: 'Portfolio & Case Studies', icon: <Layers size={18} />, allowedRoles: ['super_admin', 'content_editor'] },
-    { id: 'production', label: 'Production Showcase', icon: <Film size={18} />, allowedRoles: ['super_admin', 'content_editor'] },
     { id: 'testimonials', label: 'Testimonials', icon: <MessageSquare size={18} />, allowedRoles: ['super_admin', 'content_editor'] },
     { id: 'team', label: 'Team & Mentors', icon: <Users size={18} />, allowedRoles: ['super_admin', 'content_editor'] },
     { id: 'blog', label: 'Blog & Articles', icon: <FileText size={18} />, allowedRoles: ['super_admin', 'content_editor'] },

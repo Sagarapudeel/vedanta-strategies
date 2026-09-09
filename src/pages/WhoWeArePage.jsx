@@ -2,7 +2,6 @@ import React from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
 import { 
-  Quote, 
   Target, 
   Users, 
   CheckCircle, 
@@ -10,11 +9,14 @@ import {
   MapPin, 
   Laptop, 
   TrendingUp, 
+  GraduationCap,
+  Award,
+  Sparkles,
   ShieldCheck,
-  GraduationCap
+  Building2
 } from 'lucide-react';
 
-export default function AboutPage({ currentLang, siteContent, teamMembers = [], openLeadModal, setActivePage }) {
+export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, setActivePage }) {
   const t = translations[currentLang] || translations.en;
 
   const whoWeAreText = getLangText(siteContent?.about, 'whoWeAre', currentLang) || (
@@ -27,16 +29,6 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
     currentLang === 'ne'
       ? 'हामीले काठमाडौंमा एउटा स्पष्ट उद्देश्यका साथ वेदान्त स्ट्राटेजिज सुरु गरेका हौँ: नेपालमा प्रविधि तालिम केवल जटिल सैद्धान्तिक स्लाइडहरूमा सीमित हुनुहुँदैन। यो व्यावहारिक, हातैले गर्ने अभ्यास र दैनिक कार्यालय वा व्यवसायमा तत्काल उपयोगी हुनुपर्छ।'
       : 'We started Vedanta Strategies in Kathmandu with a simple conviction: technology training in Nepal shouldn\'t be about dry slideshows or confusing buzzwords. It should be hands-on, practical, and immediately useful for your daily job, college studies, or local business.'
-  );
-
-  const ceoName = getLangText(siteContent?.about, 'ceoName', currentLang) || 'Er. Suman Adhikari';
-  const ceoTitle = getLangText(siteContent?.about, 'ceoTitle', currentLang) || (
-    currentLang === 'ne' ? 'संस्थापक तथा प्रमुख कार्यकारी अधिकृत' : 'Founder & Chief Executive Officer'
-  );
-  const ceoMessage = getLangText(siteContent?.about, 'ceoMessage', currentLang) || (
-    currentLang === 'ne'
-      ? 'वेदान्त स्ट्राटेजिजमा हाम्रो मूल उद्देश्य सधैं स्पष्ट छ: नेपालमा औपचारिक शिक्षा र वास्तविक कार्यस्थलका सीपहरूबीचको खाडल पुर्नु। धेरै लामो समयदेखि विद्यार्थी र संघसंस्थाहरूले पुराना पाठ्यक्रम र खोक्रा प्रचारमा समय खर्चिरहेका छन्। हामीले एउटा यस्तो सिकाइ वातावरण निर्माण गरेका छौँ जहाँ प्रत्येक प्रशिक्षार्थीले आफ्नै ल्यापटपमा वास्तविक परियोजनाहरूमा काम गरेर सीप हासिल गर्छन्। चाहे तपाईं आफ्नो करिअर उकास्न खोज्दै हुनुहुन्छ वा आफ्ना शिक्षक र विद्यार्थीलाई भविष्यका प्रविधि सिकाउन चाहने संस्था, हामी तपाईंको वास्तविक प्रगतिका लागि प्रतिबद्ध छौँ।'
-      : 'At Vedanta Strategies, our founding purpose has always been crystal clear: to close the painful gap between academic credentials and real, productive workplace skills in Nepal. For too long, students and organizations have invested time in outdated syllabi and hollow buzzwords. We founded Vedanta to create an environment where every trainee learns on their own machine, works through actual live case studies, and leaves with skills they can deploy the very next day. Whether you are an individual wanting to master AI workflows or an educational institution looking to transform your faculty and student readiness, we are deeply committed to your measurable progress.'
   );
 
   const corePillars = [
@@ -73,25 +65,49 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
       <div className="container">
+
+        {/* Sub-Navigation Pill Bar across About Us Pages */}
+        <nav className="subnav-pill-bar" aria-label="About Us Navigation">
+          <button 
+            className="subnav-pill active" 
+            onClick={() => setActivePage('who-we-are')}
+          >
+            <span>{currentLang === 'ne' ? 'हाम्रो परिचय' : 'Who We Are'}</span>
+          </button>
+          <button 
+            className="subnav-pill" 
+            onClick={() => { setActivePage('ceo-message'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          >
+            <span>{currentLang === 'ne' ? 'प्रमुख कार्यकारी अधिकृत (CEO) को सन्देश' : 'Message from CEO'}</span>
+          </button>
+          <button 
+            className="subnav-pill" 
+            onClick={() => { setActivePage('team'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          >
+            <span>{currentLang === 'ne' ? 'हाम्रो टिम' : 'Our Team'}</span>
+          </button>
+        </nav>
         
+        {/* Section Header */}
         <div className="section-header" style={{ marginBottom: '56px' }}>
-          <span className="section-badge">{currentLang === 'ne' ? 'वेदान्त स्ट्राटेजिजबारे' : 'ABOUT VEDANTA STRATEGIES'}</span>
+          <span className="section-badge">{currentLang === 'ne' ? 'हाम्रो परिचय' : 'ABOUT VEDANTA STRATEGIES'}</span>
           <h1 className="section-title">
             {currentLang === 'ne' ? 'व्यावहारिक सीप, रणनीतिक सोच र संस्थागत प्रभाव' : 'Practical Learning, Strategic Thinking & Lasting Impact'}
           </h1>
           <p className="section-subtitle">
             {currentLang === 'ne' 
-              ? 'हामी काठमाडौंस्थित प्रविधि प्रशिक्षक तथा डिजिटल रणनीतिकारहरूको टिम हौँ जसले नतिजामुखी काममा विश्वास गर्छौं।'
-              : 'A Kathmandu-based academy and digital agency committed to execution-driven training and measurable business growth.'}
+              ? 'हामी काठमाडौंस्थित प्रविधि प्रशिक्षक तथा डिजिटल रणनीतिकारहरूको समूह हौँ जसले नतिजामुखी काममा विश्वास गर्छौं।'
+              : 'A Kathmandu-based strategic learning academy and digital consulting firm committed to execution-driven training and measurable progress.'}
           </p>
         </div>
 
-        <section id="who-we-are" style={{ marginBottom: '88px' }}>
+        {/* Main Who We Are Grid */}
+        <section style={{ marginBottom: '80px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '48px', alignItems: 'center' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
                 <span className="section-badge" style={{ marginBottom: 0 }}>
-                  {currentLang === 'ne' ? 'हाम्रो परिचय' : 'SECTION 1 • WHO WE ARE'}
+                  {currentLang === 'ne' ? 'संस्थागत दृष्टिकोण' : 'OUR IDENTITY & VALUES'}
                 </span>
               </div>
               <h2 style={{ fontSize: '2.1rem', color: 'var(--brand-navy)', marginBottom: '18px', fontWeight: '800' }}>
@@ -109,13 +125,13 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
                   <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-maroon)', fontFamily: 'var(--font-heading)' }}>
                     Bagbazar Campus
                   </div>
-                  <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Central Kathmandu Hub</div>
+                  <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Central Kathmandu Practical Lab</div>
                 </div>
                 <div style={{ padding: '14px 22px', background: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
                   <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-navy)', fontFamily: 'var(--font-heading)' }}>
                     Max 15 Trainees
                   </div>
-                  <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Rigorous Hands-On Batches</div>
+                  <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Small Hands-On Cohorts</div>
                 </div>
               </div>
             </div>
@@ -148,135 +164,60 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
           </div>
         </section>
 
-        <section id="ceo-message" style={{ marginBottom: '88px' }}>
-          <div className="section-header" style={{ marginBottom: '32px' }}>
-            <span className="section-badge">{currentLang === 'ne' ? 'नेतृत्वको सन्देश' : 'SECTION 2 • LEADERSHIP PERSPECTIVE'}</span>
-            <h2 className="section-title">
-              {currentLang === 'ne' ? 'प्रमुख कार्यकारी अधिकृत (CEO) को सन्देश' : 'Message from the CEO'}
+        {/* Campus & Infrastructure Highlights */}
+        <section style={{ marginBottom: '80px', background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '40px' }}>
+          <div style={{ maxWidth: '840px', margin: '0 auto', textAlign: 'center', marginBottom: '32px' }}>
+            <span className="section-badge">{currentLang === 'ne' ? 'हाम्रो क्याम्पस' : 'THE BAGBAZAR CAMPUS'}</span>
+            <h2 style={{ fontSize: '1.85rem', color: 'var(--brand-navy)', fontWeight: '800', marginBottom: '12px' }}>
+              {currentLang === 'ne' ? 'काठमाडौंको केन्द्रमा सुविधायुक्त सिकाइ वातावरण' : 'Centrally Located with Practical Computing Infrastructure'}
             </h2>
-            <p className="section-subtitle">
-              {currentLang === 'ne' 
-                ? 'नेपालको सीप विकास र प्रविधि शिक्षाबारे संस्थापकको स्पष्ट दृष्टिकोण।'
-                : 'Our founding philosophy, commitment to quality, and vision for digital capability in Nepal.'}
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.96rem', lineHeight: '1.65' }}>
+              {currentLang === 'ne'
+                ? 'काठमाडौंको बागबजार (२७.७०३३९४९, ८५.३१७७०६५) मा अवस्थित हाम्रो केन्द्र विद्यार्थी तथा संस्थागत प्रतिनिधिहरूका लागि सहज पहुँचमा छ।'
+                : 'Conveniently located at Bagbazar, Kathmandu (27.7033949, 85.3177065), our campus is designed for focused, disruption-free learning with dedicated workstation desks and gigabit fiber internet.'}
             </p>
           </div>
 
-          <div 
-            className="mindrisers-card" 
-            style={{ 
-              padding: '48px', 
-              background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
-              border: '1px solid rgba(197, 154, 63, 0.35)',
-              boxShadow: 'var(--shadow-md)',
-              position: 'relative'
-            }}
-          >
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', alignItems: 'center' }}>
-              
-              <div style={{ textAlign: 'center', borderRight: '1px solid var(--border-color)', paddingRight: '20px' }}>
-                <div 
-                  style={{ 
-                    width: '110px', 
-                    height: '110px', 
-                    borderRadius: '50%', 
-                    background: 'linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-maroon) 100%)', 
-                    border: '3px solid var(--brand-gold)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    margin: '0 auto 16px auto', 
-                    fontSize: '2.2rem', 
-                    fontWeight: '800', 
-                    color: '#ffffff',
-                    boxShadow: 'var(--shadow-md)'
-                  }}
-                >
-                  SA
-                </div>
-                <h3 style={{ fontSize: '1.4rem', color: 'var(--brand-navy)', marginBottom: '4px', fontWeight: '800' }}>
-                  {ceoName}
-                </h3>
-                <div style={{ color: 'var(--brand-maroon)', fontSize: '0.9rem', fontWeight: '700', marginBottom: '6px' }}>
-                  {ceoTitle}
-                </div>
-                <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                  <MapPin size={13} color="#C59A3F" />
-                  <span>Bagbazar, Kathmandu, Nepal</span>
-                </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+            <div style={{ background: '#ffffff', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(197, 154, 63, 0.15)', color: '#C59A3F', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+                <Laptop size={18} />
               </div>
+              <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>
+                {currentLang === 'ne' ? 'ल्यापटप पावर स्टेशन' : 'Dedicated Workstations'}
+              </h4>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: '1.5', margin: 0 }}>
+                High-speed dual fiber connections and ergonomic seating tailored for multi-hour hands-on sprints.
+              </p>
+            </div>
 
-              <div style={{ position: 'relative' }}>
-                <Quote size={40} color="rgba(197, 154, 63, 0.25)" style={{ position: 'absolute', top: '-18px', left: '-12px', zIndex: 0 }} />
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <blockquote style={{ fontSize: '1.05rem', color: 'var(--text-body)', lineHeight: '1.8', fontStyle: 'italic', marginBottom: '24px', margin: 0 }}>
-                    "{ceoMessage}"
-                  </blockquote>
-                  
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '16px', borderTop: '1px solid var(--border-color)' }}>
-                    <div style={{ width: '4px', height: '32px', background: 'var(--brand-maroon)', borderRadius: '2px' }} />
-                    <div>
-                      <div style={{ fontWeight: '700', color: 'var(--brand-navy)', fontSize: '0.95rem' }}>{ceoName}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Vedanta Strategies Pvt. Ltd.</div>
-                    </div>
-                  </div>
-                </div>
+            <div style={{ background: '#ffffff', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(133, 28, 44, 0.1)', color: 'var(--brand-maroon)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+                <Users size={18} />
               </div>
+              <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>
+                {currentLang === 'ne' ? '१२–१५ सिट मात्र' : 'Intimate Cohort Rooms'}
+              </h4>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: '1.5', margin: 0 }}>
+                Spacious lab rooms capped strictly at 15 trainees so every mentor can walk up to your laptop screen.
+              </p>
+            </div>
 
+            <div style={{ background: '#ffffff', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(23, 38, 66, 0.1)', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+                <Building2 size={18} />
+              </div>
+              <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>
+                {currentLang === 'ne' ? 'केन्द्रीय बागबजार' : 'Central Accessibility'}
+              </h4>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', lineHeight: '1.5', margin: 0 }}>
+                Accessible by public transit from anywhere across Kathmandu, Lalitpur, and Bhaktapur.
+              </p>
             </div>
           </div>
         </section>
 
-        <section id="team" style={{ marginBottom: '88px' }}>
-          <div className="section-header">
-            <span className="section-badge">{currentLang === 'ne' ? 'हाम्रो नेतृत्व तथा प्रशिक्षकहरू' : 'SECTION 3 • OUR TEAM'}</span>
-            <h2 className="section-title">
-              {currentLang === 'ne' ? 'वेदान्त स्ट्राटेजिजको टिम' : 'The People Behind Vedanta Strategies'}
-            </h2>
-            <p className="section-subtitle">
-              {currentLang === 'ne'
-                ? 'हामी प्रविधि, डिजिटल मार्केटिङ तथा संस्थागत रणनीतिमा प्रत्यक्ष कार्यरत विशेषज्ञहरूको समूह हौँ।'
-                : 'We are hands-on practitioners, engineers, and digital marketing leaders who manage live operations every day.'}
-            </p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' }}>
-            {teamMembers.map((member) => (
-              <div key={member.id} className="mindrisers-card" style={{ padding: '32px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
-                <div 
-                  style={{ 
-                    width: '76px', 
-                    height: '76px', 
-                    borderRadius: '50%', 
-                    background: 'rgba(197, 154, 63, 0.12)', 
-                    border: '2px solid var(--brand-gold)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    margin: '0 auto 16px auto', 
-                    fontSize: '1.55rem', 
-                    fontWeight: '800', 
-                    color: 'var(--brand-maroon)' 
-                  }}
-                >
-                  {member.avatar}
-                </div>
-                <h3 style={{ fontSize: '1.25rem', marginBottom: '4px', color: 'var(--brand-navy)', fontWeight: '700' }}>
-                  {member.name}
-                </h3>
-                <div style={{ color: 'var(--brand-maroon)', fontSize: '0.86rem', fontWeight: '700', marginBottom: '6px' }}>
-                  {getLangText(member, 'role', currentLang) || member.role}
-                </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--brand-navy-light)', marginBottom: '14px', fontWeight: '600' }}>
-                  {getLangText(member, 'specialty', currentLang) || member.specialty}
-                </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
-                  {getLangText(member, 'bio', currentLang) || member.bio}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
+        {/* Visit Campus CTA Card */}
         <div className="mindrisers-card" style={{ padding: '44px 32px', textAlign: 'center', maxWidth: '760px', margin: '0 auto', border: '1px solid var(--border-color)', background: '#ffffff' }}>
           <h3 style={{ fontSize: '1.8rem', marginBottom: '12px', color: 'var(--brand-navy)', fontWeight: '800' }}>
             {currentLang === 'ne' ? 'हाम्रो बागबजार कार्यालय आउनुहोस्' : 'Visit Our Campus at Bagbazar'}
@@ -291,7 +232,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
               {currentLang === 'ne' ? 'टोलीसँग परामर्श गर्नुहोस्' : 'Schedule a Consultation'}
             </button>
             <button className="btn btn-secondary" onClick={() => { setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              {currentLang === 'ne' ? 'कार्यालय ठेगाना र नक्सा' : 'Get Campus Directions'}
+              {currentLang === 'ne' ? 'कार्यालय ठेगाना र नक्सा' : 'View Campus Directions & Map'}
             </button>
           </div>
         </div>

@@ -1,5 +1,68 @@
 import React, { useState } from 'react';
-import { PlusCircle, Edit2, Trash2, CheckCircle, X, BookOpen, Clock, Award, Globe } from 'lucide-react';
+import { PlusCircle, Edit2, Trash2, CheckCircle, X, BookOpen, Clock, Award, Globe, ListPlus, Trash, Layers } from 'lucide-react';
+
+const defaultModulesEn = [
+  { id: 1, title: 'Module 1: Practical Fundamentals & Setup', topics: ['Setting up software properly', 'Workspace & keyboard shortcuts', 'Core workflow fundamentals'] },
+  { id: 2, title: 'Module 2: Live Workplace Projects', topics: ['Real-world client scenarios', 'Step-by-step mentored execution', 'Troubleshooting common roadblocks'] },
+  { id: 3, title: 'Module 3: Portfolio & Career Ready', topics: ['Compiling verifiable portfolio', 'Final capstone assessment', 'Official certification dispatch'] }
+];
+
+const defaultModulesNe = [
+  { id: 1, title: 'खण्ड १: आधारभूत सीप र कार्यस्थल तयारी', topics: ['सफ्टवेयर र टूलको सही सेटअप', 'किबोर्ड सर्टकट र कार्यप्रवाह', 'आधारभूत सिद्धान्त र अभ्यास'] },
+  { id: 2, title: 'खण्ड २: प्रत्यक्ष परियोजना अभ्यास', topics: ['वास्तविक ग्राहक परियोजना कार्य', 'प्रशिक्षकको प्रत्यक्ष मार्गदर्शन', 'व्यावहारिक समस्या समाधान'] },
+  { id: 3, title: 'खण्ड ३: पोर्टफोलियो तथा प्रमाणीकरण', topics: ['व्यावसायिक पोर्टफोलियो निर्माण', 'अन्तिम मूल्याङ्कन र परीक्षा', 'प्रमाणित वेदान्त प्रमाणपत्र वितरण'] }
+];
+
+const parseToModules = (curr, defaultList = []) => {
+  if (!curr) return defaultList;
+  if (Array.isArray(curr)) {
+    if (curr.length === 0) return defaultList;
+    return curr.map((item, idx) => {
+      if (typeof item === 'object' && item !== null) {
+        return {
+          id: idx + 1,
+          title: item.title || item.module || `Module ${idx + 1}`,
+          topics: Array.isArray(item.topics) ? [...item.topics] : []
+        };
+      }
+      if (typeof item === 'string') {
+        if (item.includes(':')) {
+          const [title, rest] = item.split(/:\s*(.+)/);
+          const topics = rest ? rest.split(/,\s*/).map(s => s.trim()).filter(Boolean) : [];
+          return { id: idx + 1, title: title.trim(), topics };
+        }
+        return { id: idx + 1, title: item.trim(), topics: [] };
+      }
+      return { id: idx + 1, title: String(item), topics: [] };
+    });
+  }
+  if (typeof curr === 'string') {
+    const lines = curr.split('\n').map(l => l.trim()).filter(Boolean);
+    const result = [];
+    let currentMod = null;
+    lines.forEach((line, idx) => {
+      if (line.startsWith('-') || line.startsWith('*') || line.startsWith('•')) {
+        const topic = line.replace(/^[-*•]\s*/, '');
+        if (currentMod) {
+          currentMod.topics.push(topic);
+        } else {
+          currentMod = { id: idx + 1, title: `Module ${result.length + 1}`, topics: [topic] };
+          result.push(currentMod);
+        }
+      } else if (line.includes(':')) {
+        const [title, rest] = line.split(/:\s*(.+)/);
+        const topics = rest ? rest.split(/,\s*/).map(s => s.trim()).filter(Boolean) : [];
+        currentMod = { id: idx + 1, title: title.trim(), topics };
+        result.push(currentMod);
+      } else {
+        currentMod = { id: idx + 1, title: line, topics: [] };
+        result.push(currentMod);
+      }
+    });
+    return result.length > 0 ? result : defaultList;
+  }
+  return defaultList;
+};
 
 export default function AdminCourses({ courses = [], addCourse, updateCourse, deleteCourse }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -13,12 +76,12 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
     tagline_ne: '',
     duration_en: '6 Weeks (36 Hours)',
     duration_ne: '६ हप्ता (३६ घण्टा)',
-    mode_en: 'Putalisadak Physical Lab & Live Online',
-    mode_ne: 'पुतलीसडक भौतिक ल्याब तथा अनलाइन',
+    mode_en: 'Bagbazar Physical Lab & Live Online',
+    mode_ne: 'बागबजार भौतिक ल्याब तथा अनलाइन',
     nextBatch_en: 'Sunday, 15th Ashoj (Morning 7:00 AM)',
     nextBatch_ne: 'आइतबार, १५ असोज (बिहान ७:००)',
-    curriculum_en: '',
-    curriculum_ne: '',
+    modules_en: defaultModulesEn,
+    modules_ne: defaultModulesNe,
     category: 'ai',
     track: 'individual',
     fee: 14000,
@@ -36,12 +99,12 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
       tagline_ne: '',
       duration_en: '6 Weeks (36 Hours)',
       duration_ne: '६ हप्ता (३६ घण्टा)',
-      mode_en: 'Putalisadak Campus or Live Online',
-      mode_ne: 'पुतलीसडक क्याम्पस वा प्रत्यक्ष अनलाइन',
+      mode_en: 'Bagbazar Campus or Live Online',
+      mode_ne: 'बागबजार क्याम्पस वा प्रत्यक्ष अनलाइन',
       nextBatch_en: 'Sunday, 15th Ashoj (Morning 7:00 AM & Evening 5:30 PM)',
       nextBatch_ne: 'आइतबार, १५ असोज (बिहान ७:०० र बेलुकी ५:३०)',
-      curriculum_en: 'Module 1: Practical Fundamentals\nModule 2: Real-world Workflows\nModule 3: Final Project Submission',
-      curriculum_ne: 'खण्ड १: व्यावहारिक आधारभूत सीप\nखण्ड २: वास्तविक कार्यस्थल परियोजना\nखण्ड ३: अन्तिम प्रमाणपत्र परियोजना',
+      modules_en: defaultModulesEn,
+      modules_ne: defaultModulesNe,
       category: 'ai',
       track: 'individual',
       fee: 14000,
@@ -61,12 +124,12 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
       tagline_ne: course.tagline_ne || '',
       duration_en: course.duration_en || course.duration || '6 Weeks (36 Hours)',
       duration_ne: course.duration_ne || '',
-      mode_en: course.mode_en || course.mode || 'Putalisadak Campus',
+      mode_en: course.mode_en || course.mode || 'Bagbazar Campus',
       mode_ne: course.mode_ne || '',
       nextBatch_en: course.nextBatch_en || course.nextBatch || '',
       nextBatch_ne: course.nextBatch_ne || '',
-      curriculum_en: Array.isArray(course.curriculum_en) ? course.curriculum_en.join('\n') : (Array.isArray(course.curriculum) ? course.curriculum.join('\n') : (course.curriculum || '')),
-      curriculum_ne: Array.isArray(course.curriculum_ne) ? course.curriculum_ne.join('\n') : '',
+      modules_en: parseToModules(course.curriculum_en || course.curriculum, defaultModulesEn),
+      modules_ne: parseToModules(course.curriculum_ne, defaultModulesNe),
       category: course.category || 'ai',
       track: course.track || 'individual',
       fee: course.fee || 14000,
@@ -76,10 +139,95 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
     setModalOpen(true);
   };
 
+  // Structured Module & Sub-topics Handlers
+  const handleAddModule = (lang) => {
+    const key = lang === 'en' ? 'modules_en' : 'modules_ne';
+    const current = formData[key] || [];
+    const newId = Date.now();
+    const newTitle = lang === 'en' ? `Module ${current.length + 1}: New Topic` : `खण्ड ${current.length + 1}: नयाँ शीर्षक`;
+    setFormData(prev => ({
+      ...prev,
+      [key]: [...current, { id: newId, title: newTitle, topics: ['Key takeaway or skill item'] }]
+    }));
+  };
+
+  const handleRemoveModule = (lang, modId) => {
+    const key = lang === 'en' ? 'modules_en' : 'modules_ne';
+    setFormData(prev => ({
+      ...prev,
+      [key]: prev[key].filter(m => m.id !== modId)
+    }));
+  };
+
+  const handleModuleTitleChange = (lang, modId, val) => {
+    const key = lang === 'en' ? 'modules_en' : 'modules_ne';
+    setFormData(prev => ({
+      ...prev,
+      [key]: prev[key].map(m => m.id === modId ? { ...m, title: val } : m)
+    }));
+  };
+
+  const handleAddSubtopic = (lang, modId) => {
+    const key = lang === 'en' ? 'modules_en' : 'modules_ne';
+    setFormData(prev => ({
+      ...prev,
+      [key]: prev[key].map(m => {
+        if (m.id === modId) {
+          return { ...m, topics: [...m.topics, ''] };
+        }
+        return m;
+      })
+    }));
+  };
+
+  const handleUpdateSubtopic = (lang, modId, topicIdx, val) => {
+    const key = lang === 'en' ? 'modules_en' : 'modules_ne';
+    setFormData(prev => ({
+      ...prev,
+      [key]: prev[key].map(m => {
+        if (m.id === modId) {
+          const nextTopics = [...m.topics];
+          nextTopics[topicIdx] = val;
+          return { ...m, topics: nextTopics };
+        }
+        return m;
+      })
+    }));
+  };
+
+  const handleRemoveSubtopic = (lang, modId, topicIdx) => {
+    const key = lang === 'en' ? 'modules_en' : 'modules_ne';
+    setFormData(prev => ({
+      ...prev,
+      [key]: prev[key].map(m => {
+        if (m.id === modId) {
+          return { ...m, topics: m.topics.filter((_, idx) => idx !== topicIdx) };
+        }
+        return m;
+      })
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const currEnArray = formData.curriculum_en.split('\n').filter(line => line.trim().length > 0);
-    const currNeArray = formData.curriculum_ne.split('\n').filter(line => line.trim().length > 0);
+
+    const cleanModulesEn = (formData.modules_en || [])
+      .filter(m => m.title && m.title.trim().length > 0)
+      .map(m => ({
+        title: m.title.trim(),
+        topics: (m.topics || []).map(t => t.trim()).filter(Boolean)
+      }));
+
+    const cleanModulesNe = (formData.modules_ne || [])
+      .filter(m => m.title && m.title.trim().length > 0)
+      .map(m => ({
+        title: m.title.trim(),
+        topics: (m.topics || []).map(t => t.trim()).filter(Boolean)
+      }));
+
+    const fallbackCurriculum = cleanModulesEn.map(m => 
+      m.topics.length > 0 ? `${m.title}: ${m.topics.join(', ')}` : m.title
+    );
 
     const payload = {
       ...formData,
@@ -89,9 +237,9 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
       mode: formData.mode_en,
       nextBatch: formData.nextBatch_en,
       fee: Number(formData.fee),
-      curriculum: currEnArray,
-      curriculum_en: currEnArray,
-      curriculum_ne: currNeArray.length > 0 ? currNeArray : currEnArray
+      curriculum: fallbackCurriculum,
+      curriculum_en: cleanModulesEn,
+      curriculum_ne: cleanModulesNe.length > 0 ? cleanModulesNe : cleanModulesEn
     };
 
     if (editingCourse) {
@@ -289,7 +437,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                         value={formData.mode_en}
                         onChange={(e) => setFormData({ ...formData, mode_en: e.target.value })}
                         className="form-input"
-                        placeholder="e.g. Putalisadak Campus or Live Online"
+                        placeholder="e.g. Bagbazar Campus or Live Online"
                       />
                     </div>
                   </div>
@@ -305,15 +453,87 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                     />
                   </div>
 
-                  <div className="form-group">
-                    <label className="form-label">Curriculum Modules in English (1 module per line)</label>
-                    <textarea
-                      rows="4"
-                      value={formData.curriculum_en}
-                      onChange={(e) => setFormData({ ...formData, curriculum_en: e.target.value })}
-                      className="form-textarea"
-                      placeholder="Module 1: Getting Started with AI&#10;Module 2: Excel & Data Analysis..."
-                    />
+                  <div className="form-group" style={{ marginTop: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <label className="form-label" style={{ fontWeight: '700', color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                        <Layers size={16} /> Structured Modules & Sub-topics (English)
+                      </label>
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => handleAddModule('en')}
+                        style={{ fontSize: '0.78rem', padding: '4px 10px' }}
+                      >
+                        <ListPlus size={14} /> + Add Module
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                      {(formData.modules_en || []).map((mod, modIdx) => (
+                        <div key={mod.id || modIdx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '14px' }}>
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
+                            <span style={{ fontSize: '0.78rem', fontWeight: '800', background: 'rgba(197, 154, 63, 0.2)', color: '#fbbf24', padding: '4px 8px', borderRadius: '4px', flexShrink: 0 }}>
+                              Module #{modIdx + 1}
+                            </span>
+                            <input
+                              type="text"
+                              required
+                              value={mod.title}
+                              onChange={(e) => handleModuleTitleChange('en', mod.id, e.target.value)}
+                              className="form-input"
+                              placeholder={`Module ${modIdx + 1} Title`}
+                              style={{ flex: 1, fontWeight: '600' }}
+                            />
+                            {formData.modules_en.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveModule('en', mod.id)}
+                                style={{ background: 'transparent', border: 'none', color: '#f43f5e', cursor: 'pointer', padding: '4px' }}
+                                title="Remove Module"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Sub-topics list */}
+                          <div style={{ paddingLeft: '16px', borderLeft: '2px solid rgba(197, 154, 63, 0.3)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+                              Sub-topics Checklist:
+                            </div>
+                            {(mod.topics || []).map((topic, tIdx) => (
+                              <div key={tIdx} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                                <span style={{ color: '#fbbf24', fontSize: '0.9rem' }}>•</span>
+                                <input
+                                  type="text"
+                                  value={topic}
+                                  onChange={(e) => handleUpdateSubtopic('en', mod.id, tIdx, e.target.value)}
+                                  className="form-input"
+                                  placeholder={`Sub-topic ${tIdx + 1}`}
+                                  style={{ padding: '4px 8px', fontSize: '0.82rem', flex: 1 }}
+                                />
+                                {(mod.topics || []).length > 1 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveSubtopic('en', mod.id, tIdx)}
+                                    style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '2px' }}
+                                  >
+                                    <X size={14} />
+                                  </button>
+                                )}
+                              </div>
+                            ))}
+                            <button
+                              type="button"
+                              onClick={() => handleAddSubtopic('en', mod.id)}
+                              style={{ background: 'transparent', border: 'none', color: '#38bdf8', fontSize: '0.78rem', cursor: 'pointer', textAlign: 'left', padding: '4px 0', fontWeight: '600', width: 'fit-content' }}
+                            >
+                              + Add Sub-topic
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -361,7 +581,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                         value={formData.mode_ne}
                         onChange={(e) => setFormData({ ...formData, mode_ne: e.target.value })}
                         className="form-input"
-                        placeholder="जस्तै: पुतलीसडक भौतिक ल्याब वा अनलाइन"
+                        placeholder="जस्तै: बागबजार भौतिक ल्याब वा अनलाइन"
                       />
                     </div>
                   </div>
@@ -377,15 +597,86 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                     />
                   </div>
 
-                  <div className="form-group">
-                    <label className="form-label">Curriculum Modules in Nepali (प्रति लाइन १ मोड्युल)</label>
-                    <textarea
-                      rows="4"
-                      value={formData.curriculum_ne}
-                      onChange={(e) => setFormData({ ...formData, curriculum_ne: e.target.value })}
-                      className="form-textarea"
-                      placeholder="खण्ड १: एआई टुल्सको सही प्रयोग&#10;खण्ड २: व्यावसायिक इमेल र लेखन..."
-                    />
+                  <div className="form-group" style={{ marginTop: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <label className="form-label" style={{ fontWeight: '700', color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                        <Layers size={16} /> संरचित मोड्युल तथा उप-विषयहरू (नेपाली)
+                      </label>
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => handleAddModule('ne')}
+                        style={{ fontSize: '0.78rem', padding: '4px 10px' }}
+                      >
+                        <ListPlus size={14} /> + नयाँ मोड्युल थप्नुहोस्
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                      {(formData.modules_ne || []).map((mod, modIdx) => (
+                        <div key={mod.id || modIdx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '14px' }}>
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
+                            <span style={{ fontSize: '0.78rem', fontWeight: '800', background: 'rgba(197, 154, 63, 0.2)', color: '#fbbf24', padding: '4px 8px', borderRadius: '4px', flexShrink: 0 }}>
+                              मोड्युल #{modIdx + 1}
+                            </span>
+                            <input
+                              type="text"
+                              value={mod.title}
+                              onChange={(e) => handleModuleTitleChange('ne', mod.id, e.target.value)}
+                              className="form-input"
+                              placeholder={`खण्ड ${modIdx + 1} शीर्षक`}
+                              style={{ flex: 1, fontWeight: '600' }}
+                            />
+                            {formData.modules_ne.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveModule('ne', mod.id)}
+                                style={{ background: 'transparent', border: 'none', color: '#f43f5e', cursor: 'pointer', padding: '4px' }}
+                                title="Remove Module"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Sub-topics list */}
+                          <div style={{ paddingLeft: '16px', borderLeft: '2px solid rgba(197, 154, 63, 0.3)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+                              उप-विषयहरू (Sub-topics):
+                            </div>
+                            {(mod.topics || []).map((topic, tIdx) => (
+                              <div key={tIdx} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                                <span style={{ color: '#fbbf24', fontSize: '0.9rem' }}>•</span>
+                                <input
+                                  type="text"
+                                  value={topic}
+                                  onChange={(e) => handleUpdateSubtopic('ne', mod.id, tIdx, e.target.value)}
+                                  className="form-input"
+                                  placeholder={`उप-विषय ${tIdx + 1}`}
+                                  style={{ padding: '4px 8px', fontSize: '0.82rem', flex: 1 }}
+                                />
+                                {(mod.topics || []).length > 1 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveSubtopic('ne', mod.id, tIdx)}
+                                    style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '2px' }}
+                                  >
+                                    <X size={14} />
+                                  </button>
+                                )}
+                              </div>
+                            ))}
+                            <button
+                              type="button"
+                              onClick={() => handleAddSubtopic('ne', mod.id)}
+                              style={{ background: 'transparent', border: 'none', color: '#38bdf8', fontSize: '0.78rem', cursor: 'pointer', textAlign: 'left', padding: '4px 0', fontWeight: '600', width: 'fit-content' }}
+                            >
+                              + उप-विषय थप्नुहोस्
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -405,27 +696,32 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Category</label>
-                    <select
+                    <label className="form-label">Category (Free-Text Manual Field)</label>
+                    <input
+                      type="text"
+                      required
+                      list="existing-categories"
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="form-select"
-                    >
-                      <option value="ai">AI & Media Literacy</option>
-                      <option value="marketing">Digital Marketing</option>
-                      <option value="production">Media Production</option>
-                    </select>
+                      className="form-input"
+                      placeholder="Type any category (e.g. AI & Automation)"
+                    />
+                    <datalist id="existing-categories">
+                      {Array.from(new Set(courses.map(c => c.category).filter(Boolean))).map((cat) => (
+                        <option key={cat} value={cat} />
+                      ))}
+                    </datalist>
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Track</label>
+                    <label className="form-label">Track Selection</label>
                     <select
                       value={formData.track}
                       onChange={(e) => setFormData({ ...formData, track: e.target.value })}
                       className="form-select"
                     >
-                      <option value="individual">For Individuals</option>
-                      <option value="institution">For Schools / Institutions</option>
+                      <option value="individual">Individual Track (Students & Professionals)</option>
+                      <option value="institution">Institution Track (Schools & Colleges)</option>
                     </select>
                   </div>
 

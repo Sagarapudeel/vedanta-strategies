@@ -175,7 +175,6 @@ export default function LeadModal({
                     <option value="training">{t.contact.purposeOpts.training}</option>
                     <option value="institution">{t.contact.purposeOpts.institution}</option>
                     <option value="services">{t.contact.purposeOpts.services}</option>
-                    <option value="production">{t.contact.purposeOpts.production}</option>
                     <option value="partnership">{t.contact.purposeOpts.partnership}</option>
                     <option value="other">{t.contact.purposeOpts.other}</option>
                   </select>

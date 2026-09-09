@@ -1,0 +1,196 @@
+import React, { useState, useMemo } from 'react';
+import { translations } from '../translations';
+import { getLangText } from '../utils/langHelper';
+import { 
+  Mail, 
+  Sparkles, 
+  ArrowRight
+} from 'lucide-react';
+
+export default function TeamPage({ currentLang, teamMembers = [], openLeadModal, setActivePage }) {
+  const t = translations[currentLang] || translations.en;
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const filteredMembers = useMemo(() => {
+    if (activeFilter === 'all') return teamMembers;
+    return teamMembers.filter(m => {
+      const spec = (m.specialty || '').toLowerCase();
+      const role = (m.role || '').toLowerCase();
+      if (activeFilter === 'ai') return spec.includes('ai') || role.includes('ai') || spec.includes('tech');
+      if (activeFilter === 'marketing') return spec.includes('marketing') || spec.includes('ads') || role.includes('marketing');
+      if (activeFilter === 'leadership') return role.includes('ceo') || role.includes('lead') || role.includes('founder');
+      return true;
+    });
+  }, [teamMembers, activeFilter]);
+
+  return (
+    <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
+      <div className="container">
+
+        {/* Sub-Navigation Pill Bar across About Us Pages */}
+        <nav className="subnav-pill-bar" aria-label="About Us Navigation">
+          <button 
+            className="subnav-pill" 
+            onClick={() => { setActivePage('who-we-are'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          >
+            <span>{currentLang === 'ne' ? 'हाम्रो परिचय' : 'Who We Are'}</span>
+          </button>
+          <button 
+            className="subnav-pill" 
+            onClick={() => { setActivePage('ceo-message'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          >
+            <span>{currentLang === 'ne' ? 'प्रमुख कार्यकारी अधिकृत (CEO) को सन्देश' : 'Message from CEO'}</span>
+          </button>
+          <button 
+            className="subnav-pill active" 
+            onClick={() => setActivePage('team')}
+          >
+            <span>{currentLang === 'ne' ? 'हाम्रो टिम' : 'Our Team'}</span>
+          </button>
+        </nav>
+
+        {/* Section Header */}
+        <div className="section-header" style={{ marginBottom: '40px' }}>
+          <span className="section-badge">{currentLang === 'ne' ? 'हाम्रा प्रशिक्षक तथा नेतृत्व' : 'OUR MENTORS & LEADERSHIP'}</span>
+          <h1 className="section-title">
+            {currentLang === 'ne' ? 'वेदान्त स्ट्राटेजिजको टिम' : 'The People Behind Vedanta Strategies'}
+          </h1>
+          <p className="section-subtitle">
+            {currentLang === 'ne'
+              ? 'हामी प्रविधि, डिजिटल मार्केटिङ तथा संस्थागत रणनीतिमा प्रत्यक्ष कार्यरत विशेषज्ञहरूको समूह हौँ।'
+              : 'We are active practitioners, engineers, and digital growth specialists who manage real campaigns and teach what works today in Nepal.'}
+          </p>
+        </div>
+
+        {/* Filter Pills */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '40px', flexWrap: 'wrap' }}>
+          {[
+            { id: 'all', label_en: 'All Mentors & Leads', label_ne: 'सबै टिम सदस्यहरू' },
+            { id: 'leadership', label_en: 'Leadership', label_ne: 'संस्थागत नेतृत्व' },
+            { id: 'ai', label_en: 'AI & Tech Instructors', label_ne: 'एआई तथा प्रविधि' },
+            { id: 'marketing', label_en: 'Digital Growth Specialists', label_ne: 'डिजिटल मार्केटिङ' }
+          ].map(f => (
+            <button
+              key={f.id}
+              onClick={() => setActiveFilter(f.id)}
+              style={{
+                padding: '8px 18px',
+                borderRadius: 'var(--radius-full)',
+                border: activeFilter === f.id ? '2px solid var(--brand-maroon)' : '1px solid var(--border-color)',
+                background: activeFilter === f.id ? 'rgba(133, 28, 44, 0.08)' : '#ffffff',
+                color: activeFilter === f.id ? 'var(--brand-maroon)' : 'var(--brand-navy)',
+                fontWeight: '700',
+                fontSize: '0.86rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {currentLang === 'ne' ? f.label_ne : f.label_en}
+            </button>
+          ))}
+        </div>
+
+        {/* Team Members Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '28px', marginBottom: '64px' }}>
+          {filteredMembers.map((member) => (
+            <div 
+              key={member.id} 
+              className="mindrisers-card" 
+              style={{ 
+                padding: '36px 28px', 
+                textAlign: 'center', 
+                display: 'flex', 
+                flexDirection: 'column',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                borderTop: '4px solid var(--brand-maroon)'
+              }}
+            >
+              <div 
+                style={{ 
+                  width: '84px', 
+                  height: '84px', 
+                  borderRadius: '50%', 
+                  background: 'linear-gradient(135deg, rgba(197, 154, 63, 0.15) 0%, rgba(133, 28, 44, 0.1) 100%)', 
+                  border: '2px solid var(--brand-gold)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  margin: '0 auto 18px auto', 
+                  fontSize: '1.65rem', 
+                  fontWeight: '800', 
+                  color: 'var(--brand-maroon)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
+                }}
+              >
+                {member.avatar || member.name?.slice(0, 2).toUpperCase()}
+              </div>
+
+              <h3 style={{ fontSize: '1.35rem', marginBottom: '4px', color: 'var(--brand-navy)', fontWeight: '800' }}>
+                {member.name}
+              </h3>
+              
+              <div style={{ color: 'var(--brand-maroon)', fontSize: '0.88rem', fontWeight: '700', marginBottom: '6px' }}>
+                {getLangText(member, 'role', currentLang) || member.role}
+              </div>
+
+              <div style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '16px', fontWeight: '600' }}>
+                {getLangText(member, 'specialty', currentLang) || member.specialty}
+              </div>
+
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.65', margin: '0 0 20px 0', flexGrow: 1 }}>
+                {getLangText(member, 'bio', currentLang) || member.bio}
+              </p>
+
+              <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'center', gap: '12px' }}>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  style={{ fontSize: '0.8rem', padding: '6px 14px' }}
+                  onClick={() => openLeadModal('general')}
+                >
+                  <Mail size={13} />
+                  <span>Connect</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Join Our Instructor Fellowship Banner */}
+        <div 
+          style={{ 
+            background: 'linear-gradient(135deg, #172642 0%, #1e3a6c 100%)', 
+            color: '#ffffff', 
+            borderRadius: 'var(--radius-lg)', 
+            padding: '40px 48px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '24px'
+          }}
+        >
+          <div style={{ maxWidth: '640px' }}>
+            <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#fbbf24', fontWeight: '800' }}>
+              JOIN OUR FELLOWSHIP
+            </span>
+            <h3 style={{ fontSize: '1.75rem', fontWeight: '800', marginTop: '6px', marginBottom: '10px' }}>
+              Are you a practitioner passionate about teaching?
+            </h3>
+            <p style={{ color: '#cbd5e1', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+              We are constantly looking for practical instructors, AI researchers, and digital marketing leads in Kathmandu to lead weekend cohorts and campus bootcamps.
+            </p>
+          </div>
+
+          <button 
+            className="btn btn-primary btn-lg"
+            onClick={() => openLeadModal('general')}
+          >
+            <span>Apply as a Mentor</span>
+            <ArrowRight size={16} />
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}

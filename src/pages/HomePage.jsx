@@ -49,13 +49,11 @@ export default function HomePage({
 }) {
   const t = translations[currentLang] || translations.en;
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
-  const [selectedVideo, setSelectedVideo] = useState(null);
   const [heroSearch, setHeroSearch] = useState('');
 
   const effectivePartners = (partners && partners.length > 0) ? partners : partnerLogos;
 
   const featuredCourses = courses.filter(c => c.featured).slice(0, 3);
-  const recentWork = productionGallery.slice(0, 3);
   const recentBlog = blogPosts.slice(0, 3);
 
   const nextTestimonial = () => {
@@ -70,7 +68,7 @@ export default function HomePage({
 
   const handleHeroSearchSubmit = (e) => {
     e.preventDefault();
-    setActivePage('training');
+    setActivePage('individual-training');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -115,21 +113,21 @@ export default function HomePage({
                 <span style={{ fontWeight: '700', color: 'var(--brand-navy)' }}>Popular:</span>
                 <button
                   className="popular-tag-btn"
-                  onClick={() => { setActivePage('training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 >
                   AI Tools for Office
                 </button>
                 <button
                   className="popular-tag-btn"
-                  onClick={() => { setActivePage('training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 >
                   Meta Ads & Marketing
                 </button>
                 <button
                   className="popular-tag-btn"
-                  onClick={() => { setActivePage('production'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 >
-                  Podcast Studio
+                  Corporate AI Bootcamps
                 </button>
                 <button
                   className="popular-tag-btn"
@@ -145,7 +143,7 @@ export default function HomePage({
                   <CheckCircle size={16} color="#851C2C" /> Small Batches (12–15 Students)
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-                  <CheckCircle size={16} color="#851C2C" /> Putalisadak Lab & Studio
+                  <CheckCircle size={16} color="#851C2C" /> Bagbazar Lab & Campus
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
                   <CheckCircle size={16} color="#851C2C" /> Direct Mentor Guidance
@@ -237,42 +235,48 @@ export default function HomePage({
 
               <button
                 className="btn btn-outline-gold"
-                onClick={() => { setActivePage('training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 <span>{t.pillars.p1Btn}</span>
                 <ArrowRight size={15} />
               </button>
             </div>
 
-            {/* Pillar 2: Production */}
+            {/* Pillar 2: Institutional Programs */}
             <div className="pillar-card-clean" style={{ borderTop: '4px solid var(--brand-maroon)' }}>
               <div className="pillar-icon-wrap" style={{ background: 'rgba(133, 28, 44, 0.08)', color: 'var(--brand-maroon)' }}>
-                <Video size={26} />
+                <GraduationCap size={26} />
               </div>
               <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '700', color: 'var(--brand-maroon)', letterSpacing: '0.05em', marginBottom: '6px' }}>
-                {t.pillars.p2Tag}
+                {currentLang === 'ne' ? 'संस्थागत कार्यक्रम' : 'INSTITUTIONAL TRACK'}
               </span>
-              <h3 style={{ fontSize: '1.35rem', color: 'var(--brand-navy)', marginBottom: '10px' }}>{t.pillars.p2Title}</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '18px', flexGrow: 1 }}>{t.pillars.p2Desc}</p>
+              <h3 style={{ fontSize: '1.35rem', color: 'var(--brand-navy)', marginBottom: '10px' }}>
+                {currentLang === 'ne' ? '२. विद्यालय तथा कलेज बुटक्याम्प' : '2. Institutional Bootcamps'}
+              </h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '18px', flexGrow: 1 }}>
+                {currentLang === 'ne' 
+                  ? 'शिक्षक तथा विद्यार्थीहरूका लागि प्रयोगात्मक एआई, तथ्य-जाँच र अनलाइन सुरक्षा कार्यशाला।' 
+                  : 'Customized AI tools, media literacy, and digital safety workshops designed for campuses and faculties across Nepal.'}
+              </p>
 
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '22px' }}>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#334155' }}>
-                  <CheckCircle size={15} color="var(--brand-maroon)" /> {t.pillars.p2F1}
+                  <CheckCircle size={15} color="var(--brand-maroon)" /> {currentLang === 'ne' ? 'तपाईंकै कलेज वा विद्यालय परिसरमा' : 'On-campus workshops or hybrid cohorts'}
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#334155' }}>
-                  <CheckCircle size={15} color="var(--brand-maroon)" /> {t.pillars.p2F2}
+                  <CheckCircle size={15} color="var(--brand-maroon)" /> {currentLang === 'ne' ? 'शिक्षकहरूका लागि एआई पाठयोजना अभ्यास' : 'Teacher prompt templates & curriculum aids'}
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#334155' }}>
-                  <CheckCircle size={15} color="var(--brand-maroon)" /> {t.pillars.p2F3}
+                  <CheckCircle size={15} color="var(--brand-maroon)" /> {currentLang === 'ne' ? 'प्रमाणित वेदान्त संस्थागत प्रमाणपत्र' : 'Verified digital credentialing for trainees'}
                 </li>
               </ul>
 
               <button
                 className="btn btn-secondary"
                 style={{ color: 'var(--brand-maroon)', borderColor: 'rgba(133, 28, 44, 0.3)' }}
-                onClick={() => { setActivePage('production'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={() => { setActivePage('institutional-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
-                <span>{t.pillars.p2Btn}</span>
+                <span>{currentLang === 'ne' ? 'संस्थागत कार्यक्रम हेर्नुहोस्' : 'View Institutional Programs'}</span>
                 <ArrowRight size={15} />
               </button>
             </div>
@@ -398,52 +402,7 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* 5. RECENT WORK & STUDIO PREVIEW */}
-      <section className="section-py">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge">{t.production.badge}</span>
-            <h2 className="section-title">Recent Studio & Video Projects</h2>
-            <p className="section-subtitle">A look at podcasts, educational videos, and documentaries shot in Kathmandu.</p>
-          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
-            {recentWork.map((item) => (
-              <div key={item.id} className="mindrisers-card" style={{ overflow: 'hidden' }}>
-                <div className="production-thumb-wrap">
-                  <img src={item.thumb} alt={item.title} className="production-thumb" />
-                  <div
-                    className="play-badge-overlay"
-                    onClick={() => setSelectedVideo(item)}
-                    title="Watch Sample"
-                  >
-                    <Play size={20} fill="#fff" color="#fff" />
-                  </div>
-                </div>
-                <div className="production-content">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', fontSize: '0.78rem', color: 'var(--brand-maroon)', fontWeight: '700' }}>
-                    <span>{item.category}</span>
-                    <span>{item.duration}</span>
-                  </div>
-                  <h4 style={{ fontSize: '1.15rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>{item.title}</h4>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: '1.5' }}>{item.summary}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '32px' }}>
-            <button
-              className="btn btn-secondary"
-              onClick={() => { setActivePage('production'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            >
-              <span>Explore Putalisadak Studio</span>
-              <ArrowRight size={15} />
-            </button>
-          </div>
-
-        </div>
-      </section>
 
       {/* 6. CLIENT & PARTNER LOGO RUNNING MARQUEE STRIP */}
       <section style={{ padding: '56px 0 64px 0', background: '#ffffff', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', overflow: 'hidden' }}>
@@ -647,10 +606,12 @@ export default function HomePage({
             VISIT OR MESSAGE US
           </span>
           <h2 style={{ fontSize: '2.2rem', fontWeight: '800', marginBottom: '14px', color: '#ffffff' }}>
-            Have a question or want to visit our studio?
+            {currentLang === 'ne' ? 'सोधपुछ गर्न वा हाम्रो कार्यालय आउन चाहनुहुन्छ?' : 'Have a question or want to visit our campus?'}
           </h2>
           <p style={{ color: '#cbd5e1', fontSize: '1.02rem', marginBottom: '28px', lineHeight: '1.65' }}>
-            Whether you want to join an upcoming training batch, record a podcast episode, or discuss marketing for your school or brand, you're always welcome to drop by our Putalisadak office.
+            {currentLang === 'ne'
+              ? 'आगामी तालिम ब्याच, संस्थागत कार्यशाला वा डिजिटल मार्केटिङ परामर्शका लागि तपाईंलाई हाम्रो बागबजार कार्यालयमा हार्दिक स्वागत छ।'
+              : 'Whether you want to join an upcoming training cohort, discuss customized institutional workshops, or grow your business, you are always welcome to drop by our Bagbazar campus.'}
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
             <button className="btn btn-primary btn-lg" onClick={() => openLeadModal('general')}>
@@ -663,30 +624,6 @@ export default function HomePage({
           </div>
         </div>
       </section>
-
-      {/* Video Modal Player */}
-      {selectedVideo && (
-        <div className="modal-overlay" onClick={() => setSelectedVideo(null)}>
-          <div className="modal-card" style={{ maxWidth: '800px', padding: '20px' }} onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <h3 style={{ fontSize: '1.2rem', color: '#ffffff' }}>{selectedVideo.title}</h3>
-              <button className="modal-close-btn" style={{ position: 'static' }} onClick={() => setSelectedVideo(null)}>✕</button>
-            </div>
-            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
-              <iframe
-                title={selectedVideo.title}
-                src={selectedVideo.videoUrl}
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-            <p style={{ marginTop: '14px', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-              {selectedVideo.summary} (Client: {selectedVideo.client})
-            </p>
-          </div>
-        </div>
-      )}
 
     </div>
   );

@@ -69,33 +69,84 @@ export default function CourseDetailModal({ course, isOpen, onClose, onEnroll, c
           </div>
         </div>
 
-        {/* Curriculum Modules */}
+        {/* Curriculum Modules & Structured Sub-Topics */}
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{ fontSize: '1.25rem', marginBottom: '16px', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Award size={18} color="#f59e0b" /> {currentLang === 'ne' ? 'पाठ्यक्रम मोड्युलहरू' : 'Detailed Curriculum Modules'}
+            <Award size={18} color="#f59e0b" /> {currentLang === 'ne' ? 'पाठ्यक्रम मोड्युल तथा उप-विषयहरू' : 'Curriculum Modules & Sub-Topics'}
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {displayCurriculum.map((mod, idx) => (
-              <div 
-                key={idx}
-                style={{
-                  background: 'rgba(15, 23, 42, 0.6)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '12px 16px',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '12px'
-                }}
-              >
-                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.78rem', fontWeight: '800', flexShrink: 0, marginTop: '2px' }}>
-                  {idx + 1}
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {/* If course has structured modules */}
+            {Array.isArray(course.structuredModules) && course.structuredModules.length > 0 ? (
+              course.structuredModules.map((mod, idx) => (
+                <div 
+                  key={idx}
+                  style={{
+                    background: 'rgba(15, 23, 42, 0.65)',
+                    border: '1px solid rgba(197, 154, 63, 0.25)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '16px 18px'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(197, 154, 63, 0.2)', color: '#fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.78rem', fontWeight: '800', flexShrink: 0 }}>
+                      {idx + 1}
+                    </div>
+                    <div style={{ fontWeight: '700', color: '#fff', fontSize: '1rem' }}>
+                      {getLangText(mod, 'title', currentLang) || mod.title}
+                    </div>
+                  </div>
+
+                  {Array.isArray(mod.topics) && mod.topics.length > 0 && (
+                    <ul style={{ listStyle: 'none', paddingLeft: '36px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '6px 14px', margin: 0 }}>
+                      {mod.topics.map((t, tIdx) => (
+                        <li key={tIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#cbd5e1' }}>
+                          <CheckCircle2 size={13} color="#10b981" style={{ flexShrink: 0 }} />
+                          <span>{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-                <div style={{ color: 'var(--text-light)', fontSize: '0.92rem', lineHeight: '1.5' }}>
-                  {mod}
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              /* Fallback to line-by-line curriculum with sub-topic parsing */
+              displayCurriculum.map((mod, idx) => {
+                const isString = typeof mod === 'string';
+                const parts = isString && mod.includes(':') ? mod.split(':') : null;
+                const header = parts ? parts[0] : null;
+                const body = parts ? parts.slice(1).join(':').trim() : mod;
+
+                return (
+                  <div 
+                    key={idx}
+                    style={{
+                      background: 'rgba(15, 23, 42, 0.6)',
+                      border: '1px solid var(--border-subtle)',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '12px 16px',
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '12px'
+                    }}
+                  >
+                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.78rem', fontWeight: '800', flexShrink: 0, marginTop: '2px' }}>
+                      {idx + 1}
+                    </div>
+                    <div style={{ color: 'var(--text-light)', fontSize: '0.92rem', lineHeight: '1.5' }}>
+                      {header ? (
+                        <>
+                          <span style={{ fontWeight: '700', color: '#fff' }}>{header}: </span>
+                          <span>{body}</span>
+                        </>
+                      ) : (
+                        body
+                      )}
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
 
