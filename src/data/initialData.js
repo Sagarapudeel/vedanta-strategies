@@ -897,7 +897,6 @@ What works much better:
       status: "active",
       isPrimary: false
     }
-    }
   ],
 
   // Media Manager defaults
