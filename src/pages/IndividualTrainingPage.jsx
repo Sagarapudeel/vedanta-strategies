@@ -234,7 +234,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
             <span style={{ fontSize: '0.75rem', color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
               CAMPUS & FACULTY TRACK
             </span>
-            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', marginTop: '4px', marginBottom: '6px' }}>
+            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', marginTop: '4px', marginBottom: '6px', color: '#ffffff' }}>
               Looking for workshops for your School or College?
             </h3>
             <p style={{ color: '#cbd5e1', fontSize: '0.92rem', margin: 0 }}>

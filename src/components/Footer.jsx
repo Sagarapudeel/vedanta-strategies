@@ -39,12 +39,15 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
           
           {/* Column 1: Brand Info */}
           <div style={{ maxWidth: '320px' }}>
-            <div style={{ marginBottom: '16px' }}>
-              <img 
-                src="/images/logo.png" 
-                alt="Vedanta Strategies" 
-                style={{ height: '42px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} 
-              />
+            {/* Logo — white container so it's always visible on dark footer */}
+            <div style={{ marginBottom: '16px', display: 'inline-block' }}>
+              <div style={{ background: '#ffffff', borderRadius: '10px', padding: '7px 14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
+                <img 
+                  src="/images/logo.png" 
+                  alt="Vedanta Strategies" 
+                  style={{ height: '38px', width: 'auto', objectFit: 'contain', display: 'block' }} 
+                />
+              </div>
             </div>
             <p style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '20px' }}>
               {currentLang === 'ne'

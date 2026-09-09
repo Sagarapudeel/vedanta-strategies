@@ -75,55 +75,106 @@ export default function HomePage({
 
   return (
     <div>
-      {/* 1. HERO SECTION — Full-bleed image with bottom gradient overlay */}
-      <section style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '560px', overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
-        {/* Background Image */}
-        <img
-          src={media?.heroImage || "/images/hero.jpg"}
-          alt={media?.heroImageAlt || "Vedanta Strategies Training Workshop"}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
-          onError={(e) => { e.target.style.background = 'var(--brand-navy)'; e.target.style.display = 'none'; }}
-        />
+      {/* 1. HERO — Premium dark navy, photo right, bold heading */}
+      <section style={{
+        background: 'linear-gradient(135deg, #0f1f3d 0%, #172642 60%, #1a2d4a 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+        padding: '72px 0 80px 0',
+      }}>
+        {/* Subtle dot grid texture */}
+        <div style={{
+          position: 'absolute', inset: 0, opacity: 0.06,
+          backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }} />
+        {/* Gold accent line top */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(to right, #C59A3F, #e8b84b, #C59A3F)' }} />
 
-        {/* White gradient — stronger, covers lower 60% */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.97) 22%, rgba(255,255,255,0.75) 42%, rgba(255,255,255,0.2) 62%, rgba(255,255,255,0) 100%)' }} />
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
 
-        {/* Overlay Text — anchored to bottom-left */}
-        <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: '72px', maxWidth: '740px' }}>
-          <div className="section-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
-            <MapPin size={13} /> {t.hero.badge}
+          {/* LEFT — Text */}
+          <div>
+            {/* Location pill */}
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '24px', fontSize: '0.74rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C59A3F', background: 'rgba(197,154,63,0.12)', border: '1px solid rgba(197,154,63,0.3)', padding: '5px 14px', borderRadius: '100px' }}>
+              <MapPin size={11} /> {t.hero.badge}
+            </div>
+
+            {/* Heading */}
+            <h1 style={{ fontFamily: 'Poppins, sans-serif', fontSize: '3.4rem', fontWeight: '800', lineHeight: 1.08, color: '#ffffff', marginBottom: '20px', letterSpacing: '-0.03em' }}>
+              {t.hero.titleStart}
+              <span style={{ color: '#C59A3F', display: 'block' }}>{t.hero.titleHighlight}</span>
+            </h1>
+
+            {/* Subtitle */}
+            <p style={{ fontSize: '1.02rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, marginBottom: '36px', maxWidth: '480px' }}>
+              {t.hero.subtitle}
+            </p>
+
+            {/* Horizontal mini-stats */}
+            <div style={{ display: 'flex', gap: '0', marginBottom: '40px', borderLeft: '2px solid rgba(197,154,63,0.4)' }}>
+              {[
+                { num: '120+', label: 'Batches Run' },
+                { num: '15,000+', label: 'Students Trained' },
+                { num: '6 Yrs', label: 'In Kathmandu' },
+              ].map((s, i) => (
+                <div key={i} style={{ padding: '0 24px', borderRight: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div style={{ fontFamily: 'Poppins, sans-serif', fontSize: '1.5rem', fontWeight: '800', color: '#C59A3F', lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.5)', marginTop: '4px', fontWeight: '500' }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <button
+                onClick={() => openLeadModal('training')}
+                style={{ padding: '14px 32px', fontSize: '0.97rem', fontWeight: '700', fontFamily: 'Poppins, sans-serif', background: 'linear-gradient(135deg, #C59A3F, #e8b84b)', color: '#0f1f3d', border: 'none', borderRadius: '7px', cursor: 'pointer', letterSpacing: '0.01em', boxShadow: '0 4px 20px rgba(197,154,63,0.35)', transition: 'transform 0.15s, box-shadow 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(197,154,63,0.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(197,154,63,0.35)'; }}
+              >
+                {currentLang === 'ne' ? 'सिट बुक गर्नुहोस्' : 'Book Your Seat →'}
+              </button>
+              <button
+                onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                style={{ padding: '14px 28px', fontSize: '0.97rem', fontWeight: '600', fontFamily: 'Poppins, sans-serif', background: 'transparent', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.3)', borderRadius: '7px', cursor: 'pointer', transition: 'border-color 0.15s, background 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.7)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'transparent'; }}
+              >
+                {currentLang === 'ne' ? 'पाठ्यक्रमहरू' : 'View Courses'}
+              </button>
+            </div>
           </div>
 
-          <h1 className="hero-clean-h1">
-            {t.hero.titleStart}
-            <span style={{ color: 'var(--brand-maroon)' }}>{t.hero.titleHighlight}</span>
-          </h1>
+          {/* RIGHT — Photo Card */}
+          <div style={{ position: 'relative' }}>
+            {/* Decorative gold ring */}
+            <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '140px', height: '140px', borderRadius: '50%', border: '2px solid rgba(197,154,63,0.2)', zIndex: 0 }} />
+            <div style={{ position: 'absolute', top: '-10px', right: '-10px', width: '80px', height: '80px', borderRadius: '50%', border: '2px solid rgba(197,154,63,0.15)', zIndex: 0 }} />
 
-          <p className="hero-clean-p">
-            {t.hero.subtitle}
-          </p>
+            {/* Photo */}
+            <div style={{ position: 'relative', zIndex: 1, borderRadius: '16px', overflow: 'hidden', boxShadow: '0 32px 80px rgba(0,0,0,0.5)' }}>
+              <img
+                src={media?.heroImage || "/images/hero.jpg"}
+                alt={media?.heroImageAlt || "Vedanta Strategies Training Workshop"}
+                style={{ width: '100%', height: '420px', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
+              />
+              {/* Subtle top scrim */}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(15,31,61,0.15) 0%, transparent 40%)' }} />
+            </div>
 
-          {/* Quick Trust Highlights */}
-          <div style={{ display: 'flex', gap: '20px', marginBottom: '28px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-              <CheckCircle size={15} color="var(--brand-maroon)" /> Small Batches (12–15 Students)
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-              <CheckCircle size={15} color="var(--brand-maroon)" /> Bagbazar Lab & Campus
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-              <CheckCircle size={15} color="var(--brand-maroon)" /> Direct Mentor Guidance
+            {/* Floating "Next Batch" badge */}
+            <div style={{ position: 'absolute', bottom: '-18px', left: '-18px', zIndex: 2, background: '#ffffff', borderRadius: '12px', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 8px 28px rgba(0,0,0,0.2)' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(133,28,44,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Award size={18} color="#851C2C" />
+              </div>
+              <div>
+                <div style={{ fontWeight: '700', fontSize: '0.8rem', color: '#172642' }}>Next Batch — October</div>
+                <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '1px' }}>Limited seats available</div>
+              </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <button className="btn btn-primary" onClick={() => openLeadModal('training')} style={{ padding: '12px 28px', fontSize: '0.96rem' }}>
-              {currentLang === 'ne' ? 'भर्ना हुनुहोस्' : 'Apply Now'}
-            </button>
-            <button className="btn btn-secondary" onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ padding: '12px 24px', fontSize: '0.96rem' }}>
-              {currentLang === 'ne' ? 'पाठ्यक्रमहरू हेर्नुहोस्' : 'View Courses'}
-            </button>
-          </div>
         </div>
       </section>
 
@@ -472,51 +523,83 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* 8. TESTIMONIALS */}
-      <section className="section-py" style={{ background: '#ffffff', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge">{t.testimonials.badge}</span>
-            <h2 className="section-title">{t.testimonials.title}</h2>
-            <p className="section-subtitle">{t.testimonials.subtitle}</p>
+      {/* 8. TESTIMONIALS — Premium dark section */}
+      <section style={{ background: 'linear-gradient(135deg, #0f1f3d 0%, #172642 100%)', padding: '80px 0', position: 'relative', overflow: 'hidden' }}>
+        {/* Dot texture */}
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+        {/* Gold top accent */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(to right, transparent, #C59A3F, transparent)' }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '14px', fontSize: '0.74rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C59A3F', background: 'rgba(197,154,63,0.12)', border: '1px solid rgba(197,154,63,0.25)', padding: '5px 14px', borderRadius: '100px' }}>
+              ★ {t.testimonials.badge}
+            </div>
+            <h2 style={{ fontFamily: 'Poppins, sans-serif', fontSize: '2.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '10px', letterSpacing: '-0.02em' }}>
+              {t.testimonials.title}
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.98rem', maxWidth: '480px', margin: '0 auto' }}>
+              {t.testimonials.subtitle}
+            </p>
           </div>
 
-          <div className="mindrisers-card testimonial-box">
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '3px', marginBottom: '16px' }}>
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={18} fill="#C59A3F" color="#C59A3F" />
+          {/* Testimonial Cards Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px', marginBottom: '48px' }}>
+            {(testimonials.length > 0 ? testimonials.slice(0, 3) : [
+              { id: 't1', author: 'Priya Shrestha', role: 'Digital Marketing Executive', quote_en: 'The AI tools training completely changed how I work. I can now automate tasks that used to take hours. The instructors at Vedanta are genuinely experienced and patient.', quote_ne: 'AI टूल्सको तालिमले मेरो काम गर्ने तरिका पूरै बदल्यो।' },
+              { id: 't2', author: 'Rohan Magar', role: 'School Teacher, Bagbazar', quote_en: 'The school faculty workshop opened my eyes to how AI can be used in teaching. I now use it daily for lesson planning. Highly recommended for all educators.', quote_ne: 'शिक्षक कार्यशालाले मलाई AI को नयाँ संसार देखायो।' },
+              { id: 't3', author: 'Sita Gurung', role: 'E-commerce Entrepreneur', quote_en: 'After completing the Meta Ads course I was able to run profitable campaigns for my online store. The practical approach — bringing real dashboards into the class — is something you don\'t get anywhere else.', quote_ne: 'Meta Ads कोर्स पछि मेरो व्यापार धेरै बढ्यो।' },
+            ]).map((testimonial, i) => {
+              const quote = currentLang === 'ne' ? testimonial.quote_ne || testimonial.quote_en || testimonial.quote : testimonial.quote_en || testimonial.quote;
+              const role = currentLang === 'ne' ? testimonial.role_ne || testimonial.role : testimonial.role_en || testimonial.role;
+              const initials = testimonial.author?.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+              const accentColors = ['#C59A3F', '#851C2C', '#4f87c5'];
+              return (
+                <div key={testimonial.id || i} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: '20px', backdropFilter: 'blur(4px)', transition: 'background 0.2s, transform 0.2s', position: 'relative', overflow: 'hidden' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.09)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'none'; }}
+                >
+                  {/* Big decorative quote mark */}
+                  <div style={{ position: 'absolute', top: '16px', right: '20px', fontSize: '5rem', lineHeight: 1, color: accentColors[i % 3], opacity: 0.18, fontFamily: 'Georgia, serif', userSelect: 'none' }}>"</div>
+
+                  {/* Stars */}
+                  <div style={{ display: 'flex', gap: '3px' }}>
+                    {[...Array(5)].map((_, si) => <Star key={si} size={15} fill="#C59A3F" color="#C59A3F" />)}
+                  </div>
+
+                  {/* Quote */}
+                  <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.82)', lineHeight: 1.7, fontStyle: 'italic', flex: 1 }}>
+                    "{quote}"
+                  </p>
+
+                  {/* Author */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: accentColors[i % 3], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', fontWeight: '800', color: '#0f1f3d', flexShrink: 0 }}>
+                      {initials}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: '700', fontSize: '0.88rem', color: '#ffffff' }}>{testimonial.author}</div>
+                      <div style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.45)', marginTop: '2px' }}>{role}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Dot navigation */}
+          {testimonials.length > 3 && (
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+              {testimonials.map((_, i) => (
+                <button key={i} onClick={() => setActiveTestimonialIdx(i)}
+                  style={{ width: i === activeTestimonialIdx ? '24px' : '8px', height: '8px', borderRadius: '4px', background: i === activeTestimonialIdx ? '#C59A3F' : 'rgba(255,255,255,0.25)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.2s' }} />
               ))}
             </div>
-
-            <p className="testimonial-quote" style={{ color: 'var(--brand-navy)' }}>
-              "{currentLang === 'ne' ? currentTestimonial?.quote_ne || currentTestimonial?.quote_en || '' : currentTestimonial?.quote_en || currentTestimonial?.quote || ''}"
-            </p>
-
-            <div className="testimonial-author" style={{ color: 'var(--brand-maroon)' }}>{currentTestimonial?.author}</div>
-            <div className="testimonial-role">{currentLang === 'ne' ? currentTestimonial?.role_ne || currentTestimonial?.role : currentTestimonial?.role_en || currentTestimonial?.role}</div>
-
-            {/* Carousel Controls */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', marginTop: '24px' }}>
-              <button
-                onClick={prevTestimonial}
-                className="btn btn-secondary btn-sm"
-                style={{ borderRadius: '50%', width: '36px', height: '36px', padding: 0 }}
-                aria-label="Previous Testimonial"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                className="btn btn-secondary btn-sm"
-                style={{ borderRadius: '50%', width: '36px', height: '36px', padding: 0 }}
-                aria-label="Next Testimonial"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </section>
+
 
       {/* 9. LATEST INSIGHTS & ARTICLES */}
       <section className="section-py">

@@ -168,7 +168,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
             <span style={{ fontSize: '0.75rem', color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
               60-MINUTE COMPLIMENTARY WORKSHOP
             </span>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', marginTop: '6px', marginBottom: '8px' }}>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', marginTop: '6px', marginBottom: '8px', color: '#ffffff' }}>
               Book a Free Practical AI Demo for Your Faculty
             </h3>
             <p style={{ color: '#cbd5e1', fontSize: '0.92rem', lineHeight: '1.6', margin: 0 }}>
