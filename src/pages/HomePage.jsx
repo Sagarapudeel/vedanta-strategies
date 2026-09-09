@@ -175,9 +175,9 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* 2. TRUST-STAT STRIP */}
-      <div className="container">
-        <div className="trust-stats-bar">
+      {/* 2. TRUST-STAT STRIP — full-bleed dark navy */}
+      <div className="trust-stats-bar">
+        <div className="container">
           <div className="trust-stats-grid">
             <div className="stat-item">
               <div className="stat-num">{t.hero.stat1Number}</div>
@@ -200,10 +200,14 @@ export default function HomePage({
       </div>
 
       {/* 3. THREE CORE PILLARS */}
-      <section className="section-py">
+      <section className="section-py" style={{ background: '#f8fafc', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-badge">{t.pillars.badge}</span>
+            <div className="section-label">
+              <span className="section-label-num">01</span>
+              <div className="section-label-line"></div>
+              <span className="section-label-text">{t.pillars.badge}</span>
+            </div>
             <h2 className="section-title">{t.pillars.title}</h2>
             <p className="section-subtitle">{t.pillars.subtitle}</p>
           </div>
@@ -321,7 +325,11 @@ export default function HomePage({
       <section className="section-py" style={{ background: '#ffffff', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-badge">{t.courses.badge}</span>
+            <div className="section-label">
+              <span className="section-label-num">02</span>
+              <div className="section-label-line"></div>
+              <span className="section-label-text">{t.courses.badge}</span>
+            </div>
             <h2 className="section-title">{t.courses.title}</h2>
             <p className="section-subtitle">{t.courses.subtitle}</p>
           </div>

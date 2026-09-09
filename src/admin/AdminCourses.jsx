@@ -495,45 +495,10 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                               </button>
                             )}
                           </div>
-
-                          {/* Sub-topics list */}
-                          <div style={{ paddingLeft: '16px', borderLeft: '2px solid rgba(197, 154, 63, 0.3)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
-                              Sub-topics Checklist:
-                            </div>
-                            {(mod.topics || []).map((topic, tIdx) => (
-                              <div key={tIdx} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                                <span style={{ color: '#fbbf24', fontSize: '0.9rem' }}>•</span>
-                                <input
-                                  type="text"
-                                  value={topic}
-                                  onChange={(e) => handleUpdateSubtopic('en', mod.id, tIdx, e.target.value)}
-                                  className="form-input"
-                                  placeholder={`Sub-topic ${tIdx + 1}`}
-                                  style={{ padding: '4px 8px', fontSize: '0.82rem', flex: 1 }}
-                                />
-                                {(mod.topics || []).length > 1 && (
-                                  <button
-                                    type="button"
-                                    onClick={() => handleRemoveSubtopic('en', mod.id, tIdx)}
-                                    style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '2px' }}
-                                  >
-                                    <X size={14} />
-                                  </button>
-                                )}
-                              </div>
-                            ))}
-                            <button
-                              type="button"
-                              onClick={() => handleAddSubtopic('en', mod.id)}
-                              style={{ background: 'transparent', border: 'none', color: '#38bdf8', fontSize: '0.78rem', cursor: 'pointer', textAlign: 'left', padding: '4px 0', fontWeight: '600', width: 'fit-content' }}
-                            >
-                              + Add Sub-topic
-                            </button>
-                          </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
+                  </div>
                   </div>
                 </div>
               )}

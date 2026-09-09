@@ -278,29 +278,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
         </div>
       </div>
 
-      {/* 3. Category Strip (No Explore label) */}
-      <div className="category-nav-strip">
-        <div className="container category-nav-flex">
-          <span style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '700' }}>Topics:</span>
-          {categoryPills.map((pill) => (
-            <div 
-              key={pill.id} 
-              className="category-item"
-              onClick={() => {
-                if (pill.id === 'institution') {
-                  setActivePage('institutional-training');
-                } else {
-                  setActivePage('individual-training');
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              {pill.icon}
-              <span>{pill.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
