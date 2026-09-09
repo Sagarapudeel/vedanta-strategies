@@ -15,7 +15,7 @@ export default function WhatsAppWidget({ whatsappNumber, currentLang }) {
   };
 
   return (
-    <div style={{ position: 'fixed', bottom: '28px', right: '28px', zIndex: 9999 }}>
+    <div className="whatsapp-float-wrap">
       {showTooltip && (
         <div 
           className="whatsapp-tooltip"

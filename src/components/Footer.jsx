@@ -83,6 +83,7 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
                 { id: 'services', label: t.nav.services },
                 { id: 'portfolio', label: t.nav.portfolio },
                 { id: 'blog', label: t.nav.blog },
+                { id: 'gallery', label: t.nav.gallery || (currentLang === 'ne' ? 'ग्यालेरी' : 'Gallery') },
                 { id: 'contact', label: t.nav.contact }
               ].map((item) => (
                 <li key={item.id}>

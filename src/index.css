@@ -695,7 +695,7 @@ button, input, select, textarea {
   background: #ffffff;
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  z-index: 100;
+  z-index: 1100;
 }
 
 .main-nav-container {
@@ -2223,11 +2223,12 @@ button, input, select, textarea {
    480px  → mobile portrait
    ========================================================================== */
 
-/* ── TABLET (≤ 900px) ── */
-@media (max-width: 900px) {
+/* ── TABLET (≤ 1100px) — collapse full nav before items clip ── */
+@media (max-width: 1100px) {
   /* Navbar */
   .nav-links { display: none !important; }
   .mobile-toggle-btn { display: flex !important; }
+  .nav-enquiry-btn { display: none !important; }
   .top-utility-bar { display: none; }
 
   /* Hero — stack columns */
@@ -2269,12 +2270,15 @@ button, input, select, textarea {
   /* Navbar */
   .nav-links { display: none !important; }
   .mobile-toggle-btn { display: flex !important; }
+  .nav-enquiry-btn { display: none !important; }
   .main-nav-container {
     padding: 12px 16px !important;
     flex-wrap: nowrap !important;
+    gap: 8px;
   }
   .brand-logo-img { height: 36px !important; }
   .top-utility-bar { display: none !important; }
+  .nav-search-wrap input { width: 110px !important; }
 
   /* Hero — single column, hide photo on very small */
   .hero-right-photo { display: none !important; }
@@ -2326,10 +2330,14 @@ button, input, select, textarea {
     grid-template-columns: 1fr !important;
   }
 
-  /* Masonry gallery → 2 cols */
-  [style*="columns: '3 280px'"],
-  [style*='columns: "3 280px"'] {
-    columns: 2 140px !important;
+  .gallery-photo-grid {
+    columns: 2 140px;
+  }
+  .gallery-video-grid {
+    grid-template-columns: 1fr;
+  }
+  .gallery-tabs {
+    width: 100%;
   }
 
   /* Institutional / training banners */
@@ -2377,6 +2385,9 @@ button, input, select, textarea {
   [style*="columns:"] {
     columns: 1 !important;
   }
+  .gallery-photo-grid {
+    columns: 1;
+  }
 
   /* Trust indicators stacked */
   .hero-trust-row {
@@ -2395,10 +2406,202 @@ button, input, select, textarea {
 }
 
 /* ── NAVBAR RESPONSIVE CLASSES ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .mobile-toggle-btn {
   display: none;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: none;
+  color: #172642;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.mobile-toggle-btn:hover {
+  background: rgba(23, 38, 66, 0.06);
+}
+
+.logo-wrap {
+  flex-shrink: 0;
+}
+
+.site-announcement-bar {
+  background: linear-gradient(90deg, #b45309 0%, #f59e0b 50%, #b45309 100%);
+  color: #000;
+  padding: 7px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gallery-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 36px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.gallery-tabs button {
+  flex: 1;
+}
+
+.gallery-photo-grid {
+  columns: 3 240px;
+  column-gap: 16px;
+}
+
+.gallery-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+}
+
+.whatsapp-float-wrap {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 990;
+}
+
+body.mobile-nav-open {
+  overflow: hidden;
+}
+
+.mobile-drawer-overlay {
+  position: fixed;
+  top: 74px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 1090;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 74px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  padding: 16px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1095;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.mobile-drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #1e293b;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 12px 8px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.mobile-drawer-link.active {
+  color: #851C2C;
+  font-weight: 700;
+  background: rgba(133, 28, 44, 0.06);
+}
+
+.mobile-drawer-accordion {
+  justify-content: space-between;
+}
+
+.mobile-drawer-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0 8px 12px;
+  border-left: 2px solid rgba(133, 28, 44, 0.2);
+  margin: 0 8px 8px 12px;
+}
+
+.mobile-drawer-sub button {
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #475569;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 8px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.mobile-drawer-sub button.active {
+  color: #851C2C;
+  font-weight: 700;
+}
+
+.mobile-drawer-footer {
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 12px;
+}
+
+.mobile-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  border: 1px solid var(--border-color);
+  color: var(--brand-navy);
+  padding: 8px 12px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.mobile-drawer-meta {
+  font-size: 0.84rem;
+  color: #64748b;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .site-announcement-bar {
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+  .whatsapp-float-wrap {
+    bottom: 18px;
+    right: 14px;
+  }
+  .whatsapp-tooltip {
+    display: none;
+  }
 }
 
 /* ── HERO PHOTO VISIBILITY ── */

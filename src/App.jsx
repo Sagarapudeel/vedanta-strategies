@@ -256,7 +256,7 @@ export default function App() {
     <div>
       {/* Top Announcement Bar */}
       {getLangText(store.siteSettings, 'announcementText', currentLang) && (
-        <div style={{ background: 'linear-gradient(90deg, #b45309 0%, #f59e0b 50%, #b45309 100%)', color: '#000', padding: '7px 20px', fontSize: '0.82rem', fontWeight: '700', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+        <div className="site-announcement-bar">
           <Megaphone size={14} />
           <span>{getLangText(store.siteSettings, 'announcementText', currentLang)}</span>
           <button 

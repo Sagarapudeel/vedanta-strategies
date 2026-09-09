@@ -33,7 +33,7 @@ export default function GalleryPage({ media = {}, currentLang }) {
 
       <div className="container" style={{ paddingTop: '40px' }}>
         {/* Tab Bar */}
-        <div style={{ display: 'flex', gap: '0', marginBottom: '36px', border: '1px solid var(--border-color)', borderRadius: '8px', overflow: 'hidden', width: 'fit-content' }}>
+        <div className="gallery-tabs">
           <button id="gallery-tab-photos" onClick={() => setActiveTab('photos')}
             style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 24px', border: 'none', fontSize: '0.9rem', fontWeight: '600', cursor: 'pointer', borderRight: '1px solid var(--border-color)',
               background: activeTab === 'photos' ? 'var(--brand-navy)' : '#fff',
@@ -60,7 +60,7 @@ export default function GalleryPage({ media = {}, currentLang }) {
                 <div style={{ fontSize: '0.88rem', marginTop: '4px' }}>Photos will appear here once added from the admin panel.</div>
               </div>
             ) : (
-              <div style={{ columns: '3 280px', columnGap: '16px' }}>
+              <div className="gallery-photo-grid">
                 {photos.map((photo) => (
                   <div key={photo.id}
                     onClick={() => setLightbox({ type: 'photo', item: photo })}
@@ -93,7 +93,7 @@ export default function GalleryPage({ media = {}, currentLang }) {
                 <div style={{ fontSize: '0.88rem', marginTop: '4px' }}>Videos will appear here once added from the admin panel.</div>
               </div>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '20px' }}>
+              <div className="gallery-video-grid">
                 {videos.map((video) => {
                   const platformColors = { youtube: '#ff0000', tiktok: '#010101', facebook: '#1877f2', other: '#64748b' };
                   const platformLabels = { youtube: 'YouTube', tiktok: 'TikTok', facebook: 'Facebook', other: 'Video' };

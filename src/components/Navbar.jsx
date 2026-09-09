@@ -46,8 +46,22 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
   const handleNavClick = (pageId) => {
     setActivePage(pageId);
     setMobileMenuOpen(false);
+    window.location.hash = pageId === 'home' ? 'home' : pageId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const closeOnDesktop = () => {
+      if (window.innerWidth > 1100) setMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', closeOnDesktop);
+    return () => window.removeEventListener('resize', closeOnDesktop);
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle('mobile-nav-open', mobileMenuOpen);
+    return () => document.body.classList.remove('mobile-nav-open');
+  }, [mobileMenuOpen]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -60,6 +74,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
   // Hidden keyboard shortcut: Ctrl+Shift+A opens admin for internal staff
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
         e.preventDefault();
         setActivePage('admin');
@@ -123,7 +138,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
         </a>
 
         {/* Compact Search Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <div className="nav-search-wrap" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
           {searchOpen && (
             <form onSubmit={handleSearchSubmit}
               style={{ display: 'flex', alignItems: 'center', background: '#f1f5f9', borderRadius: '6px', padding: '4px 8px', gap: '4px', marginRight: '6px', border: '1px solid var(--border-color)' }}>
@@ -268,7 +283,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
             onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}
             className={`nav-link ${activePage === 'gallery' ? 'active' : ''}`}
           >
-            {currentLang === 'ne' ? 'ग्यालेरी' : 'Gallery'}
+            {t.nav.gallery || (currentLang === 'ne' ? 'ग्यालेरी' : 'Gallery')}
           </a>
 
           <a
@@ -281,9 +296,9 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
         </nav>
 
         {/* Action Controls - Send Enquiry */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="nav-actions">
           <button 
-            className="btn btn-primary btn-sm"
+            className="btn btn-primary btn-sm nav-enquiry-btn"
             onClick={() => openLeadModal('general')}
           >
             <span>{currentLang === 'ne' ? 'सोधपुछ गर्नुहोस्' : 'Send Enquiry'}</span>
@@ -291,9 +306,10 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
 
           {/* Mobile Hamburger Toggle */}
           <button 
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Mobile Menu"
-            style={{ background: 'transparent', border: 'none', color: '#172642', cursor: 'pointer', display: 'none' }}
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
             className="mobile-toggle-btn"
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -303,110 +319,71 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
 
 
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer — full menu including Gallery */}
       {mobileMenuOpen && (
-        <div 
-          style={{
-            position: 'fixed',
-            top: '74px',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: '#ffffff',
-            borderBottom: '2px solid #e2e8f0',
-            padding: '24px 20px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '14px',
-            zIndex: 9999,
-            overflowY: 'auto',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
-          }}
-        >
-          <button
-            onClick={() => handleNavClick('home')}
-            style={{ textAlign: 'left', background: 'transparent', border: 'none', color: activePage === 'home' ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: activePage === 'home' ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-          >
-            {t.nav.home}
-          </button>
-
-          {/* Mobile About Us Accordion */}
-          <div>
-            <div 
-              onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: isAboutActive ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: isAboutActive ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-            >
-              <span>{t.nav.about}</span>
-              <ChevronDown size={16} style={{ transform: mobileAboutOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
-            </div>
-            {mobileAboutOpen && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingLeft: '16px', paddingTop: '8px', borderLeft: '2px solid rgba(133, 28, 44, 0.2)', marginLeft: '4px' }}>
-                <span style={{ cursor: 'pointer', color: activePage === 'who-we-are' ? '#851C2C' : '#475569', fontSize: '0.92rem', fontWeight: activePage === 'who-we-are' ? '700' : '500' }} onClick={() => handleNavClick('who-we-are')}>• {t.nav.aboutWhoWeAre || 'Who We Are'}</span>
-                <span style={{ cursor: 'pointer', color: activePage === 'ceo-message' ? '#851C2C' : '#475569', fontSize: '0.92rem', fontWeight: activePage === 'ceo-message' ? '700' : '500' }} onClick={() => handleNavClick('ceo-message')}>• {t.nav.aboutCeo || 'Message from CEO'}</span>
-                <span style={{ cursor: 'pointer', color: activePage === 'team' ? '#851C2C' : '#475569', fontSize: '0.92rem', fontWeight: activePage === 'team' ? '700' : '500' }} onClick={() => handleNavClick('team')}>• {t.nav.aboutTeam || 'Our Team'}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile Training Accordion */}
-          <div>
-            <div 
-              onClick={() => setMobileTrainingOpen(!mobileTrainingOpen)}
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: isTrainingActive ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: isTrainingActive ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-            >
-              <span>{t.nav.training}</span>
-              <ChevronDown size={16} style={{ transform: mobileTrainingOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
-            </div>
-            {mobileTrainingOpen && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingLeft: '16px', paddingTop: '8px', borderLeft: '2px solid rgba(197, 154, 63, 0.3)', marginLeft: '4px' }}>
-                <span style={{ cursor: 'pointer', color: activePage === 'individual-training' ? '#851C2C' : '#475569', fontSize: '0.92rem', fontWeight: activePage === 'individual-training' ? '700' : '500' }} onClick={() => handleNavClick('individual-training')}>• {t.nav.trainingIndividual || 'Individual Training'}</span>
-                <span style={{ cursor: 'pointer', color: activePage === 'institutional-training' ? '#851C2C' : '#475569', fontSize: '0.92rem', fontWeight: activePage === 'institutional-training' ? '700' : '500' }} onClick={() => handleNavClick('institutional-training')}>• {t.nav.trainingInstitution || 'Institutional Programs'}</span>
-              </div>
-            )}
-          </div>
-
-          <button
-            onClick={() => handleNavClick('services')}
-            style={{ textAlign: 'left', background: 'transparent', border: 'none', color: activePage === 'services' ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: activePage === 'services' ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-          >
-            {t.nav.services}
-          </button>
-
-          <button
-            onClick={() => handleNavClick('portfolio')}
-            style={{ textAlign: 'left', background: 'transparent', border: 'none', color: activePage === 'portfolio' ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: activePage === 'portfolio' ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-          >
-            {t.nav.portfolio}
-          </button>
-
-          <button
-            onClick={() => handleNavClick('blog')}
-            style={{ textAlign: 'left', background: 'transparent', border: 'none', color: activePage === 'blog' ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: activePage === 'blog' ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-          >
-            {t.nav.blog}
-          </button>
-
-          <button
-            onClick={() => handleNavClick('contact')}
-            style={{ textAlign: 'left', background: 'transparent', border: 'none', color: activePage === 'contact' ? '#851C2C' : '#1e293b', fontSize: '1.05rem', fontWeight: activePage === 'contact' ? '700' : '600', padding: '6px 0', cursor: 'pointer' }}
-          >
-            {t.nav.contact}
-          </button>
-
-          <div style={{ paddingTop: '16px', borderTop: '1px solid #e2e8f0', marginTop: 'auto' }}>
-            <div style={{ fontSize: '0.84rem', color: '#64748b', marginBottom: '12px' }}>
-              📍 {getLangText(siteSettings, 'address', currentLang) || siteSettings?.address_en || 'Bagbazar, Kathmandu 44600, Nepal'}<br />
-              📞 {siteSettings?.primaryPhone || '+977 1-4421098'}
-            </div>
-            <button 
-              className="btn btn-primary" 
-              style={{ width: '100%' }} 
-              onClick={() => { setMobileMenuOpen(false); openLeadModal('general'); }}
-            >
-              {currentLang === 'ne' ? 'सोधपुछ पठाउनुहोस्' : 'Send Enquiry'}
+        <>
+          <div className="mobile-drawer-overlay" onClick={() => setMobileMenuOpen(false)} />
+          <nav className="mobile-drawer" aria-label="Mobile menu">
+            <button className={`mobile-drawer-link ${activePage === 'home' ? 'active' : ''}`} onClick={() => handleNavClick('home')}>
+              {t.nav.home}
             </button>
-          </div>
-        </div>
+
+            <div>
+              <button type="button" className={`mobile-drawer-link mobile-drawer-accordion ${isAboutActive ? 'active' : ''}`} onClick={() => setMobileAboutOpen(!mobileAboutOpen)}>
+                <span>{t.nav.about}</span>
+                <ChevronDown size={16} style={{ transform: mobileAboutOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+              </button>
+              {mobileAboutOpen && (
+                <div className="mobile-drawer-sub">
+                  <button className={activePage === 'who-we-are' || activePage === 'about' ? 'active' : ''} onClick={() => handleNavClick('who-we-are')}>{t.nav.aboutWhoWeAre}</button>
+                  <button className={activePage === 'ceo-message' ? 'active' : ''} onClick={() => handleNavClick('ceo-message')}>{t.nav.aboutCeo}</button>
+                  <button className={activePage === 'team' ? 'active' : ''} onClick={() => handleNavClick('team')}>{t.nav.aboutTeam}</button>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <button type="button" className={`mobile-drawer-link mobile-drawer-accordion ${isTrainingActive ? 'active' : ''}`} onClick={() => setMobileTrainingOpen(!mobileTrainingOpen)}>
+                <span>{t.nav.training}</span>
+                <ChevronDown size={16} style={{ transform: mobileTrainingOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+              </button>
+              {mobileTrainingOpen && (
+                <div className="mobile-drawer-sub">
+                  <button className={activePage === 'individual-training' || activePage === 'training' ? 'active' : ''} onClick={() => handleNavClick('individual-training')}>{t.nav.trainingIndividual}</button>
+                  <button className={activePage === 'institutional-training' ? 'active' : ''} onClick={() => handleNavClick('institutional-training')}>{t.nav.trainingInstitution}</button>
+                </div>
+              )}
+            </div>
+
+            <button className={`mobile-drawer-link ${activePage === 'services' ? 'active' : ''}`} onClick={() => handleNavClick('services')}>{t.nav.services}</button>
+            <button className={`mobile-drawer-link ${activePage === 'portfolio' ? 'active' : ''}`} onClick={() => handleNavClick('portfolio')}>{t.nav.portfolio}</button>
+            <button className={`mobile-drawer-link ${activePage === 'blog' ? 'active' : ''}`} onClick={() => handleNavClick('blog')}>{t.nav.blog}</button>
+            <button className={`mobile-drawer-link ${activePage === 'gallery' ? 'active' : ''}`} onClick={() => handleNavClick('gallery')}>
+              <Image size={16} />
+              {t.nav.gallery}
+            </button>
+            <button className={`mobile-drawer-link ${activePage === 'contact' ? 'active' : ''}`} onClick={() => handleNavClick('contact')}>{t.nav.contact}</button>
+
+            <div className="mobile-drawer-footer">
+              <button type="button" className="mobile-lang-btn" onClick={toggleLanguage}>
+                <Globe size={14} />
+                {t.nav.languageName}
+              </button>
+              <div className="mobile-drawer-meta">
+                {getLangText(siteSettings, 'address', currentLang) || siteSettings?.address_en || 'Bagbazar, Kathmandu 44600, Nepal'}
+                <br />
+                {siteSettings?.primaryPhone || '+977 1-4421098'}
+              </div>
+              <button
+                className="btn btn-primary"
+                style={{ width: '100%' }}
+                onClick={() => { setMobileMenuOpen(false); openLeadModal('general'); }}
+              >
+                {currentLang === 'ne' ? 'सोधपुछ पठाउनुहोस्' : 'Send Enquiry'}
+              </button>
+            </div>
+          </nav>
+        </>
       )}
     </header>
   );
