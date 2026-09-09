@@ -43,6 +43,7 @@ export default function HomePage({
   portfolioItems = [],
   testimonials = [],
   blogPosts = [],
+  media = {},
   setActivePage,
   openLeadModal,
   openCourseModal
@@ -74,103 +75,54 @@ export default function HomePage({
 
   return (
     <div>
-      {/* 1. HERO SECTION (Mindrisers Clean Human Layout) */}
-      <section className="hero-clean">
-        <div className="container">
-          <div className="hero-clean-grid">
+      {/* 1. HERO SECTION — Full-bleed image with bottom gradient overlay */}
+      <section style={{ position: 'relative', width: '100%', height: '85vh', minHeight: '520px', overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
+        {/* Background Image */}
+        <img
+          src={media?.heroImage || "/images/hero.jpg"}
+          alt={media?.heroImageAlt || "Vedanta Strategies Training Workshop"}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+          onError={(e) => { e.target.style.background = 'var(--brand-navy)'; e.target.style.display = 'none'; }}
+        />
 
-            <div>
-              <div className="section-badge">
-                <MapPin size={13} /> {t.hero.badge}
-              </div>
+        {/* White gradient from bottom — text-readable */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 28%, rgba(255,255,255,0.3) 55%, rgba(255,255,255,0) 100%)' }} />
 
-              <h1 className="hero-clean-h1">
-                {t.hero.titleStart}
-                <span style={{ color: 'var(--brand-maroon)' }}>{t.hero.titleHighlight}</span>
-              </h1>
+        {/* Overlay Text — sits on the gradient */}
+        <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: '56px', paddingTop: '32px', maxWidth: '720px' }}>
+          <div className="section-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
+            <MapPin size={13} /> {t.hero.badge}
+          </div>
 
-              <p className="hero-clean-p">
-                {t.hero.subtitle}
-              </p>
+          <h1 className="hero-clean-h1">
+            {t.hero.titleStart}
+            <span style={{ color: 'var(--brand-maroon)' }}>{t.hero.titleHighlight}</span>
+          </h1>
 
-              {/* Mindrisers Search Form in Hero */}
-              <form onSubmit={handleHeroSearchSubmit} className="hero-search-box">
-                <Search size={18} color="#851C2C" style={{ marginRight: '8px' }} />
-                <input
-                  type="text"
-                  placeholder={currentLang === 'ne' ? 'कुन कोर्स वा सेवा खोज्दै हुनुहुन्छ?' : 'Which course are you interested in?'}
-                  value={heroSearch}
-                  onChange={(e) => setHeroSearch(e.target.value)}
-                  className="hero-search-input"
-                />
-                <button type="submit" className="btn btn-primary" style={{ padding: '8px 18px', fontSize: '0.85rem' }}>
-                  {currentLang === 'ne' ? 'खोज्नुहोस्' : 'Search'}
-                </button>
-              </form>
+          <p className="hero-clean-p">
+            {t.hero.subtitle}
+          </p>
 
-              {/* Popular Tags (Mindrisers Style) */}
-              <div className="popular-tags">
-                <span style={{ fontWeight: '700', color: 'var(--brand-navy)' }}>Popular:</span>
-                <button
-                  className="popular-tag-btn"
-                  onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                >
-                  AI Tools for Office
-                </button>
-                <button
-                  className="popular-tag-btn"
-                  onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                >
-                  Meta Ads & Marketing
-                </button>
-                <button
-                  className="popular-tag-btn"
-                  onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                >
-                  Corporate AI Bootcamps
-                </button>
-                <button
-                  className="popular-tag-btn"
-                  onClick={() => openLeadModal('institution')}
-                >
-                  School Workshops
-                </button>
-              </div>
-
-              {/* Quick Trust Highlights */}
-              <div style={{ display: 'flex', gap: '20px', marginTop: '28px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-                  <CheckCircle size={16} color="#851C2C" /> Small Batches (12–15 Students)
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-                  <CheckCircle size={16} color="#851C2C" /> Bagbazar Lab & Campus
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
-                  <CheckCircle size={16} color="#851C2C" /> Direct Mentor Guidance
-                </div>
-              </div>
+          {/* Quick Trust Highlights */}
+          <div style={{ display: 'flex', gap: '20px', marginBottom: '28px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
+              <CheckCircle size={15} color="var(--brand-maroon)" /> Small Batches (12–15 Students)
             </div>
-
-            {/* Hero Visual Card with Guarantee Seal */}
-            <div className="hero-visual-card">
-              <img
-                src="/images/hero.jpg"
-                alt="Vedanta Strategies Training Workshop in Kathmandu"
-                className="hero-visual-img"
-              />
-
-              {/* Trust Badge Seal */}
-              <div className="hero-guarantee-seal">
-                <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(133, 28, 44, 0.1)', color: 'var(--brand-maroon)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Award size={22} />
-                </div>
-                <div>
-                  <div style={{ fontWeight: '700', fontSize: '0.92rem', color: 'var(--brand-navy)' }}>100% Practical & Guided</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Learn on your own laptop with real tools</div>
-                </div>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
+              <CheckCircle size={15} color="var(--brand-maroon)" /> Bagbazar Lab & Campus
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#334155', fontWeight: '500' }}>
+              <CheckCircle size={15} color="var(--brand-maroon)" /> Direct Mentor Guidance
+            </div>
+          </div>
 
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <button className="btn btn-primary" onClick={() => openLeadModal('training')} style={{ padding: '12px 28px', fontSize: '0.96rem' }}>
+              {currentLang === 'ne' ? 'भर्ना हुनुहोस्' : 'Apply Now'}
+            </button>
+            <button className="btn btn-secondary" onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ padding: '12px 24px', fontSize: '0.96rem' }}>
+              {currentLang === 'ne' ? 'पाठ्यक्रमहरू हेर्नुहोस्' : 'View Courses'}
+            </button>
           </div>
         </div>
       </section>

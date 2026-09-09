@@ -897,5 +897,25 @@ What works much better:
       status: "active",
       isPrimary: false
     }
-  ]
+    }
+  ],
+
+  // Media Manager defaults
+  media: {
+    heroImage: "/images/hero.jpg",
+    heroImageAlt: "Vedanta Strategies Training Workshop in Kathmandu",
+    siteLogo: "/images/logo.png",
+    banners: {
+      about: "",
+      training: "",
+      contact: "",
+      gallery: ""
+    },
+    galleryPhotos: [
+      { id: "gph-1", url: "/images/hero.jpg", caption: "AI Tools Workshop — Bagbazar", date: "2026" },
+      { id: "gph-2", url: "/images/hero.jpg", caption: "Media Literacy Session", date: "2026" },
+      { id: "gph-3", url: "/images/hero.jpg", caption: "Corporate Bootcamp", date: "2026" }
+    ],
+    galleryVideos: []
+  }
 };

@@ -20,7 +20,8 @@ import {
   Award,
   Users,
   Building2,
-  FileText
+  FileText,
+  Image
 } from 'lucide-react';
 
 export default function Navbar({ currentLang, setLang, activePage, setActivePage, openLeadModal, siteSettings, onSearch }) {
@@ -28,6 +29,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileTrainingOpen, setMobileTrainingOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
   const t = translations[currentLang] || translations.en;
 
   const toggleLanguage = () => {
@@ -120,19 +122,32 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           />
         </a>
 
-        {/* Mindrisers Style Header Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="nav-search-form">
-          <input
-            type="text"
-            placeholder={currentLang === 'ne' ? 'पाठ्यक्रम खोज्नुहोस्...' : 'Search courses, skills...'}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="nav-search-input"
-          />
-          <button type="submit" style={{ background: 'none', border: 'none', color: '#851C2C', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-            <Search size={16} />
+        {/* Compact Search Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+          {searchOpen && (
+            <form onSubmit={handleSearchSubmit}
+              style={{ display: 'flex', alignItems: 'center', background: '#f1f5f9', borderRadius: '6px', padding: '4px 8px', gap: '4px', marginRight: '6px', border: '1px solid var(--border-color)' }}>
+              <input
+                autoFocus
+                type="text"
+                placeholder={currentLang === 'ne' ? 'खोज्नुहोस्...' : 'Search...'}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onBlur={() => { if (!searchTerm) setSearchOpen(false); }}
+                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '0.85rem', width: '160px', color: 'var(--text-main)' }}
+              />
+              <button type="submit" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-maroon)', display: 'flex', padding: '2px' }}>
+                <Search size={15} />
+              </button>
+            </form>
+          )}
+          <button
+            onClick={() => setSearchOpen(!searchOpen)}
+            title="Search"
+            style={{ background: searchOpen ? 'rgba(133,28,44,0.08)' : 'transparent', border: 'none', cursor: 'pointer', color: 'var(--brand-maroon)', display: 'flex', alignItems: 'center', padding: '7px', borderRadius: '6px', transition: 'background 0.15s' }}>
+            <Search size={18} />
           </button>
-        </form>
+        </div>
 
         {/* Desktop Nav Links */}
         <nav className="nav-links">
@@ -246,6 +261,14 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
             className={`nav-link ${activePage === 'blog' ? 'active' : ''}`}
           >
             {t.nav.blog}
+          </a>
+
+          <a
+            href="#gallery"
+            onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}
+            className={`nav-link ${activePage === 'gallery' ? 'active' : ''}`}
+          >
+            {currentLang === 'ne' ? 'ग्यालेरी' : 'Gallery'}
           </a>
 
           <a

@@ -18,6 +18,7 @@ import ServicesPage from './pages/ServicesPage';
 import PortfolioPage from './pages/PortfolioPage';
 import BlogPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
+import GalleryPage from './pages/GalleryPage';
 
 // Admin Pages
 import AdminLogin from './admin/AdminLogin';
@@ -34,6 +35,7 @@ import AdminSettings from './admin/AdminSettings';
 import AdminContent from './admin/AdminContent';
 import AdminPartners from './admin/AdminPartners';
 import AdminUsers from './admin/AdminUsers';
+import AdminMedia from './admin/AdminMedia';
 import { getLangText } from './utils/langHelper';
 
 import { Sparkles, Megaphone } from 'lucide-react';
@@ -74,7 +76,8 @@ export default function App() {
         'services',
         'portfolio',
         'blog',
-        'contact'
+        'contact',
+        'gallery'
       ].includes(hash)) {
         setActivePage(hash);
       } else if (hash === 'production') {
@@ -234,6 +237,16 @@ export default function App() {
             resetStoreToDefault={store.resetStoreToDefault}
           />
         )}
+        {adminTab === 'media' && (
+          <AdminMedia
+            media={store.media || {}}
+            updateMedia={store.updateMedia}
+            addGalleryPhoto={store.addGalleryPhoto}
+            deleteGalleryPhoto={store.deleteGalleryPhoto}
+            addGalleryVideo={store.addGalleryVideo}
+            deleteGalleryVideo={store.deleteGalleryVideo}
+          />
+        )}
       </AdminLayout>
     );
   }
@@ -279,6 +292,7 @@ export default function App() {
               portfolioItems={store.portfolioItems}
               testimonials={store.testimonials}
               blogPosts={store.blogPosts}
+              media={store.media || {}}
               setActivePage={setActivePage}
               openLeadModal={openLeadModal}
               openCourseModal={openCourseModal}
@@ -362,6 +376,13 @@ export default function App() {
               currentLang={currentLang}
               siteSettings={store.siteSettings}
               onLeadSubmit={handleLeadSubmit}
+            />
+          )}
+
+          {activePage === 'gallery' && (
+            <GalleryPage
+              currentLang={currentLang}
+              media={store.media || {}}
             />
           )}
         </main>

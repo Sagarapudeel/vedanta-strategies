@@ -301,6 +301,34 @@ export function useDataStore() {
       });
     },
 
+    // Media Manager (hero image, logo, gallery)
+    updateMedia: (mediaData) => {
+      const current = getStore();
+      saveStore({ ...current, media: { ...(current.media || {}), ...mediaData } });
+    },
+    addGalleryPhoto: (photo) => {
+      const current = getStore();
+      const newPhoto = { ...photo, id: 'gph-' + Date.now() };
+      const media = current.media || {};
+      saveStore({ ...current, media: { ...media, galleryPhotos: [...(media.galleryPhotos || []), newPhoto] } });
+    },
+    deleteGalleryPhoto: (id) => {
+      const current = getStore();
+      const media = current.media || {};
+      saveStore({ ...current, media: { ...media, galleryPhotos: (media.galleryPhotos || []).filter(p => p.id !== id) } });
+    },
+    addGalleryVideo: (video) => {
+      const current = getStore();
+      const newVideo = { ...video, id: 'gvd-' + Date.now() };
+      const media = current.media || {};
+      saveStore({ ...current, media: { ...media, galleryVideos: [...(media.galleryVideos || []), newVideo] } });
+    },
+    deleteGalleryVideo: (id) => {
+      const current = getStore();
+      const media = current.media || {};
+      saveStore({ ...current, media: { ...media, galleryVideos: (media.galleryVideos || []).filter(v => v.id !== id) } });
+    },
+
     resetStoreToDefault: () => {
       saveStore(initialData);
     }
