@@ -113,22 +113,6 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
       <div className="container">
 
-        {/* Sub-Navigation Pill Bar between Individual & Institutional */}
-        <nav className="subnav-pill-bar" aria-label="Training Track Navigation">
-          <button 
-            className="subnav-pill" 
-            onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          >
-            <span>{currentLang === 'ne' ? 'व्यक्तिगत तालिम' : 'Individual Training'}</span>
-          </button>
-          <button 
-            className="subnav-pill active" 
-            onClick={() => setActivePage('institutional-training')}
-          >
-            <span>{currentLang === 'ne' ? 'संस्थागत कार्यक्रम (विद्यालय/कलेज)' : 'Institutional Programs'}</span>
-            <span className="pill-count">{institutionalCourses.length}</span>
-          </button>
-        </nav>
 
         {/* Section Header */}
         <div className="section-header" style={{ marginBottom: '40px' }}>

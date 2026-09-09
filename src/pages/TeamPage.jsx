@@ -27,27 +27,6 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
       <div className="container">
 
-        {/* Sub-Navigation Pill Bar across About Us Pages */}
-        <nav className="subnav-pill-bar" aria-label="About Us Navigation">
-          <button 
-            className="subnav-pill" 
-            onClick={() => { setActivePage('who-we-are'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          >
-            <span>{currentLang === 'ne' ? 'हाम्रो परिचय' : 'Who We Are'}</span>
-          </button>
-          <button 
-            className="subnav-pill" 
-            onClick={() => { setActivePage('ceo-message'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          >
-            <span>{currentLang === 'ne' ? 'प्रमुख कार्यकारी अधिकृत (CEO) को सन्देश' : 'Message from CEO'}</span>
-          </button>
-          <button 
-            className="subnav-pill active" 
-            onClick={() => setActivePage('team')}
-          >
-            <span>{currentLang === 'ne' ? 'हाम्रो टिम' : 'Our Team'}</span>
-          </button>
-        </nav>
 
         {/* Section Header */}
         <div className="section-header" style={{ marginBottom: '40px' }}>
