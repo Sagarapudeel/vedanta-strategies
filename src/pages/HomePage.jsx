@@ -537,11 +537,11 @@ export default function HomePage({
             </div>
 
             <p className="testimonial-quote" style={{ color: 'var(--brand-navy)' }}>
-              "{currentTestimonial.quote}"
+              "{currentLang === 'ne' ? currentTestimonial?.quote_ne || currentTestimonial?.quote_en || '' : currentTestimonial?.quote_en || currentTestimonial?.quote || ''}"
             </p>
 
-            <div className="testimonial-author" style={{ color: 'var(--brand-maroon)' }}>{currentTestimonial.author}</div>
-            <div className="testimonial-role">{currentTestimonial.role}</div>
+            <div className="testimonial-author" style={{ color: 'var(--brand-maroon)' }}>{currentTestimonial?.author}</div>
+            <div className="testimonial-role">{currentLang === 'ne' ? currentTestimonial?.role_ne || currentTestimonial?.role : currentTestimonial?.role_en || currentTestimonial?.role}</div>
 
             {/* Carousel Controls */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', marginTop: '24px' }}>

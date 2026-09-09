@@ -46,7 +46,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
     }, 400);
   };
 
-  const mapUrl = siteSettings?.mapsUrl || "https://www.google.com/maps?q=27.7033949,85.3177065";
+  const mapUrl = siteSettings?.mapsUrl || "https://maps.app.goo.gl/rS7SUHTm1zKXiiYq5";
   const mapEmbed = siteSettings?.mapsEmbed || "https://maps.google.com/maps?q=27.7033949,85.3177065&z=17&output=embed";
 
   return (

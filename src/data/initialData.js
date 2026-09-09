@@ -856,7 +856,7 @@ What works much better:
     address_ne: "बागबजार, काठमाडौं ४४६००, नेपाल",
     latitude: 27.7033949,
     longitude: 85.3177065,
-    mapsUrl: "https://www.google.com/maps?q=27.7033949,85.3177065",
+    mapsUrl: "https://maps.app.goo.gl/rS7SUHTm1zKXiiYq5",
     mapsEmbed: "https://maps.google.com/maps?q=27.7033949,85.3177065&z=17&output=embed",
     officeHours_en: "Sunday to Friday: 9:00 AM – 6:00 PM",
     officeHours_ne: "आइतबार देखि शुक्रबार: बिहान ९:०० – बेलुकी ६:००",
