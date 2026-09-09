@@ -91,7 +91,7 @@ export default function HomePage({
         {/* Gold accent line top */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(to right, #C59A3F, #e8b84b, #C59A3F)' }} />
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+        <div className="hero-grid-cols" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
 
           {/* LEFT — Text */}
           <div>
@@ -147,7 +147,7 @@ export default function HomePage({
           </div>
 
           {/* RIGHT — Photo Card */}
-          <div style={{ position: 'relative' }}>
+          <div className="hero-right-photo" style={{ position: 'relative' }}>
             {/* Decorative gold ring */}
             <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '140px', height: '140px', borderRadius: '50%', border: '2px solid rgba(197,154,63,0.2)', zIndex: 0 }} />
             <div style={{ position: 'absolute', top: '-10px', right: '-10px', width: '80px', height: '80px', borderRadius: '50%', border: '2px solid rgba(197,154,63,0.15)', zIndex: 0 }} />

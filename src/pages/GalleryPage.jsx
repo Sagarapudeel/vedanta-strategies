@@ -93,23 +93,41 @@ export default function GalleryPage({ media = {}, currentLang }) {
                 <div style={{ fontSize: '0.88rem', marginTop: '4px' }}>Videos will appear here once added from the admin panel.</div>
               </div>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
-                {videos.map((video) => (
-                  <div key={video.id}
-                    onClick={() => setLightbox({ type: 'video', item: video })}
-                    style={{ background: '#0f172a', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', border: '1px solid var(--border-color)', position: 'relative', aspectRatio: '16/9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--brand-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Play size={24} fill="#fff" color="#fff" />
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '20px' }}>
+                {videos.map((video) => {
+                  const platformColors = { youtube: '#ff0000', tiktok: '#010101', facebook: '#1877f2', other: '#64748b' };
+                  const platformLabels = { youtube: 'YouTube', tiktok: 'TikTok', facebook: 'Facebook', other: 'Video' };
+                  const platform = video.platform || 'other';
+                  return (
+                    <div key={video.id} style={{ background: '#0f172a', borderRadius: '10px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}>
+                      {/* Live embed iframe */}
+                      <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, background: '#000' }}>
+                        <iframe
+                          src={video.embedUrl}
+                          title={video.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'block' }}
+                        />
                       </div>
-                      <div style={{ color: '#fff', fontWeight: '600', fontSize: '0.9rem', textAlign: 'center', padding: '0 16px' }}>{video.title}</div>
+                      {/* Title + platform badge */}
+                      <div style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ background: platformColors[platform], color: '#fff', borderRadius: '4px', padding: '2px 8px', fontSize: '0.68rem', fontWeight: '700', flexShrink: 0 }}>
+                          {platformLabels[platform]}
+                        </span>
+                        <div style={{ color: 'rgba(255,255,255,0.85)', fontWeight: '600', fontSize: '0.85rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {video.title || 'Untitled'}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </>
         )}
+
       </div>
 
       {/* Lightbox */}
