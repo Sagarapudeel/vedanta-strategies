@@ -496,9 +496,8 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                             )}
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
