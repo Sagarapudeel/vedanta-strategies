@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Image, Video, UploadCloud, Trash2, Plus, CheckCircle, Link, Play, ExternalLink } from 'lucide-react';
+import { uploadMediaFile } from '../lib/uploadMedia';
 
 // ─── VIDEO URL PARSER ────────────────────────────────────────────────────────
 function parseVideoUrl(raw) {
@@ -33,16 +34,6 @@ function parseVideoUrl(raw) {
 const PLATFORM_COLORS = { youtube: '#ff0000', tiktok: '#010101', facebook: '#1877f2', other: '#64748b' };
 const PLATFORM_LABELS = { youtube: 'YouTube', tiktok: 'TikTok', facebook: 'Facebook', other: 'Video' };
 
-// ─── FILE → BASE64 ───────────────────────────────────────────────────────────
-function readFileAsDataURL(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
 // ─── REUSABLE IMAGE INPUT (upload + URL) ─────────────────────────────────────
 function ImageInput({ label, value, onChange, hint, previewHeight = 160 }) {
   const fileRef = useRef();
@@ -52,8 +43,8 @@ function ImageInput({ label, value, onChange, hint, previewHeight = 160 }) {
   const handleFile = async (file) => {
     if (!file || !file.type.startsWith('image/')) { alert('Please select an image file (JPG, PNG, WebP, SVG)'); return; }
     setUploading(true);
-    try { onChange(await readFileAsDataURL(file)); }
-    catch { alert('Failed to read image file'); }
+    try { onChange(await uploadMediaFile(file, 'site')); }
+    catch (err) { alert(err.message || 'Failed to upload image'); }
     finally { setUploading(false); }
   };
 
@@ -77,7 +68,7 @@ function ImageInput({ label, value, onChange, hint, previewHeight = 160 }) {
       >
         <UploadCloud size={22} color="#fbbf24" style={{ marginBottom: '6px' }} />
         <div style={{ fontSize: '0.82rem', color: '#fff', fontWeight: '600' }}>
-          {uploading ? 'Reading…' : 'Click to upload or drag & drop'}
+          {uploading ? 'Uploading…' : 'Click to upload or drag & drop'}
         </div>
         <div style={{ fontSize: '0.73rem', color: 'var(--text-subtle)', marginTop: '3px' }}>JPG, PNG, WebP, SVG</div>
         <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }}
@@ -105,7 +96,7 @@ function ImageInput({ label, value, onChange, hint, previewHeight = 160 }) {
           <img src={value} alt="Preview"
             style={{ width: '100%', height: `${previewHeight}px`, objectFit: 'cover', display: 'block' }}
             onError={e => { e.target.style.display = 'none'; }} />
-          {value?.startsWith('data:') && (
+          {value && !value.startsWith('/') && (
             <div style={{ position: 'absolute', top: '8px', left: '8px', background: 'rgba(0,0,0,0.65)', borderRadius: '4px', padding: '2px 8px', fontSize: '0.7rem', color: '#4ade80' }}>
               ✓ Uploaded
             </div>
@@ -181,7 +172,8 @@ export default function AdminMedia({ media = {}, updateMedia, addGalleryPhoto, d
   const handlePhotoFile = async (file) => {
     if (!file?.type.startsWith('image/')) { alert('Please select an image file'); return; }
     setUploadingPhoto(true);
-    try { setNewPhotoUrl(await readFileAsDataURL(file)); }
+    try { setNewPhotoUrl(await uploadMediaFile(file, 'gallery')); }
+    catch (err) { alert(err.message || 'Failed to upload photo'); }
     finally { setUploadingPhoto(false); }
   };
 
@@ -271,7 +263,7 @@ export default function AdminMedia({ media = {}, updateMedia, addGalleryPhoto, d
             >
               <UploadCloud size={26} color="#fbbf24" style={{ marginBottom: '8px' }} />
               <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '600' }}>
-                {uploadingPhoto ? 'Reading file…' : 'Click or drag & drop to upload photo'}
+                {uploadingPhoto ? 'Uploading…' : 'Click or drag & drop to upload photo'}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', marginTop: '4px' }}>JPG, PNG, WebP, SVG</div>
               <input ref={photoFileRef} type="file" accept="image/*" style={{ display: 'none' }}
@@ -288,10 +280,9 @@ export default function AdminMedia({ media = {}, updateMedia, addGalleryPhoto, d
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Photo URL</label>
                 <input type="text"
-                  value={newPhotoUrl?.startsWith('data:') ? '(file uploaded ✓)' : newPhotoUrl}
+                  value={newPhotoUrl}
                   onChange={e => setNewPhotoUrl(e.target.value)}
-                  className="form-input" placeholder="https://... or /images/photo.jpg"
-                  readOnly={newPhotoUrl?.startsWith('data:')} />
+                  className="form-input" placeholder="https://... or /images/photo.jpg" />
               </div>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Caption</label>

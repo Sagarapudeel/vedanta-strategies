@@ -37,8 +37,10 @@ import AdminPartners from './admin/AdminPartners';
 import AdminUsers from './admin/AdminUsers';
 import AdminMedia from './admin/AdminMedia';
 import { getLangText } from './utils/langHelper';
+import { loadAdminFromSession, signOutAdmin } from './lib/auth';
+import { isSupabaseConfigured } from './lib/supabase';
 
-import { Sparkles, Megaphone } from 'lucide-react';
+import { Megaphone } from 'lucide-react';
 
 export default function App() {
   const store = useDataStore();
@@ -46,10 +48,8 @@ export default function App() {
   const [activePage, setActivePage] = useState('home');
 
   // Admin Auth State
-  const [adminAuth, setAdminAuth] = useState(() => {
-    const saved = sessionStorage.getItem('vedanta_admin_auth');
-    return saved ? JSON.parse(saved) : { isAuthenticated: false, user: null, role: 'super_admin' };
-  });
+  const [adminAuth, setAdminAuth] = useState({ isAuthenticated: false, user: null, role: 'super_admin' });
+  const [authReady, setAuthReady] = useState(false);
   const [adminTab, setAdminTab] = useState('dashboard');
 
   // Modals
@@ -89,6 +89,18 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    loadAdminFromSession()
+      .then((auth) => {
+        if (!cancelled) setAdminAuth(auth);
+      })
+      .finally(() => {
+        if (!cancelled) setAuthReady(true);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
   const openLeadModal = (purpose = 'general', courseId = '') => {
     setLeadModal({ isOpen: true, purpose, courseId });
   };
@@ -109,25 +121,32 @@ export default function App() {
     store.addLead(leadData);
   };
 
-  const handleAdminLogin = ({ email, role }) => {
-    const authData = { isAuthenticated: true, user: email, role };
-    setAdminAuth(authData);
-    sessionStorage.setItem('vedanta_admin_auth', JSON.stringify(authData));
+  const handleAdminLogin = ({ email, role, name }) => {
+    setAdminAuth({ isAuthenticated: true, user: email, role, name });
     setAdminTab('dashboard');
+    store.refreshLeads?.();
+    store.refreshAdminUsers?.();
   };
 
-  const handleAdminLogout = () => {
-    sessionStorage.removeItem('vedanta_admin_auth');
+  const handleAdminLogout = async () => {
+    await signOutAdmin();
     setAdminAuth({ isAuthenticated: false, user: null, role: 'super_admin' });
     setActivePage('home');
   };
+
+  if (store.loading || !authReady) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0b1220', color: '#94a3b8' }}>
+        Loading Vedanta Strategies…
+      </div>
+    );
+  }
 
   // If Admin Page is Active
   if (activePage === 'admin') {
     if (!adminAuth.isAuthenticated) {
       return (
         <AdminLogin
-          adminUsers={store.adminUsers}
           onLoginSuccess={handleAdminLogin}
           onBackToSite={() => setActivePage('home')}
         />
@@ -139,7 +158,6 @@ export default function App() {
         activeTab={adminTab}
         setActiveTab={setAdminTab}
         currentRole={adminAuth.role}
-        setCurrentRole={(newRole) => setAdminAuth(prev => ({ ...prev, role: newRole }))}
         onLogout={handleAdminLogout}
         onBackToSite={() => setActivePage('home')}
         leadCount={store.leads?.filter(l => l.status === 'new').length}
@@ -254,6 +272,11 @@ export default function App() {
   // Public Website Render
   return (
     <div>
+      {(!isSupabaseConfigured || store.error) && (
+        <div style={{ background: '#7c2d12', color: '#fed7aa', padding: '8px 16px', textAlign: 'center', fontSize: '0.82rem', fontWeight: '600' }}>
+          {store.error || 'Supabase is not configured. Copy .env.example to .env.local.'}
+        </div>
+      )}
       {/* Top Announcement Bar */}
       {getLangText(store.siteSettings, 'announcementText', currentLang) && (
         <div className="site-announcement-bar">

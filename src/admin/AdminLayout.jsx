@@ -22,7 +22,6 @@ export default function AdminLayout({
   activeTab, 
   setActiveTab, 
   currentRole, 
-  setCurrentRole, 
   onLogout, 
   onBackToSite, 
   leadCount, 
@@ -92,15 +91,14 @@ export default function AdminLayout({
           </div>
         </div>
 
-        {/* Role Selector */}
         <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.02)' }}>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', fontWeight: '600', textTransform: 'uppercase' }}>Staff Role:</div>
-          <select value={currentRole} onChange={(e) => { setCurrentRole(e.target.value); if (e.target.value === 'sales_handler') setActiveTab('leads'); }}
-            className="form-select" style={{ padding: '5px 8px', fontSize: '0.8rem' }}>
-            <option value="super_admin">Super Admin (Full Access)</option>
-            <option value="content_editor">Content Editor</option>
-            <option value="sales_handler">Sales / Leads Handler</option>
-          </select>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '5px', fontWeight: '600', textTransform: 'uppercase' }}>Staff Role</div>
+          <div style={{ fontSize: '0.85rem', color: '#fff', fontWeight: '600' }}>
+            {currentRole === 'super_admin' && 'Super Admin'}
+            {currentRole === 'content_editor' && 'Content Editor'}
+            {currentRole === 'sales_handler' && 'Sales / Leads Handler'}
+            {!['super_admin', 'content_editor', 'sales_handler'].includes(currentRole) && currentRole}
+          </div>
         </div>
 
         {/* Grouped Navigation */}

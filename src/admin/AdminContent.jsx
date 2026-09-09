@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Globe, Save, CheckCircle, RefreshCw, Eye, Sparkles, AlertCircle, Upload, Image, User, Camera } from 'lucide-react';
+import { uploadMediaFile } from '../lib/uploadMedia';
 
 export default function AdminContent({ siteContent = {}, updateSiteContent, resetStoreToDefault }) {
   const [activeLangTab, setActiveLangTab] = useState('en');
@@ -94,18 +95,18 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
     }));
   };
 
-  const handleCeoPhotoUpload = (e) => {
+  const handleCeoPhotoUpload = async (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 3 * 1024 * 1024) {
-        alert('Please choose an image smaller than 3MB for optimal browser performance.');
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = () => {
-        handleAboutChange('ceoPhoto', reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Please choose an image smaller than 10MB.');
+      return;
+    }
+    try {
+      const url = await uploadMediaFile(file, 'content');
+      handleAboutChange('ceoPhoto', url);
+    } catch (err) {
+      alert(err.message || 'Failed to upload CEO photo.');
     }
   };
 
@@ -597,7 +598,7 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
         {/* Save Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
           <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Changes are saved to local persistent storage and instantly reflected on the public site when visitors switch languages.
+            Changes are saved to the Supabase database and appear on the public site for every visitor.
           </span>
           <button type="submit" className="btn btn-primary" style={{ padding: '12px 28px', fontWeight: '700' }}>
             <Save size={18} />

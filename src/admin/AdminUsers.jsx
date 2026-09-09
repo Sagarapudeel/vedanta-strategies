@@ -56,9 +56,8 @@ export default function AdminUsers({
   const salesCount = adminUsers.filter(u => u.role === 'sales_handler').length;
 
   const handleOpenAdd = () => {
-    setEditingId(null);
-    setFormData(initialForm);
-    setModalOpen(true);
+    setErrorMsg('Create new staff in the Supabase dashboard: Authentication → Users. A profile appears here automatically after they are created.');
+    setModalOpen(false);
   };
 
   const handleOpenEdit = (user) => {
@@ -86,8 +85,8 @@ export default function AdminUsers({
       return;
     }
 
-    if (!editingId && !formData.password.trim()) {
-      setErrorMsg('Please assign an initial temporary password for this new admin.');
+    if (!editingId) {
+      setErrorMsg('Create new staff in Supabase Authentication → Users. Then edit their role here.');
       return;
     }
 
@@ -98,24 +97,8 @@ export default function AdminUsers({
       status: formData.status
     };
 
-    if (formData.password.trim()) {
-      payload.password = formData.password.trim();
-    }
-
-    if (editingId) {
-      updateAdminUser(editingId, payload);
-      setSuccessMsg(`Admin account "${payload.name}" updated successfully!`);
-    } else {
-      // Check for duplicate email
-      const exists = adminUsers.some(u => u.email.toLowerCase() === payload.email);
-      if (exists) {
-        setErrorMsg('An administrator with this email address already exists.');
-        return;
-      }
-
-      addAdminUser(payload);
-      setSuccessMsg(`New admin "${payload.name}" provisioned successfully!`);
-    }
+    updateAdminUser(editingId, payload);
+    setSuccessMsg(`Admin account "${payload.name}" updated successfully!`);
 
     setModalOpen(false);
     setTimeout(() => setSuccessMsg(''), 3500);
@@ -158,7 +141,7 @@ export default function AdminUsers({
             Admin Accounts & Team Management
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-            Provision, manage roles, and revoke staff access across Vedanta Strategies portal.
+            Roles are stored in Supabase. Create login accounts in Authentication → Users, then set the role here.
           </p>
         </div>
 
@@ -168,7 +151,7 @@ export default function AdminUsers({
           style={{ padding: '12px 22px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}
         >
           <UserPlus size={18} />
-          <span>Create New Admin Account</span>
+          <span>Add via Supabase</span>
         </button>
       </div>
 
@@ -176,6 +159,12 @@ export default function AdminUsers({
         <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid #10b981', color: '#34d399', padding: '14px 20px', borderRadius: 'var(--radius-md)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <CheckCircle size={20} />
           <span style={{ fontWeight: '600' }}>{successMsg}</span>
+        </div>
+      )}
+
+      {errorMsg && !modalOpen && (
+        <div style={{ background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.35)', color: '#fbbf24', padding: '14px 20px', borderRadius: 'var(--radius-md)', marginBottom: '24px', fontSize: '0.9rem' }}>
+          {errorMsg}
         </div>
       )}
 
@@ -469,17 +458,15 @@ export default function AdminUsers({
               </div>
 
               <div className="form-group">
-                <label className="form-label">
-                  {editingId ? 'Reset Password (Leave blank to keep unchanged)' : 'Initial Password / Passcode *'}
-                </label>
-                <input
-                  type="password"
-                  required={!editingId}
-                  className="form-input"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  placeholder={editingId ? '••••••••' : 'Minimum 6 characters'}
-                />
+                <label className="form-label">Account status</label>
+                <select
+                  value={formData.status}
+                  onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                  className="form-select"
+                >
+                  <option value="active">Active</option>
+                  <option value="disabled">Disabled</option>
+                </select>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '28px', paddingTop: '16px', borderTop: '1px solid var(--border-subtle)' }}>

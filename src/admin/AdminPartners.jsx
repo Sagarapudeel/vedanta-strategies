@@ -1,21 +1,22 @@
 import React, { useState, useRef } from 'react';
-import { 
-  Building2, 
-  Plus, 
-  Edit3, 
-  Trash2, 
-  Search, 
-  Globe, 
-  Save, 
-  X, 
-  CheckCircle, 
-  Eye, 
+import {
+  Building2,
+  Plus,
+  Edit3,
+  Trash2,
+  Search,
+  Globe,
+  Save,
+  X,
+  CheckCircle,
+  Eye,
   ExternalLink,
   Sparkles,
   Upload,
   Image as ImageIcon,
   AlertCircle
 } from 'lucide-react';
+import { uploadMediaFile } from '../lib/uploadMedia';
 
 export default function AdminPartners({ 
   partners = [], 
@@ -83,24 +84,21 @@ export default function AdminPartners({
   };
 
   // Handle Local Image File Upload
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate size (max 2.5MB)
-    if (file.size > 2.5 * 1024 * 1024) {
-      alert('The chosen image file is larger than 2.5MB. Please choose a smaller image (PNG/JPG/SVG/WebP).');
+    if (file.size > 10 * 1024 * 1024) {
+      alert('The chosen image file is larger than 10MB. Please choose a smaller image (PNG/JPG/SVG/WebP).');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setFormData(prev => ({
-        ...prev,
-        logoUrl: event.target.result
-      }));
-    };
-    reader.readAsDataURL(file);
+    try {
+      const url = await uploadMediaFile(file, 'partners');
+      setFormData((prev) => ({ ...prev, logoUrl: url }));
+    } catch (err) {
+      alert(err.message || 'Failed to upload partner logo.');
+    }
   };
 
   const handleRemoveImage = () => {
