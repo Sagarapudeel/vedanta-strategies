@@ -790,12 +790,12 @@ button, input, select, textarea {
 }
 
 .hero-clean-h1 {
-  font-size: 3.4rem;
+  font-size: 3.8rem;
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.1;
   color: var(--brand-navy);
   margin-bottom: 20px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .hero-clean-p {

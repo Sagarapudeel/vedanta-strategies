@@ -76,7 +76,7 @@ export default function HomePage({
   return (
     <div>
       {/* 1. HERO SECTION — Full-bleed image with bottom gradient overlay */}
-      <section style={{ position: 'relative', width: '100%', height: '85vh', minHeight: '520px', overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
+      <section style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '560px', overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
         {/* Background Image */}
         <img
           src={media?.heroImage || "/images/hero.jpg"}
@@ -85,11 +85,11 @@ export default function HomePage({
           onError={(e) => { e.target.style.background = 'var(--brand-navy)'; e.target.style.display = 'none'; }}
         />
 
-        {/* White gradient from bottom — text-readable */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 28%, rgba(255,255,255,0.3) 55%, rgba(255,255,255,0) 100%)' }} />
+        {/* White gradient — stronger, covers lower 60% */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.97) 22%, rgba(255,255,255,0.75) 42%, rgba(255,255,255,0.2) 62%, rgba(255,255,255,0) 100%)' }} />
 
-        {/* Overlay Text — sits on the gradient */}
-        <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: '56px', paddingTop: '32px', maxWidth: '720px' }}>
+        {/* Overlay Text — anchored to bottom-left */}
+        <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: '72px', maxWidth: '740px' }}>
           <div className="section-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
             <MapPin size={13} /> {t.hero.badge}
           </div>
