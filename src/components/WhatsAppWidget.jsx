@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { MessageCircle, X } from 'lucide-react';
 
 export default function WhatsAppWidget({ whatsappNumber, currentLang }) {
-  const [showTooltip, setShowTooltip] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const cleanNumber = (whatsappNumber || '9779801234567').replace(/[^0-9]/g, '');
   const greetingText = currentLang === 'ne' 
@@ -15,29 +14,24 @@ export default function WhatsAppWidget({ whatsappNumber, currentLang }) {
   };
 
   return (
-    <div className="whatsapp-float-wrap">
+    <div
+      className="whatsapp-float-wrap"
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
       {showTooltip && (
-        <div 
-          className="whatsapp-tooltip"
-          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-        >
-          <span>{currentLang === 'ne' ? 'ह्वाट्सएपमा कुरा गर्नुहोस्' : 'Quick Chat on WhatsApp'}</span>
-          <button 
-            onClick={(e) => { e.stopPropagation(); setShowTooltip(false); }}
-            style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 0 }}
-          >
-            <X size={13} />
-          </button>
+        <div className="whatsapp-tooltip">
+          {currentLang === 'ne' ? 'ह्वाट्सएपमा कुरा गर्नुहोस्' : 'Quick Chat on WhatsApp'}
         </div>
       )}
-      
-      <button 
+
+      <button
         className="whatsapp-float-btn"
         onClick={handleWhatsAppClick}
         aria-label="WhatsApp Chat"
         title="Chat with our program coordinator on WhatsApp"
       >
-        <MessageCircle size={32} />
+        <img src="/images/whatsapp.svg" alt="WhatsApp" width="30" height="30" />
       </button>
     </div>
   );
