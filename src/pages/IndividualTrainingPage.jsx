@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { translations } from '../translations';
 import { getLangText, getLangArray } from '../utils/langHelper';
 import { 
@@ -85,6 +85,31 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
     }
   ];
 
+  useEffect(() => {
+    const faqData = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a
+        }
+      }))
+    };
+    const id = 'faq-jsonld-individual';
+    let el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement('script');
+      el.type = 'application/ld+json';
+      el.id = id;
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(faqData);
+    return () => { el?.remove(); };
+  }, [currentLang]);
+
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
       <div className="container">
@@ -107,7 +132,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
         <div style={{ background: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '24px', marginBottom: '36px', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
             <div style={{ fontWeight: '800', color: 'var(--brand-navy)', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BookOpen size={18} color="var(--brand-maroon)" />
+              <BookOpen size={18} color="var(--brand-navy)" />
               <span>{currentLang === 'ne' ? 'विषयअनुसार छान्नुहोस्' : 'Filter by Category'}</span>
             </div>
 
@@ -141,9 +166,9 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
                 style={{
                   padding: '7px 16px',
                   borderRadius: 'var(--radius-full)',
-                  border: selectedCategory === cat ? '2px solid var(--brand-maroon)' : '1px solid var(--border-color)',
-                  background: selectedCategory === cat ? 'rgba(133, 28, 44, 0.08)' : '#ffffff',
-                  color: selectedCategory === cat ? 'var(--brand-maroon)' : 'var(--brand-navy)',
+                  border: selectedCategory === cat ? '2px solid var(--brand-navy)' : '1px solid var(--border-color)',
+                  background: selectedCategory === cat ? 'rgba(28, 47, 77, 0.08)' : '#ffffff',
+                  color: selectedCategory === cat ? 'var(--brand-navy)' : 'var(--brand-navy)',
                   fontWeight: '700',
                   fontSize: '0.84rem',
                   cursor: 'pointer',
@@ -163,7 +188,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <span className="course-badge-category">{course.category?.toUpperCase()}</span>
                 {course.featured && (
-                  <span style={{ fontSize: '0.72rem', background: 'rgba(197, 154, 63, 0.2)', color: '#b45309', padding: '3px 8px', borderRadius: '4px', fontWeight: '800' }}>
+                  <span style={{ fontSize: '0.72rem', background: 'rgba(28, 47, 77, 0.08)', color: 'var(--brand-navy)', padding: '3px 8px', borderRadius: '4px', fontWeight: '800' }}>
                     FEATURED
                   </span>
                 )}
@@ -174,18 +199,18 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
 
               <div className="course-meta-row">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Clock size={14} color="#C59A3F" />
+                  <Clock size={14} color="var(--brand-navy)" />
                   <span>{getLangText(course, 'duration', currentLang) || course.duration}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Award size={14} color="#851C2C" />
+                  <Award size={14} color="#1C2F4D" />
                   <span>{course.mentor}</span>
                 </div>
               </div>
 
               {course.nextBatch && (
                 <div style={{ fontSize: '0.78rem', color: '#64748b', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <Calendar size={13} color="#C59A3F" />
+                  <Calendar size={13} color="var(--brand-navy)" />
                   <span>{getLangText(course, 'nextBatch', currentLang) || course.nextBatch}</span>
                 </div>
               )}
@@ -218,8 +243,9 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
         {/* Banner to Switch to Institutional Programs */}
         <div 
           style={{ 
-            background: 'linear-gradient(135deg, #172642 0%, #1e3a6c 100%)', 
-            color: '#ffffff', 
+            background: '#ffffff', 
+            border: '1px solid var(--border-light)',
+            boxShadow: '0 1px 3px rgba(28, 47, 77, 0.05)',
             borderRadius: 'var(--radius-lg)', 
             padding: '36px 40px',
             display: 'flex',
@@ -231,13 +257,13 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
           }}
         >
           <div>
-            <span style={{ fontSize: '0.75rem', color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--brand-navy)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
               CAMPUS & FACULTY TRACK
             </span>
-            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', marginTop: '4px', marginBottom: '6px', color: '#ffffff' }}>
+            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', marginTop: '4px', marginBottom: '6px', color: 'var(--brand-navy)' }}>
               Looking for workshops for your School or College?
             </h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.92rem', margin: 0 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', margin: 0 }}>
               We conduct customized AI bootcamps, teacher prompt development, and student credentialing directly at your campus.
             </p>
           </div>
@@ -270,7 +296,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: '700', color: 'var(--brand-navy)', fontSize: '1.02rem' }}>
                   <span>{faq.q}</span>
-                  <ChevronDown size={18} color="var(--brand-maroon)" style={{ transform: expandedFaq === idx ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }} />
+                  <ChevronDown size={18} color="var(--brand-navy)" style={{ transform: expandedFaq === idx ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }} />
                 </div>
                 {expandedFaq === idx && (
                   <p style={{ marginTop: '12px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.65', margin: '12px 0 0 0' }}>

@@ -58,7 +58,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
           style={{ 
             padding: '48px', 
             background: 'linear-gradient(145deg, #ffffff 0%, #fcfbf9 100%)',
-            border: '1px solid rgba(197, 154, 63, 0.4)',
+            border: '1px solid rgba(28, 47, 77, 0.4)',
             boxShadow: 'var(--shadow-md)',
             position: 'relative',
             marginBottom: '64px'
@@ -79,7 +79,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                     if (e.target.parentElement) {
                       e.target.parentElement.style.padding = '80px 20px';
                       e.target.parentElement.style.textAlign = 'center';
-                      e.target.parentElement.innerHTML = '<div style="font-size: 3rem; font-weight: 800; color: #C59A3F;">SA</div><div style="color: #fff; font-weight: 700; margin-top: 10px;">Er. Suman Adhikari</div>';
+                      e.target.parentElement.innerHTML = '<div style="font-size: 3rem; font-weight: 800; color: var(--brand-navy);">SA</div><div style="color: #fff; font-weight: 700; margin-top: 10px;">Er. Suman Adhikari</div>';
                     }
                   }}
                 />
@@ -90,11 +90,11 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                 <h3 style={{ fontSize: '1.35rem', color: 'var(--brand-navy)', marginBottom: '4px', fontWeight: '800' }}>
                   {ceoName}
                 </h3>
-                <div style={{ color: 'var(--brand-maroon)', fontSize: '0.92rem', fontWeight: '700', marginBottom: '6px' }}>
+                <div style={{ color: 'var(--brand-navy)', fontSize: '0.92rem', fontWeight: '700', marginBottom: '6px' }}>
                   {ceoTitle}
                 </div>
                 <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                  <MapPin size={14} color="#C59A3F" />
+                  <MapPin size={14} color="var(--brand-navy)" />
                   <span>Bagbazar, Kathmandu 44600, Nepal</span>
                 </div>
                 <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid var(--border-light)', lineHeight: '1.5' }}>
@@ -105,10 +105,10 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
 
             {/* Right: The Executive Message */}
             <div style={{ position: 'relative' }}>
-              <Quote size={56} color="rgba(197, 154, 63, 0.2)" style={{ position: 'absolute', top: '-24px', left: '-16px', zIndex: 0 }} />
+              <Quote size={56} color="rgba(28, 47, 77, 0.2)" style={{ position: 'absolute', top: '-24px', left: '-16px', zIndex: 0 }} />
               
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--brand-gold)', fontWeight: '800', marginBottom: '16px' }}>
+                <div style={{ fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--brand-navy)', fontWeight: '800', marginBottom: '16px' }}>
                   {currentLang === 'ne' ? 'संस्थापकको पत्र' : 'A PERSONAL LETTER TO LEARNERS & PARTNERS'}
                 </div>
 
@@ -130,12 +130,12 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                 </div>
 
                 {/* Credentials & Signature Line */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', paddingTop: '24px', borderTop: '2px solid rgba(197, 154, 63, 0.25)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', paddingTop: '24px', borderTop: '2px solid rgba(28, 47, 77, 0.25)' }}>
                   <div>
                     <div style={{ fontWeight: '800', color: 'var(--brand-navy)', fontSize: '1.1rem', fontFamily: 'var(--font-heading)' }}>
                       {ceoName}
                     </div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--brand-maroon)', fontWeight: '700' }}>
+                    <div style={{ fontSize: '0.85rem', color: 'var(--brand-navy)', fontWeight: '700' }}>
                       {ceoTitle} • Vedanta Strategies Pvt. Ltd.
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
@@ -169,7 +169,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
 
         {/* 3 Core Principles from the CEO */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-maroon)' }}>
+          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-navy)' }}>
             <h4 style={{ fontSize: '1.15rem', color: 'var(--brand-navy)', marginBottom: '8px', fontWeight: '700' }}>
               {currentLang === 'ne' ? '१. अभ्यासमा आधारित सिकाइ' : '1. Zero Dry Theory'}
             </h4>
@@ -178,7 +178,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
             </p>
           </div>
 
-          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-gold)' }}>
+          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-navy)' }}>
             <h4 style={{ fontSize: '1.15rem', color: 'var(--brand-navy)', marginBottom: '8px', fontWeight: '700' }}>
               {currentLang === 'ne' ? '२. स्थानीय बजार सान्दर्भिकता' : '2. Built for Nepal\'s Market'}
             </h4>

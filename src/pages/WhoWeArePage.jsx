@@ -33,14 +33,14 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
 
   const corePillars = [
     {
-      icon: <Laptop size={22} color="var(--brand-maroon)" />,
+      icon: <Laptop size={22} color="var(--brand-navy)" />,
       title_en: "Hands-on Laptop Mastery",
       title_ne: "आफ्नै ल्यापटपमा प्रत्यक्ष अभ्यास",
       desc_en: "Every workflow is practiced live on your own machine. Zero theoretical lectures without practical output.",
       desc_ne: "प्रत्येक सीप आफ्नै ल्यापटपमा प्रत्यक्ष अभ्यास गरिन्छ। केवल सैद्धान्तिक व्याख्यान होइन, नतिजामुखी सिकाइ।"
     },
     {
-      icon: <Users size={22} color="var(--brand-gold)" />,
+      icon: <Users size={22} color="var(--brand-navy)" />,
       title_en: "Small Cohorts (12–15 Max)",
       title_ne: "सानो समूह (अधिकतम १२–१५)",
       desc_en: "Dedicated attention and step-by-step guidance from mentors on your specific projects and questions.",
@@ -54,7 +54,7 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
       desc_ne: "नेपाली उपभोक्ता मनोविज्ञान, स्थानीय विज्ञापन अभियान र वास्तविक बजार चुनौतीमा आधारित अध्ययन।"
     },
     {
-      icon: <GraduationCap size={22} color="var(--brand-maroon)" />,
+      icon: <GraduationCap size={22} color="var(--brand-navy)" />,
       title_en: "Institutional Readiness",
       title_ne: "शैक्षिक तथा संस्थागत रूपान्तरण",
       desc_en: "Tailored bootcamps and faculty development programs designed for schools, colleges, and corporate teams.",
@@ -101,7 +101,7 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
 
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                 <div style={{ padding: '14px 22px', background: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-maroon)', fontFamily: 'var(--font-heading)' }}>
+                  <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-navy)', fontFamily: 'var(--font-heading)' }}>
                     Bagbazar Campus
                   </div>
                   <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Central Kathmandu Practical Lab</div>
@@ -125,7 +125,7 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
                     display: 'flex', 
                     flexDirection: 'column', 
                     gap: '10px',
-                    borderTop: idx % 2 === 0 ? '3px solid var(--brand-maroon)' : '3px solid var(--brand-gold)'
+                    borderTop: '3px solid var(--brand-navy)'
                   }}
                 >
                   <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'var(--bg-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -159,7 +159,7 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
             <div style={{ background: '#ffffff', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(197, 154, 63, 0.15)', color: '#C59A3F', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(28, 47, 77, 0.08)', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
                 <Laptop size={18} />
               </div>
               <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>
@@ -171,7 +171,7 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
             </div>
 
             <div style={{ background: '#ffffff', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(133, 28, 44, 0.1)', color: 'var(--brand-maroon)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(28, 47, 77, 0.1)', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
                 <Users size={18} />
               </div>
               <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>
@@ -183,7 +183,7 @@ export default function WhoWeArePage({ currentLang, siteContent, openLeadModal, 
             </div>
 
             <div style={{ background: '#ffffff', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(23, 38, 66, 0.1)', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(28, 47, 77, 0.1)', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
                 <Building2 size={18} />
               </div>
               <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', marginBottom: '6px' }}>

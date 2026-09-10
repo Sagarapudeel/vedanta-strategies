@@ -225,7 +225,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
           <div className="track-highlight-banner">
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800', color: 'var(--brand-navy)', fontSize: '1.05rem', marginBottom: '4px' }}>
-                <Users size={18} color="var(--brand-maroon)" />
+                <Users size={18} color="var(--brand-navy)" />
                 {t.courses.trackIndividualTitle}
               </div>
               <div style={{ fontSize: '0.9rem', color: '#475569' }}>
@@ -234,13 +234,13 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
             </div>
             <div style={{ display: 'flex', gap: '16px', fontSize: '0.82rem', color: '#334155', fontWeight: '600' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#10b981" /> Max 15 Trainees
+                <CheckCircle size={15} color="#1C2F4D" /> Max 15 Trainees
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#10b981" /> Laptop-First Practice
+                <CheckCircle size={15} color="#1C2F4D" /> Laptop-First Practice
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#10b981" /> Bagbazar Campus
+                <CheckCircle size={15} color="#1C2F4D" /> Bagbazar Campus
               </span>
             </div>
           </div>
@@ -259,13 +259,13 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
             </div>
             <div style={{ display: 'flex', gap: '16px', fontSize: '0.82rem', color: '#334155', fontWeight: '600' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#10b981" /> On-Campus Delivery
+                <CheckCircle size={15} color="#1C2F4D" /> On-Campus Delivery
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#10b981" /> Faculty Handbooks
+                <CheckCircle size={15} color="#1C2F4D" /> Faculty Handbooks
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#10b981" /> Custom Schedules
+                <CheckCircle size={15} color="#1C2F4D" /> Custom Schedules
               </span>
             </div>
           </div>
@@ -334,7 +334,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
                   {modules.length > 0 && (
                     <div className="course-curriculum-container">
                       <div className="course-curriculum-header">
-                        <BookOpen size={13} color="var(--brand-maroon)" />
+                        <BookOpen size={13} color="var(--brand-navy)" />
                         <span>{t.courses.curriculumLabel}</span>
                       </div>
                       <div className="course-curriculum-list">
@@ -361,11 +361,11 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
                   {/* Structured Specifications Grid */}
                   <div className="course-specs">
                     <div className="spec-item">
-                      <Clock size={15} color="var(--brand-maroon)" />
+                      <Clock size={15} color="var(--brand-navy)" />
                       <span>{getLangText(course, 'duration', currentLang) || course.duration}</span>
                     </div>
                     <div className="spec-item">
-                      <Award size={15} color="var(--brand-gold)" />
+                      <Award size={15} color="var(--brand-navy)" />
                       <span>{course.mentor}</span>
                     </div>
                     <div className="spec-item" style={{ gridColumn: 'span 2' }}>
@@ -417,10 +417,10 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
         <div 
           style={{ 
             padding: '40px', 
-            background: 'linear-gradient(135deg, #172642 0%, #0f172a 100%)',
+            background: '#ffffff',
             borderRadius: 'var(--radius-lg)',
-            border: '1px solid rgba(197, 154, 63, 0.4)',
-            boxShadow: 'var(--shadow-lg)',
+            border: '1px solid var(--border-light)',
+            boxShadow: '0 1px 3px rgba(28, 47, 77, 0.05)',
             marginBottom: '80px',
             display: 'flex',
             alignItems: 'center',
@@ -430,15 +430,15 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
           }}
         >
           <div style={{ maxWidth: '680px' }}>
-            <span className="section-badge" style={{ marginBottom: '10px', background: 'rgba(197,154,63,0.2)', color: '#fbbf24', borderColor: 'rgba(197,154,63,0.4)' }}>
+            <span className="section-badge" style={{ marginBottom: '10px', background: 'rgba(28, 47, 77, 0.08)', color: 'var(--brand-navy)', borderColor: 'rgba(28, 47, 77, 0.2)' }}>
               {currentLang === 'ne' ? 'विद्यालय, कलेज तथा संस्थाहरूका लागि' : 'FOR SCHOOLS, COLLEGES & NGOS'}
             </span>
-            <h3 style={{ fontSize: '1.75rem', color: '#ffffff', marginBottom: '10px', lineHeight: '1.25' }}>
+            <h3 style={{ fontSize: '1.75rem', color: 'var(--brand-navy)', marginBottom: '10px', lineHeight: '1.25' }}>
               {currentLang === 'ne' 
                 ? 'तपाईंको क्याम्पसमा व्यावहारिक एआई तथा डिजिटल साक्षरता सत्र सञ्चालन गर्नुहोस्' 
                 : 'Host a Hands-On AI & Digital Skills Session at Your Campus'}
             </h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.96rem', lineHeight: '1.65' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.96rem', lineHeight: '1.65' }}>
               {currentLang === 'ne'
                 ? 'हामी वास्तविक एआई कार्यप्रवाह, शिक्षक तालिम टेम्प्लेट र व्यावहारिक अन्तरक्रियात्मक विधि सिधै तपाईंका विद्यार्थी र शिक्षकहरूसम्म पुर्याउँछौं।'
                 : 'We bring real-time deepfake detectors, prompt engineering frameworks, and interactive pedagogy directly to your students and teachers. No complex setup required.'}
@@ -475,7 +475,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: '700', color: 'var(--brand-navy)', fontSize: '1.02rem' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <HelpCircle size={18} color="var(--brand-gold)" /> {faq.q}
+                    <HelpCircle size={18} color="var(--brand-navy)" /> {faq.q}
                   </span>
                   <ChevronDown size={18} color="var(--brand-navy)" style={{ transform: expandedFaq === idx ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease', flexShrink: 0 }} />
                 </div>

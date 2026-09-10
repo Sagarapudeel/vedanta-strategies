@@ -55,9 +55,9 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
               style={{
                 padding: '8px 18px',
                 borderRadius: 'var(--radius-full)',
-                border: activeFilter === f.id ? '2px solid var(--brand-maroon)' : '1px solid var(--border-color)',
-                background: activeFilter === f.id ? 'rgba(133, 28, 44, 0.08)' : '#ffffff',
-                color: activeFilter === f.id ? 'var(--brand-maroon)' : 'var(--brand-navy)',
+                border: activeFilter === f.id ? '2px solid var(--brand-navy)' : '1px solid var(--border-color)',
+                background: activeFilter === f.id ? 'rgba(28, 47, 77, 0.08)' : '#ffffff',
+                color: activeFilter === f.id ? 'var(--brand-navy)' : 'var(--brand-navy)',
                 fontWeight: '700',
                 fontSize: '0.86rem',
                 cursor: 'pointer',
@@ -81,7 +81,7 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
                 display: 'flex', 
                 flexDirection: 'column',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                borderTop: '4px solid var(--brand-maroon)'
+                borderTop: '4px solid var(--brand-navy)'
               }}
             >
               <div 
@@ -89,15 +89,15 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
                   width: '84px', 
                   height: '84px', 
                   borderRadius: '50%', 
-                  background: 'linear-gradient(135deg, rgba(197, 154, 63, 0.15) 0%, rgba(133, 28, 44, 0.1) 100%)', 
-                  border: '2px solid var(--brand-gold)', 
+                  background: 'linear-gradient(135deg, rgba(28, 47, 77, 0.08) 0%, rgba(28, 47, 77, 0.05) 100%)', 
+                  border: '2px solid var(--brand-navy)', 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center', 
                   margin: '0 auto 18px auto', 
                   fontSize: '1.65rem', 
                   fontWeight: '800', 
-                  color: 'var(--brand-maroon)',
+                  color: 'var(--brand-navy)',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
                 }}
               >
@@ -108,7 +108,7 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
                 {member.name}
               </h3>
               
-              <div style={{ color: 'var(--brand-maroon)', fontSize: '0.88rem', fontWeight: '700', marginBottom: '6px' }}>
+              <div style={{ color: 'var(--brand-navy)', fontSize: '0.88rem', fontWeight: '700', marginBottom: '6px' }}>
                 {getLangText(member, 'role', currentLang) || member.role}
               </div>
 
@@ -137,8 +137,9 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
         {/* Join Our Instructor Fellowship Banner */}
         <div 
           style={{ 
-            background: 'linear-gradient(135deg, #172642 0%, #1e3a6c 100%)', 
-            color: '#ffffff', 
+            background: '#ffffff', 
+            border: '1px solid var(--border-light)',
+            boxShadow: '0 1px 3px rgba(28, 47, 77, 0.05)',
             borderRadius: 'var(--radius-lg)', 
             padding: '40px 48px',
             display: 'flex',
@@ -149,13 +150,13 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
           }}
         >
           <div style={{ maxWidth: '640px' }}>
-            <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#fbbf24', fontWeight: '800' }}>
+            <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--brand-navy)', fontWeight: '800' }}>
               JOIN OUR FELLOWSHIP
             </span>
-            <h3 style={{ fontSize: '1.75rem', fontWeight: '800', marginTop: '6px', marginBottom: '10px' }}>
+            <h3 style={{ fontSize: '1.75rem', fontWeight: '800', marginTop: '6px', marginBottom: '10px', color: 'var(--brand-navy)' }}>
               Are you a practitioner passionate about teaching?
             </h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
               We are constantly looking for practical instructors, AI researchers, and digital marketing leads in Kathmandu to lead weekend cohorts and campus bootcamps.
             </p>
           </div>

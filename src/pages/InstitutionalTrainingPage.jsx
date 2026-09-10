@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
 import { 
@@ -109,6 +109,31 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
     }
   ];
 
+  useEffect(() => {
+    const faqData = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a
+        }
+      }))
+    };
+    const id = 'faq-jsonld-institutional';
+    let el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement('script');
+      el.type = 'application/ld+json';
+      el.id = id;
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(faqData);
+    return () => { el?.remove(); };
+  }, [currentLang]);
+
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
       <div className="container">
@@ -133,10 +158,10 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
             <div 
               key={idx} 
               className="mindrisers-card" 
-              style={{ padding: '24px', borderTop: idx % 2 === 0 ? '3px solid var(--brand-maroon)' : '3px solid var(--brand-gold)' }}
+              style={{ padding: '24px', borderTop: '3px solid var(--brand-navy)' }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <CheckCircle size={18} color="var(--brand-maroon)" />
+                <CheckCircle size={18} color="var(--brand-navy)" />
                 <h4 style={{ fontSize: '1.05rem', color: 'var(--brand-navy)', margin: 0, fontWeight: '700' }}>
                   {currentLang === 'ne' ? perk.title_ne : perk.title_en}
                 </h4>
@@ -151,8 +176,9 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
         {/* Free Demo Banner */}
         <div 
           style={{ 
-            background: 'linear-gradient(135deg, #172642 0%, #1e3a6c 100%)', 
-            color: '#ffffff', 
+            background: '#ffffff', 
+            border: '1px solid var(--border-light)',
+            boxShadow: '0 1px 3px rgba(28, 47, 77, 0.05)',
             borderRadius: 'var(--radius-lg)', 
             padding: '36px 40px',
             display: 'flex',
@@ -160,18 +186,17 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '24px',
-            marginBottom: '48px',
-            boxShadow: 'var(--shadow-md)'
+            marginBottom: '48px'
           }}
         >
           <div style={{ maxWidth: '640px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--brand-navy)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
               60-MINUTE COMPLIMENTARY WORKSHOP
             </span>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', marginTop: '6px', marginBottom: '8px', color: '#ffffff' }}>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', marginTop: '6px', marginBottom: '8px', color: 'var(--brand-navy)' }}>
               Book a Free Practical AI Demo for Your Faculty
             </h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.92rem', lineHeight: '1.6', margin: 0 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.6', margin: 0 }}>
               We visit your campus to demonstrate live AI prompt templates, fact-checking workflows, and digital tools before you plan any formal cohort.
             </p>
           </div>
@@ -189,7 +214,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
         <div style={{ background: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '24px', marginBottom: '36px', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
             <div style={{ fontWeight: '800', color: 'var(--brand-navy)', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Building2 size={18} color="var(--brand-maroon)" />
+              <Building2 size={18} color="var(--brand-navy)" />
               <span>{currentLang === 'ne' ? 'संस्थागत कार्यक्रमहरू छान्नुहोस्' : 'Filter Institutional Tracks'}</span>
             </div>
 
@@ -223,9 +248,9 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
                 style={{
                   padding: '7px 16px',
                   borderRadius: 'var(--radius-full)',
-                  border: selectedCategory === cat ? '2px solid var(--brand-maroon)' : '1px solid var(--border-color)',
-                  background: selectedCategory === cat ? 'rgba(133, 28, 44, 0.08)' : '#ffffff',
-                  color: selectedCategory === cat ? 'var(--brand-maroon)' : 'var(--brand-navy)',
+                  border: selectedCategory === cat ? '2px solid var(--brand-navy)' : '1px solid var(--border-color)',
+                  background: selectedCategory === cat ? 'rgba(28, 47, 77, 0.08)' : '#ffffff',
+                  color: selectedCategory === cat ? 'var(--brand-navy)' : 'var(--brand-navy)',
                   fontWeight: '700',
                   fontSize: '0.84rem',
                   cursor: 'pointer',
@@ -244,7 +269,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
             <div key={course.id} className="course-card-clean" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <span className="course-badge-category">{course.category?.toUpperCase()}</span>
-                <span style={{ fontSize: '0.75rem', background: 'rgba(133, 28, 44, 0.1)', color: 'var(--brand-maroon)', padding: '3px 8px', borderRadius: '4px', fontWeight: '800' }}>
+                <span style={{ fontSize: '0.75rem', background: 'rgba(28, 47, 77, 0.1)', color: 'var(--brand-navy)', padding: '3px 8px', borderRadius: '4px', fontWeight: '800' }}>
                   ON-CAMPUS / LAB
                 </span>
               </div>
@@ -254,18 +279,18 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
 
               <div className="course-meta-row">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Clock size={14} color="#C59A3F" />
+                  <Clock size={14} color="var(--brand-navy)" />
                   <span>{getLangText(course, 'duration', currentLang) || course.duration}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Award size={14} color="#851C2C" />
+                  <Award size={14} color="#1C2F4D" />
                   <span>{course.mentor}</span>
                 </div>
               </div>
 
               {course.mode && (
                 <div style={{ fontSize: '0.78rem', color: '#64748b', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <Building2 size={13} color="#C59A3F" />
+                  <Building2 size={13} color="var(--brand-navy)" />
                   <span>{getLangText(course, 'mode', currentLang) || course.mode}</span>
                 </div>
               )}
@@ -298,8 +323,9 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
         {/* Switcher Banner to Individual Training */}
         <div 
           style={{ 
-            background: 'linear-gradient(135deg, #172642 0%, #0f1a30 100%)', 
-            color: '#ffffff', 
+            background: '#ffffff', 
+            border: '1px solid var(--border-light)',
+            boxShadow: '0 1px 3px rgba(28, 47, 77, 0.05)',
             borderRadius: 'var(--radius-lg)', 
             padding: '36px 40px',
             display: 'flex',
@@ -311,13 +337,13 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
           }}
         >
           <div>
-            <span style={{ fontSize: '0.75rem', color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--brand-navy)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: '800' }}>
               INDIVIDUAL LEARNERS TRACK
             </span>
-            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', marginTop: '4px', marginBottom: '6px' }}>
+            <h3 style={{ fontSize: '1.45rem', fontWeight: '800', marginTop: '4px', marginBottom: '6px', color: 'var(--brand-navy)' }}>
               Looking for open cohorts for yourself?
             </h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.92rem', margin: 0 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', margin: 0 }}>
               Join upcoming small-batch cohorts (max 15) at our Bagbazar campus for AI workflows, performance marketing, and video creation.
             </p>
           </div>
@@ -350,7 +376,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: '700', color: 'var(--brand-navy)', fontSize: '1.02rem' }}>
                   <span>{faq.q}</span>
-                  <ChevronDown size={18} color="var(--brand-maroon)" style={{ transform: expandedFaq === idx ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }} />
+                  <ChevronDown size={18} color="var(--brand-navy)" style={{ transform: expandedFaq === idx ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }} />
                 </div>
                 {expandedFaq === idx && (
                   <p style={{ marginTop: '12px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.65', margin: '12px 0 0 0' }}>

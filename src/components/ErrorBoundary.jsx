@@ -25,7 +25,7 @@ export default class ErrorBoundary extends React.Component {
       return (
         <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
           <div className="glass-card" style={{ maxWidth: '520px', textAlign: 'center', padding: '40px' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(244,63,94,0.15)', color: '#f43f5e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(182, 138, 40, 0.15)', color: '#B68A28', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
               <AlertTriangle size={28} />
             </div>
             <h2 style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '12px' }}>Something went wrong</h2>

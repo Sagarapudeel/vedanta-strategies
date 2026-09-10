@@ -22,13 +22,15 @@ import {
   Users,
   Building2,
   FileText,
-  Image
+  Image,
+  Video
 } from 'lucide-react';
 
 export default function Navbar({ currentLang, setLang, activePage, setActivePage, openLeadModal, siteSettings, onSearch }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileTrainingOpen, setMobileTrainingOpen] = useState(false);
+  const [mobileGalleryOpen, setMobileGalleryOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const t = translations[currentLang] || translations.en;
@@ -38,10 +40,10 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
   };
 
   const categoryPills = [
-    { id: 'ai', label: 'AI & Data Tools', icon: <Cpu size={14} color="#851C2C" /> },
-    { id: 'marketing', label: 'Digital Marketing & Ads', icon: <Share2 size={14} color="#172642" /> },
-    { id: 'strategy', label: 'Growth Strategy & Funnels', icon: <TrendingUp size={14} color="#C59A3F" /> },
-    { id: 'institution', label: 'School / College Workshops', icon: <GraduationCap size={14} color="#851C2C" /> }
+    { id: 'ai', label: 'AI & Data Tools', icon: <Cpu size={14} color="#1C2F4D" /> },
+    { id: 'marketing', label: 'Digital Marketing & Ads', icon: <Share2 size={14} color="#1C2F4D" /> },
+    { id: 'strategy', label: 'Growth Strategy & Funnels', icon: <TrendingUp size={14} color="var(--brand-navy)" /> },
+    { id: 'institution', label: 'School / College Workshops', icon: <GraduationCap size={14} color="#1C2F4D" /> }
   ];
 
   const handleNavClick = (pageId) => {
@@ -86,34 +88,36 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
 
   const isAboutActive = ['about', 'who-we-are', 'ceo-message', 'team'].includes(activePage);
   const isTrainingActive = ['training', 'individual-training', 'institutional-training'].includes(activePage);
+  const isGalleryActive = ['gallery', 'gallery-videos'].includes(activePage);
 
   return (
-    <header className="main-navbar">
+    <>
+      <header className="main-navbar">
       {/* 1. Top Utility Contact Bar (Site-wide Consistent Settings) */}
       <div className="top-utility-bar">
         <div className="container top-utility-flex">
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Phone size={13} color="#C59A3F" />
+              <Phone size={13} color="var(--brand-navy)" />
               <span>{siteSettings?.primaryPhone || '+977 1-4421098'}{siteSettings?.mobilePhone ? ` / ${siteSettings.mobilePhone}` : ''}</span>
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Mail size={13} color="#C59A3F" />
+              <Mail size={13} color="var(--brand-navy)" />
               <span>{siteSettings?.officialEmail || 'info@vedantastrategies.com'}</span>
             </span>
             <span className="hidden md:flex" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <MapPin size={13} color="#C59A3F" />
+              <MapPin size={13} color="var(--brand-navy)" />
               <span>{getLangText(siteSettings, 'address', currentLang) || siteSettings?.address_en || siteSettings?.address || 'Bagbazar, Kathmandu 44600, Nepal'}</span>
             </span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>Sun–Fri: 9am–6pm</span>
+            <span style={{ color: '#64748b', fontSize: '0.78rem' }}>Sun–Fri: 9am–6pm</span>
             <button
               onClick={toggleLanguage}
-              style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '2px 10px', borderRadius: 'var(--radius-full)', fontSize: '0.75rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+              style={{ background: 'rgba(23,38,66,0.06)', border: '1px solid var(--border-color)', color: 'var(--brand-navy)', padding: '2px 10px', borderRadius: 'var(--radius-full)', fontSize: '0.75rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
             >
-              <Globe size={12} color="#C59A3F" />
+              <Globe size={12} color="var(--brand-navy)" />
               <span>{t.nav.languageName}</span>
             </button>
           </div>
@@ -150,7 +154,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 onBlur={() => { if (!searchTerm) setSearchOpen(false); }}
                 style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '0.85rem', width: '160px', color: 'var(--text-main)' }}
               />
-              <button type="submit" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-maroon)', display: 'flex', padding: '2px' }}>
+              <button type="submit" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-navy)', display: 'flex', padding: '2px' }}>
                 <Search size={15} />
               </button>
             </form>
@@ -158,7 +162,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             title="Search"
-            style={{ background: searchOpen ? 'rgba(133,28,44,0.08)' : 'transparent', border: 'none', cursor: 'pointer', color: 'var(--brand-maroon)', display: 'flex', alignItems: 'center', padding: '7px', borderRadius: '6px', transition: 'background 0.15s' }}>
+            style={{ background: searchOpen ? 'rgba(23,38,66,0.08)' : 'transparent', border: 'none', cursor: 'pointer', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', padding: '7px', borderRadius: '6px', transition: 'background 0.15s' }}>
             <Search size={18} />
           </button>
         </div>
@@ -190,7 +194,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 className={`nav-dropdown-item ${activePage === 'who-we-are' || activePage === 'about' ? 'active' : ''}`}
                 onClick={(e) => { e.preventDefault(); handleNavClick('who-we-are'); }}
               >
-                <Building2 size={16} color="var(--brand-maroon)" />
+                <Building2 size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.aboutWhoWeAre || 'Who We Are'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Our mission, values & Bagbazar campus</div>
@@ -201,7 +205,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 className={`nav-dropdown-item ${activePage === 'ceo-message' ? 'active' : ''}`}
                 onClick={(e) => { e.preventDefault(); handleNavClick('ceo-message'); }}
               >
-                <Award size={16} color="var(--brand-gold)" />
+                <Award size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.aboutCeo || 'Message from CEO'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Executive letter & philosophy</div>
@@ -238,7 +242,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 className={`nav-dropdown-item ${activePage === 'individual-training' || activePage === 'training' ? 'active' : ''}`}
                 onClick={(e) => { e.preventDefault(); handleNavClick('individual-training'); }}
               >
-                <BookOpen size={16} color="var(--brand-gold)" />
+                <BookOpen size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.trainingIndividual || 'Individual Training'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Small cohorts for professionals & students</div>
@@ -249,7 +253,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 className={`nav-dropdown-item ${activePage === 'institutional-training' ? 'active' : ''}`}
                 onClick={(e) => { e.preventDefault(); handleNavClick('institutional-training'); }}
               >
-                <GraduationCap size={16} color="var(--brand-maroon)" />
+                <GraduationCap size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.trainingInstitution || 'Institutional Programs'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>On-campus bootcamps & teacher AI literacy</div>
@@ -282,13 +286,42 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
             {t.nav.blog}
           </a>
 
-          <a
-            href={pathForPage('gallery')}
-            onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}
-            className={`nav-link ${activePage === 'gallery' ? 'active' : ''}`}
-          >
-            {t.nav.gallery || (currentLang === 'ne' ? 'ग्यालेरी' : 'Gallery')}
-          </a>
+          {/* Gallery Dropdown */}
+          <div className="nav-dropdown-wrapper">
+            <a
+              href={pathForPage('gallery')}
+              onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}
+              className={`nav-link ${isGalleryActive ? 'active' : ''}`}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+            >
+              <span>{t.nav.gallery || (currentLang === 'ne' ? 'ग्यालेरी' : 'Gallery')}</span>
+              <ChevronDown size={14} style={{ opacity: 0.7 }} />
+            </a>
+            <div className="nav-dropdown-panel">
+              <a
+                href={pathForPage('gallery')}
+                className={`nav-dropdown-item ${activePage === 'gallery' ? 'active' : ''}`}
+                onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}
+              >
+                <Image size={16} color="var(--brand-navy)" />
+                <div>
+                  <div>{currentLang === 'ne' ? 'फोटो' : 'Photos'}</div>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Campus, workshops & production glimpses</div>
+                </div>
+              </a>
+              <a
+                href={pathForPage('gallery-videos')}
+                className={`nav-dropdown-item ${activePage === 'gallery-videos' ? 'active' : ''}`}
+                onClick={(e) => { e.preventDefault(); handleNavClick('gallery-videos'); }}
+              >
+                <Video size={16} color="var(--brand-navy)" />
+                <div>
+                  <div>{currentLang === 'ne' ? 'भिडियो' : 'Videos'}</div>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Workshops, training & event videos</div>
+                </div>
+              </a>
+            </div>
+          </div>
 
           <a
             href={pathForPage('contact')}
@@ -323,14 +356,32 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
 
 
 
-      {/* Mobile Drawer — full menu including Gallery */}
+      </header>
+
+      {/* Mobile Drawer — half-width vertical panel from the right */}
       {mobileMenuOpen && (
         <>
-          <div className="mobile-drawer-overlay" onClick={() => setMobileMenuOpen(false)} />
+          <div className="mobile-drawer-backdrop" onClick={() => setMobileMenuOpen(false)} />
           <nav className="mobile-drawer" aria-label="Mobile menu">
-            <a href={pathForPage('home')} className={`mobile-drawer-link ${activePage === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}>
-              {t.nav.home}
-            </a>
+          <div className="mobile-drawer-header">
+            <img
+              src="/images/logo.png"
+              alt="Vedanta Strategies"
+              className="brand-logo-img mobile-drawer-logo"
+            />
+            <button
+              type="button"
+              className="mobile-drawer-close"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              <X size={26} />
+            </button>
+          </div>
+
+          <a href={pathForPage('home')} className={`mobile-drawer-link ${activePage === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}>
+            {t.nav.home}
+          </a>
 
             <div>
               <button type="button" className={`mobile-drawer-link mobile-drawer-accordion ${isAboutActive ? 'active' : ''}`} onClick={() => setMobileAboutOpen(!mobileAboutOpen)}>
@@ -362,10 +413,18 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
             <a href={pathForPage('services')} className={`mobile-drawer-link ${activePage === 'services' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}>{t.nav.services}</a>
             <a href={pathForPage('portfolio')} className={`mobile-drawer-link ${activePage === 'portfolio' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('portfolio'); }}>{t.nav.portfolio}</a>
             <a href={pathForPage('blog')} className={`mobile-drawer-link ${activePage === 'blog' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('blog'); }}>{t.nav.blog}</a>
-            <a href={pathForPage('gallery')} className={`mobile-drawer-link ${activePage === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}>
-              <Image size={16} />
-              {t.nav.gallery}
-            </a>
+            <div>
+              <button type="button" className={`mobile-drawer-link mobile-drawer-accordion ${isGalleryActive ? 'active' : ''}`} onClick={() => setMobileGalleryOpen(!mobileGalleryOpen)}>
+                <span>{t.nav.gallery}</span>
+                <ChevronDown size={16} style={{ transform: mobileGalleryOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+              </button>
+              {mobileGalleryOpen && (
+                <div className="mobile-drawer-sub">
+                  <a href={pathForPage('gallery')} className={activePage === 'gallery' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}>{currentLang === 'ne' ? 'फोटो' : 'Photos'}</a>
+                  <a href={pathForPage('gallery-videos')} className={activePage === 'gallery-videos' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('gallery-videos'); }}>{currentLang === 'ne' ? 'भिडियो' : 'Videos'}</a>
+                </div>
+              )}
+            </div>
             <a href={pathForPage('contact')} className={`mobile-drawer-link ${activePage === 'contact' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('contact'); }}>{t.nav.contact}</a>
 
             <div className="mobile-drawer-footer">
@@ -387,9 +446,9 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
               </button>
             </div>
           </nav>
-        </>
+          </>
       )}
-    </header>
+    </>
   );
 }
 

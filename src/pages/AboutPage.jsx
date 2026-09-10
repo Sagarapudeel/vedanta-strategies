@@ -41,14 +41,14 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
 
   const corePillars = [
     {
-      icon: <Laptop size={22} color="var(--brand-maroon)" />,
+      icon: <Laptop size={22} color="var(--brand-navy)" />,
       title_en: "Hands-on Laptop Mastery",
       title_ne: "आफ्नै ल्यापटपमा प्रत्यक्ष अभ्यास",
       desc_en: "Every workflow is practiced live on your own machine. Zero theoretical lectures without practical output.",
       desc_ne: "प्रत्येक सीप आफ्नै ल्यापटपमा प्रत्यक्ष अभ्यास गरिन्छ। केवल सैद्धान्तिक व्याख्यान होइन, नतिजामुखी सिकाइ।"
     },
     {
-      icon: <Users size={22} color="var(--brand-gold)" />,
+      icon: <Users size={22} color="var(--brand-navy)" />,
       title_en: "Small Cohorts (12–15 Max)",
       title_ne: "सानो समूह (अधिकतम १२–१५)",
       desc_en: "Dedicated attention and step-by-step guidance from mentors on your specific projects and questions.",
@@ -62,7 +62,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
       desc_ne: "नेपाली उपभोक्ता मनोविज्ञान, स्थानीय विज्ञापन अभियान र वास्तविक बजार चुनौतीमा आधारित अध्ययन।"
     },
     {
-      icon: <GraduationCap size={22} color="var(--brand-maroon)" />,
+      icon: <GraduationCap size={22} color="var(--brand-navy)" />,
       title_en: "Institutional Readiness",
       title_ne: "शैक्षिक तथा संस्थागत रूपान्तरण",
       desc_en: "Tailored bootcamps and faculty development programs designed for schools, colleges, and corporate teams.",
@@ -106,7 +106,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
 
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                 <div style={{ padding: '14px 22px', background: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-maroon)', fontFamily: 'var(--font-heading)' }}>
+                  <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-navy)', fontFamily: 'var(--font-heading)' }}>
                     Bagbazar Campus
                   </div>
                   <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Central Kathmandu Hub</div>
@@ -130,7 +130,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
                     display: 'flex', 
                     flexDirection: 'column', 
                     gap: '10px',
-                    borderTop: idx % 2 === 0 ? '3px solid var(--brand-maroon)' : '3px solid var(--brand-gold)'
+                    borderTop: '3px solid var(--brand-navy)'
                   }}
                 >
                   <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'var(--bg-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -166,7 +166,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
             style={{ 
               padding: '48px', 
               background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
-              border: '1px solid rgba(197, 154, 63, 0.35)',
+              border: '1px solid rgba(28, 47, 77, 0.35)',
               boxShadow: 'var(--shadow-md)',
               position: 'relative'
             }}
@@ -179,8 +179,8 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
                     width: '110px', 
                     height: '110px', 
                     borderRadius: '50%', 
-                    background: 'linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-maroon) 100%)', 
-                    border: '3px solid var(--brand-gold)', 
+                    background: 'linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-navy) 100%)', 
+                    border: '3px solid var(--brand-navy)', 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center', 
@@ -196,24 +196,24 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
                 <h3 style={{ fontSize: '1.4rem', color: 'var(--brand-navy)', marginBottom: '4px', fontWeight: '800' }}>
                   {ceoName}
                 </h3>
-                <div style={{ color: 'var(--brand-maroon)', fontSize: '0.9rem', fontWeight: '700', marginBottom: '6px' }}>
+                <div style={{ color: 'var(--brand-navy)', fontSize: '0.9rem', fontWeight: '700', marginBottom: '6px' }}>
                   {ceoTitle}
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                  <MapPin size={13} color="#C59A3F" />
+                  <MapPin size={13} color="var(--brand-navy)" />
                   <span>Bagbazar, Kathmandu, Nepal</span>
                 </div>
               </div>
 
               <div style={{ position: 'relative' }}>
-                <Quote size={40} color="rgba(197, 154, 63, 0.25)" style={{ position: 'absolute', top: '-18px', left: '-12px', zIndex: 0 }} />
+                <Quote size={40} color="rgba(28, 47, 77, 0.25)" style={{ position: 'absolute', top: '-18px', left: '-12px', zIndex: 0 }} />
                 <div style={{ position: 'relative', zIndex: 1 }}>
                   <blockquote style={{ fontSize: '1.05rem', color: 'var(--text-body)', lineHeight: '1.8', fontStyle: 'italic', marginBottom: '24px', margin: 0 }}>
                     "{ceoMessage}"
                   </blockquote>
                   
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '16px', borderTop: '1px solid var(--border-color)' }}>
-                    <div style={{ width: '4px', height: '32px', background: 'var(--brand-maroon)', borderRadius: '2px' }} />
+                    <div style={{ width: '4px', height: '32px', background: 'var(--brand-navy)', borderRadius: '2px' }} />
                     <div>
                       <div style={{ fontWeight: '700', color: 'var(--brand-navy)', fontSize: '0.95rem' }}>{ceoName}</div>
                       <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Vedanta Strategies Pvt. Ltd.</div>
@@ -247,15 +247,15 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
                     width: '76px', 
                     height: '76px', 
                     borderRadius: '50%', 
-                    background: 'rgba(197, 154, 63, 0.12)', 
-                    border: '2px solid var(--brand-gold)', 
+                    background: 'rgba(28, 47, 77, 0.08)', 
+                    border: '2px solid var(--brand-navy)', 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center', 
                     margin: '0 auto 16px auto', 
                     fontSize: '1.55rem', 
                     fontWeight: '800', 
-                    color: 'var(--brand-maroon)' 
+                    color: 'var(--brand-navy)' 
                   }}
                 >
                   {member.avatar}
@@ -263,7 +263,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
                 <h3 style={{ fontSize: '1.25rem', marginBottom: '4px', color: 'var(--brand-navy)', fontWeight: '700' }}>
                   {member.name}
                 </h3>
-                <div style={{ color: 'var(--brand-maroon)', fontSize: '0.86rem', fontWeight: '700', marginBottom: '6px' }}>
+                <div style={{ color: 'var(--brand-navy)', fontSize: '0.86rem', fontWeight: '700', marginBottom: '6px' }}>
                   {getLangText(member, 'role', currentLang) || member.role}
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--brand-navy-light)', marginBottom: '14px', fontWeight: '600' }}>

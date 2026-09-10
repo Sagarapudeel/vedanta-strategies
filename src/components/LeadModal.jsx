@@ -78,7 +78,7 @@ export default function LeadModal({
 
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '30px 10px' }}>
-            <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+            <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'rgba(182, 138, 40, 0.15)', color: '#B68A28', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
               <CheckCircle size={40} />
             </div>
             <h3 style={{ fontSize: '1.8rem', marginBottom: '12px', color: '#fff' }}>

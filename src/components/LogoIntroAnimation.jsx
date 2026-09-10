@@ -108,7 +108,7 @@ export default function LogoIntroAnimation({ onComplete, forceShow = false }) {
           >
             <defs>
               <style>{`
-                .cls-1{font-size:74.63px;font-family:TimesNewRomanPSMT, "Times New Roman", Times, serif;}
+                .cls-1{font-size:74.63px;font-family:'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;}
                 .cls-1,.cls-6{fill:#1c2f4d;}
                 .cls-2{letter-spacing:-0.08em;}
                 .cls-3{letter-spacing:-0.06em;}

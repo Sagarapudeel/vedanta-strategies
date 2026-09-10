@@ -56,7 +56,7 @@ export default function PortfolioPage({ currentLang, portfolioItems = [], openLe
             <div key={caseStudy.id} className="mindrisers-card" style={{ padding: '36px', display: 'flex', flexDirection: 'column' }}>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--brand-maroon)', background: 'var(--brand-maroon-subtle)', padding: '4px 10px', borderRadius: '4px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--brand-navy)', background: 'var(--brand-maroon-subtle)', padding: '4px 10px', borderRadius: '4px' }}>
                   {caseStudy.pillar}
                 </span>
                 <span style={{ fontSize: '0.82rem', color: 'var(--text-subtle)' }}>
@@ -70,11 +70,11 @@ export default function PortfolioPage({ currentLang, portfolioItems = [], openLe
 
               {/* Key Metric Badge */}
               <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', padding: '16px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.12)', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '8px', background: 'rgba(28, 47, 77, 0.1)', color: '#1C2F4D', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <TrendingUp size={22} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '900', color: '#059669', fontFamily: 'var(--font-heading)' }}>
+                  <div style={{ fontSize: '1.4rem', fontWeight: '900', color: '#711B1F', fontFamily: 'var(--font-heading)' }}>
                     {getLangText(caseStudy, 'metric', currentLang)}
                   </div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
@@ -95,7 +95,7 @@ export default function PortfolioPage({ currentLang, portfolioItems = [], openLe
                 </div>
 
                 <div>
-                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--brand-maroon)', marginBottom: '4px' }}>
+                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '4px' }}>
                     {currentLang === 'ne' ? 'वेदान्त स्ट्राटेजिजको समाधान:' : 'WHAT VEDANTA STRATEGIES DELIVERED:'}
                   </div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
@@ -104,7 +104,7 @@ export default function PortfolioPage({ currentLang, portfolioItems = [], openLe
                 </div>
 
                 <div>
-                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0284c7', marginBottom: '4px' }}>
+                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#711B1F', marginBottom: '4px' }}>
                     {currentLang === 'ne' ? 'मापनयोग्य प्रभाव:' : 'MEASURABLE IMPACT:'}
                   </div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-body)', lineHeight: '1.6' }}>

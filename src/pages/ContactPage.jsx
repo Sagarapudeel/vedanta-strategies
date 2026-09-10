@@ -50,7 +50,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
   const mapEmbed = siteSettings?.mapsEmbed || "https://maps.google.com/maps?q=27.7033949,85.3177065&z=17&output=embed";
 
   return (
-    <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
+    <div className="page-wrapper">
       <div className="container">
         
         {/* Header */}
@@ -60,67 +60,67 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
           <p className="section-subtitle">{t.contact.subtitle}</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '48px', alignItems: 'start' }}>
+        <div className="contact-grid">
           
           {/* Left: Contact Info & Map Card */}
           <div>
-            <div className="mindrisers-card" style={{ padding: '36px', marginBottom: '32px' }}>
+            <div className="mindrisers-card contact-info-card">
               <h3 style={{ fontSize: '1.4rem', color: 'var(--brand-navy)', marginBottom: '24px' }}>
                 {t.contact.officeTitle}
               </h3>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '0.95rem', color: 'var(--text-body)' }}>
-                <div style={{ display: 'flex', gap: '14px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--brand-maroon-subtle)', color: 'var(--brand-maroon)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div>
+                <div className="contact-info-item">
+                  <div className="contact-info-icon" style={{ background: 'var(--brand-maroon-subtle)', color: 'var(--brand-maroon)' }}>
                     <MapPin size={20} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '2px' }}>
+                    <div className="contact-info-label">
                       {currentLang === 'ne' ? 'कार्यालय ठेगाना' : 'Address'}
                     </div>
-                    <div style={{ color: 'var(--text-muted)' }}>
+                    <div className="contact-info-value">
                       {getLangText(siteSettings, 'address', currentLang) || siteSettings?.address || 'Bagbazar, Kathmandu 44600, Nepal'}
                     </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '14px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.12)', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="contact-info-item">
+                  <div className="contact-info-icon" style={{ background: 'var(--brand-maroon-subtle)', color: 'var(--brand-maroon)' }}>
                     <Phone size={20} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '2px' }}>
+                    <div className="contact-info-label">
                       {currentLang === 'ne' ? 'फोन तथा सहयोग' : 'Phone & Support'}
                     </div>
-                    <div style={{ color: 'var(--text-muted)' }}>
+                    <div className="contact-info-value">
                       {siteSettings?.primaryPhone || '+977 1-4421098'}{siteSettings?.mobilePhone ? ` / ${siteSettings.mobilePhone}` : ''}
                     </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '14px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.12)', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="contact-info-item">
+                  <div className="contact-info-icon" style={{ background: 'var(--brand-maroon-subtle)', color: 'var(--brand-maroon)' }}>
                     <Mail size={20} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '2px' }}>
+                    <div className="contact-info-label">
                       {currentLang === 'ne' ? 'इमेल सम्पर्क' : 'Email Inquiries'}
                     </div>
-                    <div style={{ color: 'var(--text-muted)' }}>
+                    <div className="contact-info-value">
                       {siteSettings?.officialEmail || 'info@vedantastrategies.com'}
                     </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '14px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(244, 63, 94, 0.12)', color: '#e11d48', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="contact-info-item">
+                  <div className="contact-info-icon" style={{ background: 'var(--brand-maroon-subtle)', color: 'var(--brand-maroon)' }}>
                     <Clock size={20} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: '700', color: 'var(--brand-navy)', marginBottom: '2px' }}>
+                    <div className="contact-info-label">
                       {currentLang === 'ne' ? 'खुला रहने समय' : 'Office Hours'}
                     </div>
-                    <div style={{ color: 'var(--text-muted)' }}>
+                    <div className="contact-info-value">
                       {getLangText(siteSettings, 'officeHours', currentLang) || siteSettings?.officeHours || 'Sun – Fri: 9:00 AM – 6:00 PM'}
                     </div>
                   </div>
@@ -128,7 +128,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
               </div>
 
               {/* Direct WhatsApp CTA */}
-              <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
+              <div className="contact-whatsapp-cta">
                 <a
                   href={`https://wa.me/${siteSettings?.whatsappNumber || '9779801234567'}?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Bagbazar campus or enquire about programs.')}`}
                   target="_blank"
@@ -143,8 +143,8 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
             </div>
 
             {/* Interactive Map Visual with Bagbazar CID */}
-            <div className="mindrisers-card" style={{ overflow: 'hidden', padding: 0 }}>
-              <div style={{ padding: '16px 20px', background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+            <div className="mindrisers-card contact-map-card">
+              <div className="map-header-bar">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', color: 'var(--brand-navy)', fontWeight: '700' }}>
                   <MapPin size={16} color="var(--brand-maroon)" />
                   <span>Bagbazar, Kathmandu Location</span>
@@ -173,10 +173,10 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
           </div>
 
           {/* Right: Dynamic Inquiry Form */}
-          <div className="mindrisers-card" style={{ padding: '40px' }}>
+          <div className="mindrisers-card contact-form-wrapper">
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '40px 10px' }}>
-                <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.12)', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+                <div className="contact-info-icon" style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'var(--brand-maroon-subtle)', color: 'var(--brand-maroon)', margin: '0 auto 20px auto' }}>
                   <CheckCircle size={40} />
                 </div>
                 <h3 style={{ fontSize: '1.8rem', color: 'var(--brand-navy)', marginBottom: '12px' }}>
@@ -212,7 +212,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                  <div className="form-grid-2">
                     <div className="form-group">
                       <label className="form-label">{t.contact.emailLabel}</label>
                       <input
@@ -284,7 +284,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                     />
                   </div>
 
-                  <button type="submit" disabled={loading} className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '8px' }}>
+                  <button type="submit" disabled={loading} className="btn btn-primary btn-lg" style={{ width: '100%' }}>
                     <Send size={18} />
                     <span>{loading ? t.contact.submitting : t.contact.submitBtn}</span>
                   </button>

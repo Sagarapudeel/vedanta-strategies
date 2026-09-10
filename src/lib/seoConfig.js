@@ -98,12 +98,22 @@ export const PUBLIC_PAGES = [
   {
     id: 'gallery',
     path: '/gallery',
-    title: 'Gallery | Campus & Workshop Photos | Vedanta Strategies',
-    titleNe: 'ग्यालेरी | वेदान्त स्ट्र्याटेजीज',
+    title: 'Photo Gallery | Campus & Workshop Photos | Vedanta Strategies',
+    titleNe: 'फोटो ग्यालेरी | वेदान्त स्ट्र्याटेजीज',
     description:
-      'Photos and videos from Vedanta Strategies workshops, production sessions, and the Bagbazar campus.',
+      'Photos from Vedanta Strategies workshops, training sessions, production work, and the Bagbazar campus in Kathmandu.',
     descriptionNe:
-      'वेदान्त स्ट्र्याटेजीजका कार्यशाला, प्रोडक्सन सत्र र बागबजार क्याम्पसका तस्बिर तथा भिडियो।'
+      'वेदान्त स्ट्र्याटेजीजका कार्यशाला, तालिम सत्र, प्रोडक्सन र काठमाडौंको बागबजार क्याम्पसका तस्बिरहरू।'
+  },
+  {
+    id: 'gallery-videos',
+    path: '/gallery/videos',
+    title: 'Video Gallery | Workshops & Events | Vedanta Strategies',
+    titleNe: 'भिडियो ग्यालेरी | वेदान्त स्ट्र्याटेजीज',
+    description:
+      'Videos from Vedanta Strategies workshops, training sessions, and events across Nepal.',
+    descriptionNe:
+      'नेपालभरका वेदान्त स्ट्र्याटेजीजका कार्यशाला, तालिम सत्र र कार्यक्रमका भिडियोहरू।'
   },
   {
     id: 'contact',
@@ -200,6 +210,18 @@ export function applySeoToHtml(html, { title, description, canonical, ogImage, l
   } else {
     out = out.replace('</head>', `    <link rel="canonical" href="${canonical}" />\n  </head>`);
   }
+
+  const siteUrl = getSiteUrl();
+  const basePath = canonical.replace(siteUrl, '') || '/';
+  const enHref = `${siteUrl}${basePath}`;
+  const neHref = `${siteUrl}${basePath}${basePath.includes('?') ? '&' : '?'}lang=ne`;
+  const hreflangTags = [
+    `    <link rel="alternate" hreflang="en" href="${enHref}" />`,
+    `    <link rel="alternate" hreflang="ne" href="${neHref}" />`,
+    `    <link rel="alternate" hreflang="x-default" href="${enHref}" />`
+  ].join('\n');
+  out = out.replace('</head>', `${hreflangTags}\n  </head>`);
+
   return out;
 }
 

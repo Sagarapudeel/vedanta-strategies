@@ -22,6 +22,19 @@ function upsertLink(rel, href) {
   el.setAttribute('href', href);
 }
 
+function upsertHreflang(lang, href) {
+  const key = `hreflang-${lang}`;
+  let el = document.getElementById(key);
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', 'alternate');
+    el.setAttribute('hreflang', lang);
+    el.id = key;
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', href);
+}
+
 function upsertJsonLd(id, data) {
   let el = document.getElementById(id);
   if (!el) {
@@ -51,7 +64,7 @@ export default function SeoHead({ pageId, currentLang, siteSettings }) {
 
     upsertMeta('meta', 'name', 'description', description);
     upsertMeta('meta', 'name', 'robots', isAdmin ? 'noindex, nofollow' : 'index, follow');
-    upsertMeta('meta', 'property', 'og:type', isAdmin ? 'website' : pageId === 'blog' ? 'website' : 'website');
+    upsertMeta('meta', 'property', 'og:type', isAdmin ? 'website' : pageId === 'blog' ? 'article' : 'website');
     upsertMeta('meta', 'property', 'og:site_name', siteSettings?.siteName || DEFAULT_SITE_NAME);
     upsertMeta('meta', 'property', 'og:title', title);
     upsertMeta('meta', 'property', 'og:description', description);
@@ -63,6 +76,15 @@ export default function SeoHead({ pageId, currentLang, siteSettings }) {
     upsertMeta('meta', 'name', 'twitter:description', description);
     upsertMeta('meta', 'name', 'twitter:image', ogImage);
     upsertLink('canonical', canonical);
+
+    if (!isAdmin) {
+      const pagePath = seo.path || '/';
+      const baseEn = `${siteUrl}${pagePath}`;
+      const baseNe = `${siteUrl}${pagePath}${pagePath.includes('?') ? '&' : '?'}lang=ne`;
+      upsertHreflang('en', baseEn);
+      upsertHreflang('ne', baseNe);
+      upsertHreflang('x-default', baseEn);
+    }
 
     if (isAdmin) return;
 
@@ -118,6 +140,23 @@ export default function SeoHead({ pageId, currentLang, siteSettings }) {
           description,
           isPartOf: { '@id': `${siteUrl}/#website` },
           about: { '@id': `${siteUrl}/#organization` }
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: siteUrl
+            },
+            ...(pageId !== 'home' ? [{
+              '@type': 'ListItem',
+              position: 2,
+              name: title.split('|')[0].trim(),
+              item: canonical
+            }] : [])
+          ]
         }
       ]
     });

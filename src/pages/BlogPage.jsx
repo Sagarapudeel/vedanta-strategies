@@ -34,7 +34,7 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
   });
 
   return (
-    <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
+    <div className="page-wrapper">
       <div className="container">
         
         {/* Header */}
@@ -54,9 +54,9 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
         </div>
 
         {/* Filter Bar */}
-        <div style={{ background: 'rgba(15, 23, 42, 0.7)', border: '1px solid var(--border-card)', borderRadius: 'var(--radius-lg)', padding: '20px 24px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+        <div className="blog-filter-bar">
           
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -69,8 +69,8 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
             ))}
           </div>
 
-          <div style={{ position: 'relative', width: '280px' }}>
-            <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', top: '12px', left: '12px' }} />
+          <div>
+            <Search size={16} color="var(--text-muted)" />
             <input
               type="text"
               placeholder={currentLang === 'ne' ? 'लेख खोज्नुहोस्...' : 'Search articles...'}
@@ -84,11 +84,11 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
         </div>
 
         {/* Posts Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '30px', marginBottom: '80px' }}>
+        <div className="blog-grid">
           {filteredPosts.map((post) => (
-            <div key={post.id} className="mindrisers-card" style={{ padding: '32px', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', fontSize: '0.82rem' }}>
-                <span style={{ color: 'var(--brand-maroon)', fontWeight: '700', textTransform: 'uppercase', background: 'var(--brand-maroon-subtle)', padding: '3px 8px', borderRadius: '4px' }}>
+            <div key={post.id} className="mindrisers-card blog-card">
+              <div className="blog-card-meta">
+                <span className="blog-card-category">
                   {getLangText(post, 'category', currentLang) || post.category}
                 </span>
                 <span style={{ color: 'var(--text-subtle)', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -96,15 +96,15 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
                 </span>
               </div>
 
-              <h3 style={{ fontSize: '1.35rem', marginBottom: '14px', color: 'var(--brand-navy)', lineHeight: '1.3' }}>
+              <h3 className="blog-card-title">
                 {getLangText(post, 'title', currentLang)}
               </h3>
 
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
+              <p className="blog-card-summary">
                 {getLangText(post, 'summary', currentLang)}
               </p>
 
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="blog-card-footer">
                 <div style={{ fontSize: '0.82rem', color: 'var(--brand-navy)' }}>
                   <div style={{ fontWeight: '600' }}>{post.author}</div>
                   <div style={{ color: 'var(--text-subtle)', fontSize: '0.78rem' }}>{post.date}</div>
@@ -123,11 +123,11 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
         </div>
 
         {/* Newsletter Callout */}
-        <div className="mindrisers-card" style={{ padding: '40px', textAlign: 'center', maxWidth: '750px', margin: '0 auto', border: '2px solid var(--border-color)' }}>
-          <h3 style={{ fontSize: '1.8rem', color: 'var(--brand-navy)', marginBottom: '12px' }}>
+        <div className="mindrisers-card newsletter-cta">
+          <h3 className="newsletter-cta-heading">
             {currentLang === 'ne' ? 'महत्वपूर्ण विश्लेषण नछुटाउनुहोस्' : 'Never Miss a Tactical Breakdown'}
           </h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', marginBottom: '24px' }}>
+          <p className="newsletter-cta-desc">
             {currentLang === 'ne'
               ? 'हामी हरेक महिना नेपालको प्रविधि, मिडिया साक्षरता, शिक्षा र व्यवसायमा एआईको प्रभावबारे गहन विश्लेषण प्रकाशित गर्दछौँ।'
               : 'We publish monthly whitepapers and investigative essays dissecting how AI is transforming media literacy, education, and commerce in Nepal.'
@@ -157,10 +157,10 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
 
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <User size={15} color="#f59e0b" /> By {activeArticle.author}
+                  <User size={15} color="#1C2F4D" /> By {activeArticle.author}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Calendar size={15} color="#38bdf8" /> {activeArticle.date}
+                  <Calendar size={15} color="#1C2F4D" /> {activeArticle.date}
                 </div>
               </div>
 

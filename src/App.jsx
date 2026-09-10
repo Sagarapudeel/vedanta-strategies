@@ -300,7 +300,7 @@ export default function App() {
           <span>{getLangText(store.siteSettings, 'announcementText', currentLang)}</span>
           <button 
             onClick={() => openLeadModal('training')}
-            style={{ background: '#000', color: '#fff', border: 'none', borderRadius: 'var(--radius-full)', padding: '2px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer', marginLeft: '6px' }}
+            style={{ background: '#B68A28', color: '#fff', border: 'none', borderRadius: 'var(--radius-full)', padding: '2px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer', marginLeft: '6px' }}
           >
             {currentLang === 'ne' ? 'अहिले भर्ना हुनुहोस् →' : 'Apply Now →'}
           </button>
@@ -418,10 +418,12 @@ export default function App() {
             />
           )}
 
-          {activePage === 'gallery' && (
+          {(activePage === 'gallery' || activePage === 'gallery-videos') && (
             <GalleryPage
               currentLang={currentLang}
               media={store.media || {}}
+              kind={activePage === 'gallery-videos' ? 'videos' : 'photos'}
+              setActivePage={goToPage}
             />
           )}
         </main>

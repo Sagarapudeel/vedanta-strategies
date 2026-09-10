@@ -16,7 +16,7 @@ export default function VedantaLogo({
 
   // In dark variant (e.g. for dark hero or dark intro), replace #1c2f4d with #ffffff or bright gold
   const primaryTextColor = variant === 'light' ? '#ffffff' : '#1c2f4d';
-  const primaryNavyColor = variant === 'light' ? '#38bdf8' : '#1c2f4d';
+  const primaryNavyColor = variant === 'light' ? '#ffffff' : '#1c2f4d';
 
   return (
     <svg
@@ -30,7 +30,7 @@ export default function VedantaLogo({
     >
       <defs>
         <style>{`
-          .v-cls-1 { font-size: 74.63px; font-family: TimesNewRomanPSMT, "Times New Roman", Times, serif; fill: ${primaryTextColor}; }
+          .v-cls-1 { font-size: 74.63px; font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: ${primaryTextColor}; }
           .v-cls-6 { fill: ${primaryNavyColor}; }
           .v-cls-2 { letter-spacing: -0.08em; }
           .v-cls-3 { letter-spacing: -0.06em; }
