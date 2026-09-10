@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDataStore } from './data/dataStore';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -39,13 +39,21 @@ import AdminMedia from './admin/AdminMedia';
 import { getLangText } from './utils/langHelper';
 import { loadAdminFromSession, signOutAdmin } from './lib/auth';
 import { isSupabaseConfigured } from './lib/supabase';
+import SeoHead from './components/SeoHead';
+import { parseLocationPage, pathForPage, canonicalizePage } from './lib/seoConfig';
+import { syncBrowserUrl } from './lib/routing';
 
 import { Megaphone } from 'lucide-react';
 
 export default function App() {
   const store = useDataStore();
   const [currentLang, setCurrentLang] = useState('en');
-  const [activePage, setActivePage] = useState('home');
+  const [activePage, setActivePage] = useState(() => parseLocationPage());
+  const goToPage = useCallback((pageId) => {
+    const next = canonicalizePage(pageId);
+    setActivePage(next);
+    syncBrowserUrl(next);
+  }, []);
 
   // Admin Auth State
   const [adminAuth, setAdminAuth] = useState({ isAuthenticated: false, user: null, role: 'super_admin' });
@@ -56,37 +64,29 @@ export default function App() {
   const [leadModal, setLeadModal] = useState({ isOpen: false, purpose: 'general', courseId: '' });
   const [courseModal, setCourseModal] = useState({ isOpen: false, course: null });
 
-  // Handle Hash URLs (e.g. #/admin, #who-we-are, #ceo-message, #team, #individual-training, #institutional-training)
+  // Path URLs (/blog) with hash fallback (#blog) so existing links keep working
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#/', '').replace('#', '');
-      if (hash === 'admin') {
-        setActivePage('admin');
-      } else if (hash === 'about') {
-        setActivePage('who-we-are');
-      } else if (hash === 'training') {
-        setActivePage('individual-training');
-      } else if (hash && [
-        'home',
-        'who-we-are',
-        'ceo-message',
-        'team',
-        'individual-training',
-        'institutional-training',
-        'services',
-        'portfolio',
-        'blog',
-        'contact',
-        'gallery'
-      ].includes(hash)) {
-        setActivePage(hash);
-      } else if (hash === 'production') {
-        setActivePage('services');
+    const applyLocation = () => {
+      const page = parseLocationPage();
+      setActivePage(page);
+      const path = pathForPage(page);
+      if (window.location.pathname !== path || window.location.hash) {
+        window.history.replaceState({ page }, '', path);
       }
     };
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    applyLocation();
+    const onPopState = () => setActivePage(parseLocationPage());
+    const onHashChange = () => {
+      const page = parseLocationPage();
+      setActivePage(page);
+      syncBrowserUrl(page, { replace: true });
+    };
+    window.addEventListener('popstate', onPopState);
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+      window.removeEventListener('hashchange', onHashChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -131,12 +131,21 @@ export default function App() {
   const handleAdminLogout = async () => {
     await signOutAdmin();
     setAdminAuth({ isAuthenticated: false, user: null, role: 'super_admin' });
-    setActivePage('home');
+    goToPage('home');
   };
+
+  const seo = (
+    <SeoHead
+      pageId={activePage}
+      currentLang={currentLang}
+      siteSettings={store.siteSettings}
+    />
+  );
 
   if (store.loading || !authReady) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0b1220', color: '#94a3b8' }}>
+        {seo}
         Loading Vedanta Strategies…
       </div>
     );
@@ -146,20 +155,25 @@ export default function App() {
   if (activePage === 'admin') {
     if (!adminAuth.isAuthenticated) {
       return (
-        <AdminLogin
-          onLoginSuccess={handleAdminLogin}
-          onBackToSite={() => setActivePage('home')}
-        />
+        <>
+          {seo}
+          <AdminLogin
+            onLoginSuccess={handleAdminLogin}
+            onBackToSite={() => goToPage('home')}
+          />
+        </>
       );
     }
 
     return (
-      <AdminLayout
+      <>
+        {seo}
+        <AdminLayout
         activeTab={adminTab}
         setActiveTab={setAdminTab}
         currentRole={adminAuth.role}
         onLogout={handleAdminLogout}
-        onBackToSite={() => setActivePage('home')}
+        onBackToSite={() => goToPage('home')}
         leadCount={store.leads?.filter(l => l.status === 'new').length}
       >
         {adminTab === 'dashboard' && (
@@ -266,12 +280,14 @@ export default function App() {
           />
         )}
       </AdminLayout>
+      </>
     );
   }
 
   // Public Website Render
   return (
     <div>
+      {seo}
       {(!isSupabaseConfigured || store.error) && (
         <div style={{ background: '#7c2d12', color: '#fed7aa', padding: '8px 16px', textAlign: 'center', fontSize: '0.82rem', fontWeight: '600' }}>
           {store.error || 'Supabase is not configured. Copy .env.example to .env.local.'}
@@ -296,7 +312,7 @@ export default function App() {
         currentLang={currentLang}
         setLang={setCurrentLang}
         activePage={activePage}
-        setActivePage={setActivePage}
+        setActivePage={goToPage}
         openLeadModal={openLeadModal}
         siteSettings={store.siteSettings}
       />
@@ -316,7 +332,7 @@ export default function App() {
               testimonials={store.testimonials}
               blogPosts={store.blogPosts}
               media={store.media || {}}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
               openLeadModal={openLeadModal}
               openCourseModal={openCourseModal}
             />
@@ -327,7 +343,7 @@ export default function App() {
               currentLang={currentLang}
               siteContent={store.siteContent}
               openLeadModal={openLeadModal}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
             />
           )}
 
@@ -336,7 +352,7 @@ export default function App() {
               currentLang={currentLang}
               siteContent={store.siteContent}
               openLeadModal={openLeadModal}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
             />
           )}
 
@@ -345,7 +361,7 @@ export default function App() {
               currentLang={currentLang}
               teamMembers={store.teamMembers}
               openLeadModal={openLeadModal}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
             />
           )}
 
@@ -355,7 +371,7 @@ export default function App() {
               courses={store.courses}
               openCourseModal={openCourseModal}
               openLeadModal={openLeadModal}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
             />
           )}
 
@@ -365,7 +381,7 @@ export default function App() {
               courses={store.courses}
               openCourseModal={openCourseModal}
               openLeadModal={openLeadModal}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
             />
           )}
 
@@ -374,7 +390,7 @@ export default function App() {
               currentLang={currentLang}
               services={store.services}
               openLeadModal={openLeadModal}
-              setActivePage={setActivePage}
+              setActivePage={goToPage}
             />
           )}
 
@@ -414,7 +430,7 @@ export default function App() {
       {/* Site Footer */}
       <Footer
         currentLang={currentLang}
-        setActivePage={setActivePage}
+        setActivePage={goToPage}
         openLeadModal={openLeadModal}
         siteSettings={store.siteSettings}
       />

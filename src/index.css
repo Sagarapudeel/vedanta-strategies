@@ -604,6 +604,7 @@ button, input, select, textarea {
   border: 1px solid transparent;
   transition: var(--transition);
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -2524,6 +2525,7 @@ body.mobile-nav-open {
   padding: 12px 8px;
   cursor: pointer;
   border-radius: 8px;
+  text-decoration: none;
 }
 
 .mobile-drawer-link.active {
@@ -2545,7 +2547,8 @@ body.mobile-nav-open {
   margin: 0 8px 8px 12px;
 }
 
-.mobile-drawer-sub button {
+.mobile-drawer-sub button,
+.mobile-drawer-sub a {
   text-align: left;
   background: transparent;
   border: none;
@@ -2555,9 +2558,11 @@ body.mobile-nav-open {
   padding: 8px 8px;
   cursor: pointer;
   border-radius: 6px;
+  text-decoration: none;
 }
 
-.mobile-drawer-sub button.active {
+.mobile-drawer-sub button.active,
+.mobile-drawer-sub a.active {
   color: #851C2C;
   font-weight: 700;
 }

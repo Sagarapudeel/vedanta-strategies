@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
+import { pathForPage } from '../lib/seoConfig';
 import { 
   Phone, 
   Mail, 
@@ -46,7 +47,6 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
   const handleNavClick = (pageId) => {
     setActivePage(pageId);
     setMobileMenuOpen(false);
-    window.location.hash = pageId === 'home' ? 'home' : pageId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -78,7 +78,6 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
         e.preventDefault();
         setActivePage('admin');
-        window.location.hash = '#admin';
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -125,7 +124,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
       <div className="container main-nav-container">
         {/* Brand Official Logo */}
         <a 
-          href="#home" 
+          href={pathForPage('home')} 
           onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} 
           className="logo-wrap"
           title="Vedanta Strategies - Home"
@@ -167,7 +166,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
         {/* Desktop Nav Links */}
         <nav className="nav-links">
           <a
-            href="#home"
+            href={pathForPage('home')}
             onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}
             className={`nav-link ${activePage === 'home' ? 'active' : ''}`}
           >
@@ -177,7 +176,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           {/* About Us Dropdown */}
           <div className="nav-dropdown-wrapper">
             <a
-              href="#who-we-are"
+              href={pathForPage('who-we-are')}
               onClick={(e) => { e.preventDefault(); handleNavClick('who-we-are'); }}
               className={`nav-link ${isAboutActive ? 'active' : ''}`}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
@@ -186,43 +185,46 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
               <ChevronDown size={14} style={{ opacity: 0.7 }} />
             </a>
             <div className="nav-dropdown-panel">
-              <div 
+              <a
+                href={pathForPage('who-we-are')}
                 className={`nav-dropdown-item ${activePage === 'who-we-are' || activePage === 'about' ? 'active' : ''}`}
-                onClick={() => handleNavClick('who-we-are')}
+                onClick={(e) => { e.preventDefault(); handleNavClick('who-we-are'); }}
               >
                 <Building2 size={16} color="var(--brand-maroon)" />
                 <div>
                   <div>{t.nav.aboutWhoWeAre || 'Who We Are'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Our mission, values & Bagbazar campus</div>
                 </div>
-              </div>
-              <div 
+              </a>
+              <a
+                href={pathForPage('ceo-message')}
                 className={`nav-dropdown-item ${activePage === 'ceo-message' ? 'active' : ''}`}
-                onClick={() => handleNavClick('ceo-message')}
+                onClick={(e) => { e.preventDefault(); handleNavClick('ceo-message'); }}
               >
                 <Award size={16} color="var(--brand-gold)" />
                 <div>
                   <div>{t.nav.aboutCeo || 'Message from CEO'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Executive letter & philosophy</div>
                 </div>
-              </div>
-              <div 
+              </a>
+              <a
+                href={pathForPage('team')}
                 className={`nav-dropdown-item ${activePage === 'team' ? 'active' : ''}`}
-                onClick={() => handleNavClick('team')}
+                onClick={(e) => { e.preventDefault(); handleNavClick('team'); }}
               >
                 <Users size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.aboutTeam || 'Our Team'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Instructors & digital strategists</div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
           {/* Training & Courses Dropdown */}
           <div className="nav-dropdown-wrapper">
             <a
-              href="#individual-training"
+              href={pathForPage('individual-training')}
               onClick={(e) => { e.preventDefault(); handleNavClick('individual-training'); }}
               className={`nav-link ${isTrainingActive ? 'active' : ''}`}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
@@ -231,31 +233,33 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
               <ChevronDown size={14} style={{ opacity: 0.7 }} />
             </a>
             <div className="nav-dropdown-panel">
-              <div 
+              <a
+                href={pathForPage('individual-training')}
                 className={`nav-dropdown-item ${activePage === 'individual-training' || activePage === 'training' ? 'active' : ''}`}
-                onClick={() => handleNavClick('individual-training')}
+                onClick={(e) => { e.preventDefault(); handleNavClick('individual-training'); }}
               >
                 <BookOpen size={16} color="var(--brand-gold)" />
                 <div>
                   <div>{t.nav.trainingIndividual || 'Individual Training'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Small cohorts for professionals & students</div>
                 </div>
-              </div>
-              <div 
+              </a>
+              <a
+                href={pathForPage('institutional-training')}
                 className={`nav-dropdown-item ${activePage === 'institutional-training' ? 'active' : ''}`}
-                onClick={() => handleNavClick('institutional-training')}
+                onClick={(e) => { e.preventDefault(); handleNavClick('institutional-training'); }}
               >
                 <GraduationCap size={16} color="var(--brand-maroon)" />
                 <div>
                   <div>{t.nav.trainingInstitution || 'Institutional Programs'}</div>
                   <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>On-campus bootcamps & teacher AI literacy</div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
           <a
-            href="#services"
+            href={pathForPage('services')}
             onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
             className={`nav-link ${activePage === 'services' ? 'active' : ''}`}
           >
@@ -263,7 +267,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           </a>
 
           <a
-            href="#portfolio"
+            href={pathForPage('portfolio')}
             onClick={(e) => { e.preventDefault(); handleNavClick('portfolio'); }}
             className={`nav-link ${activePage === 'portfolio' ? 'active' : ''}`}
           >
@@ -271,7 +275,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           </a>
 
           <a
-            href="#blog"
+            href={pathForPage('blog')}
             onClick={(e) => { e.preventDefault(); handleNavClick('blog'); }}
             className={`nav-link ${activePage === 'blog' ? 'active' : ''}`}
           >
@@ -279,7 +283,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           </a>
 
           <a
-            href="#gallery"
+            href={pathForPage('gallery')}
             onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}
             className={`nav-link ${activePage === 'gallery' ? 'active' : ''}`}
           >
@@ -287,7 +291,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           </a>
 
           <a
-            href="#contact"
+            href={pathForPage('contact')}
             onClick={(e) => { e.preventDefault(); handleNavClick('contact'); }}
             className={`nav-link ${activePage === 'contact' ? 'active' : ''}`}
           >
@@ -324,9 +328,9 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
         <>
           <div className="mobile-drawer-overlay" onClick={() => setMobileMenuOpen(false)} />
           <nav className="mobile-drawer" aria-label="Mobile menu">
-            <button className={`mobile-drawer-link ${activePage === 'home' ? 'active' : ''}`} onClick={() => handleNavClick('home')}>
+            <a href={pathForPage('home')} className={`mobile-drawer-link ${activePage === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}>
               {t.nav.home}
-            </button>
+            </a>
 
             <div>
               <button type="button" className={`mobile-drawer-link mobile-drawer-accordion ${isAboutActive ? 'active' : ''}`} onClick={() => setMobileAboutOpen(!mobileAboutOpen)}>
@@ -335,9 +339,9 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
               </button>
               {mobileAboutOpen && (
                 <div className="mobile-drawer-sub">
-                  <button className={activePage === 'who-we-are' || activePage === 'about' ? 'active' : ''} onClick={() => handleNavClick('who-we-are')}>{t.nav.aboutWhoWeAre}</button>
-                  <button className={activePage === 'ceo-message' ? 'active' : ''} onClick={() => handleNavClick('ceo-message')}>{t.nav.aboutCeo}</button>
-                  <button className={activePage === 'team' ? 'active' : ''} onClick={() => handleNavClick('team')}>{t.nav.aboutTeam}</button>
+                  <a href={pathForPage('who-we-are')} className={activePage === 'who-we-are' || activePage === 'about' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('who-we-are'); }}>{t.nav.aboutWhoWeAre}</a>
+                  <a href={pathForPage('ceo-message')} className={activePage === 'ceo-message' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('ceo-message'); }}>{t.nav.aboutCeo}</a>
+                  <a href={pathForPage('team')} className={activePage === 'team' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('team'); }}>{t.nav.aboutTeam}</a>
                 </div>
               )}
             </div>
@@ -349,20 +353,20 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
               </button>
               {mobileTrainingOpen && (
                 <div className="mobile-drawer-sub">
-                  <button className={activePage === 'individual-training' || activePage === 'training' ? 'active' : ''} onClick={() => handleNavClick('individual-training')}>{t.nav.trainingIndividual}</button>
-                  <button className={activePage === 'institutional-training' ? 'active' : ''} onClick={() => handleNavClick('institutional-training')}>{t.nav.trainingInstitution}</button>
+                  <a href={pathForPage('individual-training')} className={activePage === 'individual-training' || activePage === 'training' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('individual-training'); }}>{t.nav.trainingIndividual}</a>
+                  <a href={pathForPage('institutional-training')} className={activePage === 'institutional-training' ? 'active' : ''} onClick={(e) => { e.preventDefault(); handleNavClick('institutional-training'); }}>{t.nav.trainingInstitution}</a>
                 </div>
               )}
             </div>
 
-            <button className={`mobile-drawer-link ${activePage === 'services' ? 'active' : ''}`} onClick={() => handleNavClick('services')}>{t.nav.services}</button>
-            <button className={`mobile-drawer-link ${activePage === 'portfolio' ? 'active' : ''}`} onClick={() => handleNavClick('portfolio')}>{t.nav.portfolio}</button>
-            <button className={`mobile-drawer-link ${activePage === 'blog' ? 'active' : ''}`} onClick={() => handleNavClick('blog')}>{t.nav.blog}</button>
-            <button className={`mobile-drawer-link ${activePage === 'gallery' ? 'active' : ''}`} onClick={() => handleNavClick('gallery')}>
+            <a href={pathForPage('services')} className={`mobile-drawer-link ${activePage === 'services' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}>{t.nav.services}</a>
+            <a href={pathForPage('portfolio')} className={`mobile-drawer-link ${activePage === 'portfolio' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('portfolio'); }}>{t.nav.portfolio}</a>
+            <a href={pathForPage('blog')} className={`mobile-drawer-link ${activePage === 'blog' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('blog'); }}>{t.nav.blog}</a>
+            <a href={pathForPage('gallery')} className={`mobile-drawer-link ${activePage === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('gallery'); }}>
               <Image size={16} />
               {t.nav.gallery}
-            </button>
-            <button className={`mobile-drawer-link ${activePage === 'contact' ? 'active' : ''}`} onClick={() => handleNavClick('contact')}>{t.nav.contact}</button>
+            </a>
+            <a href={pathForPage('contact')} className={`mobile-drawer-link ${activePage === 'contact' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); handleNavClick('contact'); }}>{t.nav.contact}</a>
 
             <div className="mobile-drawer-footer">
               <button type="button" className="mobile-lang-btn" onClick={toggleLanguage}>

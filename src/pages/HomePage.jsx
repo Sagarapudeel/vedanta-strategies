@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
+import { pathForPage } from '../lib/seoConfig';
 import {
   ArrowRight,
   Sparkles,
@@ -135,14 +136,15 @@ export default function HomePage({
               >
                 {currentLang === 'ne' ? 'सिट बुक गर्नुहोस्' : 'Book Your Seat →'}
               </button>
-              <button
-                onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                style={{ padding: '14px 28px', fontSize: '0.97rem', fontWeight: '600', fontFamily: 'Poppins, sans-serif', background: 'transparent', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.3)', borderRadius: '7px', cursor: 'pointer', transition: 'border-color 0.15s, background 0.15s' }}
+              <a
+                href={pathForPage('individual-training')}
+                onClick={(e) => { e.preventDefault(); setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                style={{ padding: '14px 28px', fontSize: '0.97rem', fontWeight: '600', fontFamily: 'Poppins, sans-serif', background: 'transparent', color: '#ffffff', border: '1.5px solid rgba(255,255,255,0.3)', borderRadius: '7px', cursor: 'pointer', transition: 'border-color 0.15s, background 0.15s', textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.7)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'transparent'; }}
               >
                 {currentLang === 'ne' ? 'पाठ्यक्रमहरू' : 'View Courses'}
-              </button>
+              </a>
             </div>
           </div>
 
@@ -240,13 +242,14 @@ export default function HomePage({
                 </li>
               </ul>
 
-              <button
+              <a
+                href={pathForPage('individual-training')}
                 className="btn btn-outline-gold"
-                onClick={() => { setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={(e) => { e.preventDefault(); setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 <span>{t.pillars.p1Btn}</span>
                 <ArrowRight size={15} />
-              </button>
+              </a>
             </div>
 
             {/* Pillar 2: Institutional Programs */}
@@ -278,14 +281,15 @@ export default function HomePage({
                 </li>
               </ul>
 
-              <button
+              <a
+                href={pathForPage('institutional-training')}
                 className="btn btn-secondary"
                 style={{ color: 'var(--brand-maroon)', borderColor: 'rgba(133, 28, 44, 0.3)' }}
-                onClick={() => { setActivePage('institutional-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={(e) => { e.preventDefault(); setActivePage('institutional-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 <span>{currentLang === 'ne' ? 'संस्थागत कार्यक्रम हेर्नुहोस्' : 'View Institutional Programs'}</span>
                 <ArrowRight size={15} />
-              </button>
+              </a>
             </div>
 
             {/* Pillar 3: Collaboration */}
@@ -311,13 +315,14 @@ export default function HomePage({
                 </li>
               </ul>
 
-              <button
+              <a
+                href={pathForPage('services')}
                 className="btn btn-navy"
-                onClick={() => { setActivePage('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={(e) => { e.preventDefault(); setActivePage('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 <span>{t.pillars.p3Btn}</span>
                 <ArrowRight size={15} />
-              </button>
+              </a>
             </div>
 
           </div>
@@ -629,12 +634,13 @@ export default function HomePage({
                 </p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid var(--border-light)' }}>
                   <span style={{ fontSize: '0.8rem', color: '#64748b' }}>By {post.author}</span>
-                  <button
-                    onClick={() => { setActivePage('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    style={{ background: 'transparent', border: 'none', color: 'var(--brand-maroon)', fontWeight: '700', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                  <a
+                    href={pathForPage('blog')}
+                    onClick={(e) => { e.preventDefault(); setActivePage('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--brand-maroon)', fontWeight: '700', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
                   >
                     Read Guide ›
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -660,10 +666,10 @@ export default function HomePage({
             <button className="btn btn-primary btn-lg" onClick={() => openLeadModal('general')}>
               <span>Talk to Our Team</span>
             </button>
-            <button className="btn btn-secondary btn-lg" onClick={() => { setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <a href={pathForPage('contact')} className="btn btn-secondary btn-lg" onClick={(e) => { e.preventDefault(); setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
               <span>View Office Location & Map</span>
               <ArrowRight size={15} />
-            </button>
+            </a>
           </div>
         </div>
       </section>
