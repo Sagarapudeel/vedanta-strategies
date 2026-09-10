@@ -35,7 +35,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }) {
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <div style={{ background: '#ffffff', borderRadius: '12px', padding: '10px 18px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', boxShadow: '0 4px 14px rgba(0,0,0,0.3)' }}>
             <img
-              src="/images/logo.png"
+              src="/images/logo.svg"
               alt="Vedanta Strategies"
               style={{ height: '48px', width: 'auto', display: 'block', objectFit: 'contain' }}
             />

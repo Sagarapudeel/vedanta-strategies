@@ -2,7 +2,7 @@
 
 export const DEFAULT_SITE_URL = 'https://vedantastrategies.com';
 export const DEFAULT_SITE_NAME = 'Vedanta Strategies';
-export const DEFAULT_OG_IMAGE = '/images/logo.png';
+export const DEFAULT_OG_IMAGE = '/images/logo.svg';
 
 export const PUBLIC_PAGES = [
   {
@@ -114,6 +114,16 @@ export const PUBLIC_PAGES = [
       'Videos from Vedanta Strategies workshops, training sessions, and events across Nepal.',
     descriptionNe:
       'नेपालभरका वेदान्त स्ट्र्याटेजीजका कार्यशाला, तालिम सत्र र कार्यक्रमका भिडियोहरू।'
+  },
+  {
+    id: 'search',
+    path: '/search',
+    title: 'Search | Vedanta Strategies',
+    titleNe: 'खोज | वेदान्त स्ट्र्याटेजीज',
+    description:
+      'Search Vedanta Strategies for courses, services, blog articles, team members, partners, and gallery content.',
+    descriptionNe:
+      'वेदान्त स्ट्र्याटेजीजमा पाठ्यक्रम, सेवा, ब्लग लेख, टिम, साझेदार र ग्यालेरी सामग्री खोज्नुहोस्।'
   },
   {
     id: 'contact',

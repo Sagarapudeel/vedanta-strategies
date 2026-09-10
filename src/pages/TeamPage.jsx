@@ -84,25 +84,13 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
                 borderTop: '4px solid var(--brand-navy)'
               }}
             >
-              <div 
-                style={{ 
-                  width: '84px', 
-                  height: '84px', 
-                  borderRadius: '50%', 
-                  background: 'linear-gradient(135deg, rgba(28, 47, 77, 0.08) 0%, rgba(28, 47, 77, 0.05) 100%)', 
-                  border: '2px solid var(--brand-navy)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  margin: '0 auto 18px auto', 
-                  fontSize: '1.65rem', 
-                  fontWeight: '800', 
-                  color: 'var(--brand-navy)',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
-                }}
-              >
-                {member.avatar || member.name?.slice(0, 2).toUpperCase()}
-              </div>
+              <div className="team-photo">
+                  {member.photo ? (
+                    <img src={member.photo} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  ) : (
+                    (member.avatar || member.name?.slice(0, 2).toUpperCase())
+                  )}
+                </div>
 
               <h3 style={{ fontSize: '1.35rem', marginBottom: '4px', color: 'var(--brand-navy)', fontWeight: '800' }}>
                 {member.name}

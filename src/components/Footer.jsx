@@ -44,7 +44,7 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
             <div className="footer-logo-wrap">
               <div className="footer-logo-box">
                 <img 
-                  src="/images/logo.png" 
+                  src="/images/logo.svg" 
                   alt="Vedanta Strategies" 
                   className="footer-logo-img"
                 />

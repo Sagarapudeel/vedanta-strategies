@@ -903,7 +903,7 @@ What works much better:
   media: {
     heroImage: "/images/hero.jpg",
     heroImageAlt: "Vedanta Strategies Training Workshop in Kathmandu",
-    siteLogo: "/images/logo.png",
+    siteLogo: "/images/logo.svg",
     banners: {
       about: "",
       training: "",

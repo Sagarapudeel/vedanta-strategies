@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Users, PlusCircle, Trash2, Edit2, Globe, CheckCircle } from 'lucide-react';
+import ImageInput from './ImageInput';
 
 export default function AdminTeam({ 
   teamMembers = [], 
@@ -19,6 +20,7 @@ export default function AdminTeam({
     specialty_ne: '',
     bio_en: '',
     bio_ne: '',
+    photo: '',
     avatar: 'VS'
   });
 
@@ -33,6 +35,7 @@ export default function AdminTeam({
       specialty_ne: '',
       bio_en: '',
       bio_ne: '',
+      photo: '',
       avatar: 'VS'
     });
     setModalOpen(true);
@@ -49,6 +52,7 @@ export default function AdminTeam({
       specialty_ne: member.specialty_ne || '',
       bio_en: member.bio_en || member.bio || '',
       bio_ne: member.bio_ne || '',
+      photo: member.photo || '',
       avatar: member.avatar || 'VS'
     });
     setModalOpen(true);
@@ -67,6 +71,7 @@ export default function AdminTeam({
       bio: formData.bio_en,
       bio_en: formData.bio_en,
       bio_ne: formData.bio_ne,
+      photo: formData.photo || '',
       avatar: formData.avatar || (formData.name ? formData.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'VS')
     };
 
@@ -98,8 +103,12 @@ export default function AdminTeam({
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
         {teamMembers.map((member) => (
           <div key={member.id} className="glass-card" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px auto', fontSize: '1.4rem', fontWeight: '800' }}>
-              {member.avatar}
+            <div style={{ width: '120px', height: '140px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px auto', fontSize: '1.4rem', fontWeight: '800', overflow: 'hidden' }}>
+              {member.photo ? (
+                <img src={member.photo} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              ) : (
+                member.avatar
+              )}
             </div>
             <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '4px' }}>{member.name}</h3>
             <div style={{ color: 'var(--accent-gold)', fontSize: '0.85rem', fontWeight: '600', marginBottom: '4px' }}>
@@ -191,30 +200,39 @@ export default function AdminTeam({
             </div>
 
             <form onSubmit={handleSubmit}>
-              {/* Shared Name & Avatar */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '14px', marginBottom: '14px' }}>
-                <div className="form-group">
-                  <label className="form-label">Full Name & Title</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. Er. Suman Adhikari"
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Avatar Initials</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    maxLength="3"
-                    value={formData.avatar}
-                    onChange={(e) => setFormData({ ...formData, avatar: e.target.value.toUpperCase() })}
-                    placeholder="e.g. SA"
-                  />
-                </div>
+              {/* Shared Name & Photo */}
+              <div className="form-group" style={{ marginBottom: '14px' }}>
+                <label className="form-label">Full Name & Title</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Er. Suman Adhikari"
+                />
+              </div>
+
+              <div style={{ marginBottom: '14px' }}>
+                <ImageInput
+                  label="Profile Photo (Upload or URL)"
+                  value={formData.photo}
+                  onChange={(v) => setFormData({ ...formData, photo: v })}
+                  hint="Shown as a circular portrait on the Team page. Leave empty to show initials instead."
+                  previewHeight={110}
+                />
+              </div>
+
+              <div className="form-group" style={{ marginBottom: '20px' }}>
+                <label className="form-label">Avatar Initials (fallback when no photo)</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  maxLength="3"
+                  value={formData.avatar}
+                  onChange={(e) => setFormData({ ...formData, avatar: e.target.value.toUpperCase() })}
+                  placeholder="e.g. SA"
+                />
               </div>
 
               {activeLangTab === 'en' ? (

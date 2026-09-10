@@ -19,6 +19,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import BlogPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
+import SearchPage from './pages/SearchPage';
 
 // Admin Pages
 import AdminLogin from './admin/AdminLogin';
@@ -49,11 +50,19 @@ export default function App() {
   const store = useDataStore();
   const [currentLang, setCurrentLang] = useState('en');
   const [activePage, setActivePage] = useState(() => parseLocationPage());
+  const [searchTerm, setSearchTerm] = useState('');
   const goToPage = useCallback((pageId) => {
     const next = canonicalizePage(pageId);
     setActivePage(next);
     syncBrowserUrl(next);
   }, []);
+
+  const handleSiteSearch = useCallback((term) => {
+    if (term && term.trim()) {
+      setSearchTerm(term.trim());
+      goToPage('search');
+    }
+  }, [goToPage]);
 
   // Admin Auth State
   const [adminAuth, setAdminAuth] = useState({ isAuthenticated: false, user: null, role: 'super_admin' });
@@ -235,6 +244,7 @@ export default function App() {
           <AdminTestimonials
             testimonials={store.testimonials}
             addTestimonial={store.addTestimonial}
+            updateTestimonial={store.updateTestimonial}
             deleteTestimonial={store.deleteTestimonial}
           />
         )}
@@ -426,6 +436,16 @@ export default function App() {
               setActivePage={goToPage}
             />
           )}
+
+          {activePage === 'search' && (
+            <SearchPage
+              query={searchTerm}
+              onQueryChange={setSearchTerm}
+              store={store}
+              goToPage={goToPage}
+              currentLang={currentLang}
+            />
+          )}
         </main>
       </ErrorBoundary>
 
@@ -441,6 +461,7 @@ export default function App() {
       <WhatsAppWidget
         whatsappNumber={store.siteSettings?.whatsappNumber}
         currentLang={currentLang}
+        onSearch={handleSiteSearch}
       />
 
       {/* Lead Inquiry Dynamic Modal */}

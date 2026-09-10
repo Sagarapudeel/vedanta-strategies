@@ -7,7 +7,6 @@ import {
   Mail, 
   MapPin, 
   Globe, 
-  Search, 
   Menu, 
   X, 
   BookOpen, 
@@ -26,13 +25,11 @@ import {
   Video
 } from 'lucide-react';
 
-export default function Navbar({ currentLang, setLang, activePage, setActivePage, openLeadModal, siteSettings, onSearch }) {
+export default function Navbar({ currentLang, setLang, activePage, setActivePage, openLeadModal, siteSettings }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileTrainingOpen, setMobileTrainingOpen] = useState(false);
   const [mobileGalleryOpen, setMobileGalleryOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchOpen, setSearchOpen] = useState(false);
   const t = translations[currentLang] || translations.en;
 
   const toggleLanguage = () => {
@@ -64,14 +61,6 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
     document.body.classList.toggle('mobile-nav-open', mobileMenuOpen);
     return () => document.body.classList.remove('mobile-nav-open');
   }, [mobileMenuOpen]);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      setActivePage('individual-training');
-      if (onSearch) onSearch(searchTerm);
-    }
-  };
 
   // Hidden keyboard shortcut: Ctrl+Shift+A opens admin for internal staff
   useEffect(() => {
@@ -134,38 +123,11 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           title="Vedanta Strategies - Home"
         >
           <img 
-            src="/images/logo.png" 
+            src="/images/logo.svg" 
             alt="Vedanta Strategies" 
             className="brand-logo-img"
           />
         </a>
-
-        {/* Compact Search Toggle */}
-        <div className="nav-search-wrap" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-          {searchOpen && (
-            <form onSubmit={handleSearchSubmit}
-              style={{ display: 'flex', alignItems: 'center', background: '#f1f5f9', borderRadius: '6px', padding: '4px 8px', gap: '4px', marginRight: '6px', border: '1px solid var(--border-color)' }}>
-              <input
-                autoFocus
-                type="text"
-                placeholder={currentLang === 'ne' ? 'खोज्नुहोस्...' : 'Search...'}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onBlur={() => { if (!searchTerm) setSearchOpen(false); }}
-                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '0.85rem', width: '160px', color: 'var(--text-main)' }}
-              />
-              <button type="submit" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-navy)', display: 'flex', padding: '2px' }}>
-                <Search size={15} />
-              </button>
-            </form>
-          )}
-          <button
-            onClick={() => setSearchOpen(!searchOpen)}
-            title="Search"
-            style={{ background: searchOpen ? 'rgba(23,38,66,0.08)' : 'transparent', border: 'none', cursor: 'pointer', color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', padding: '7px', borderRadius: '6px', transition: 'background 0.15s' }}>
-            <Search size={18} />
-          </button>
-        </div>
 
         {/* Desktop Nav Links */}
         <nav className="nav-links">
@@ -365,7 +327,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
           <nav className="mobile-drawer" aria-label="Mobile menu">
           <div className="mobile-drawer-header">
             <img
-              src="/images/logo.png"
+              src="/images/logo.svg"
               alt="Vedanta Strategies"
               className="brand-logo-img mobile-drawer-logo"
             />

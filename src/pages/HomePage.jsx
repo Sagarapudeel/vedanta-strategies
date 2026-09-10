@@ -513,6 +513,15 @@ export default function HomePage({
                   {/* Big decorative quote mark */}
                   <div className="testimonial-quote-mark">"</div>
 
+                  {/* Portrait */}
+                  <div className="testimonial-photo" style={{ background: accentColors[i % 3] }}>
+                    {testimonial.photo ? (
+                      <img src={testimonial.photo} alt={testimonial.author} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                    ) : (
+                      initials
+                    )}
+                  </div>
+
                   {/* Stars */}
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, si) => <Star key={si} size={15} fill="var(--brand-navy)" color="var(--brand-navy)" />)}
@@ -525,13 +534,8 @@ export default function HomePage({
 
                   {/* Author */}
                   <div className="testimonial-author-bar">
-                    <div className="testimonial-avatar" style={{ background: accentColors[i % 3] }}>
-                      {initials}
-                    </div>
-                    <div>
-                      <div className="testimonial-author-name">{testimonial.author}</div>
-                      <div className="testimonial-author-role">{role}</div>
-                    </div>
+                    <div className="testimonial-author-name">{testimonial.author}</div>
+                    <div className="testimonial-author-role">{role}</div>
                   </div>
                 </div>
               );

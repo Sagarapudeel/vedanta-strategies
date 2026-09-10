@@ -81,7 +81,7 @@ export default function AdminLayout({
         {/* Brand Header */}
         <div className="admin-sidebar-header">
           <div style={{ background: '#ffffff', borderRadius: '8px', padding: '5px 8px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.3)', flexShrink: 0 }}>
-            <img src="/images/logo.png" alt="Vedanta Strategies" style={{ height: '26px', width: 'auto', objectFit: 'contain' }} />
+            <img src="/images/logo.svg" alt="Vedanta Strategies" style={{ height: '26px', width: 'auto', objectFit: 'contain' }} />
           </div>
           <div>
             <div style={{ fontWeight: '800', color: '#ffffff', fontSize: '0.96rem', letterSpacing: '0.02em' }}>VEDANTA ADMIN</div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, PlusCircle, Trash2, Edit2, Star, Globe, CheckCircle } from 'lucide-react';
+import ImageInput from './ImageInput';
 
 export default function AdminTestimonials({ 
   testimonials = [], 
@@ -18,6 +19,7 @@ export default function AdminTestimonials({
     type: 'School Partner',
     quote_en: '',
     quote_ne: '',
+    photo: '',
     avatar: 'VS'
   });
 
@@ -31,6 +33,7 @@ export default function AdminTestimonials({
       type: 'School Partner',
       quote_en: '',
       quote_ne: '',
+      photo: '',
       avatar: 'VS'
     });
     setModalOpen(true);
@@ -46,6 +49,7 @@ export default function AdminTestimonials({
       type: item.type || 'School Partner',
       quote_en: item.quote_en || item.quote || '',
       quote_ne: item.quote_ne || '',
+      photo: item.photo || '',
       avatar: item.avatar || (item.author ? item.author.slice(0, 2).toUpperCase() : 'VS')
     });
     setModalOpen(true);
@@ -62,6 +66,7 @@ export default function AdminTestimonials({
       quote: formData.quote_en,
       quote_en: formData.quote_en,
       quote_ne: formData.quote_ne,
+      photo: formData.photo || '',
       avatar: formData.avatar || (formData.author ? formData.author.slice(0, 2).toUpperCase() : 'VS')
     };
 
@@ -113,16 +118,25 @@ export default function AdminTestimonials({
             )}
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-subtle)', paddingTop: '16px' }}>
-              <div>
-                <div style={{ fontWeight: '700', color: '#fff', fontSize: '0.95rem' }}>{t.author}</div>
-                <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                  {t.role_en || t.role}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '68px', height: '80px', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', fontWeight: '800', flexShrink: 0, overflow: 'hidden' }}>
+                  {t.photo ? (
+                    <img src={t.photo} alt={t.author} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  ) : (
+                    (t.avatar || (t.author ? t.author.slice(0, 2).toUpperCase() : 'VS'))
+                  )}
                 </div>
-                {t.role_ne && (
-                  <div style={{ color: '#f59e0b', fontSize: '0.75rem' }}>
-                    {t.role_ne}
+                <div>
+                  <div style={{ fontWeight: '700', color: '#fff', fontSize: '0.95rem' }}>{t.author}</div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                    {t.role_en || t.role}
                   </div>
-                )}
+                  {t.role_ne && (
+                    <div style={{ color: '#f59e0b', fontSize: '0.75rem' }}>
+                      {t.role_ne}
+                    </div>
+                  )}
+                </div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button
@@ -221,6 +235,16 @@ export default function AdminTestimonials({
                     <option value="Course Student">Course Student</option>
                   </select>
                 </div>
+              </div>
+
+              <div style={{ marginBottom: '18px' }}>
+                <ImageInput
+                  label="Author Photo (Upload or URL)"
+                  value={formData.photo}
+                  onChange={(v) => setFormData({ ...formData, photo: v })}
+                  hint="Shown as a circular portrait on the testimonial card. Leave empty to show initials instead."
+                  previewHeight={110}
+                />
               </div>
 
               {activeLangTab === 'en' ? (
