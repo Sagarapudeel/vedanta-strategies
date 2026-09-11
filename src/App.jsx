@@ -52,6 +52,12 @@ export default function App() {
   const [activePage, setActivePage] = useState(() => parseLocationPage());
   const [searchTerm, setSearchTerm] = useState('');
   const [introDone, setIntroDone] = useState(() => sessionStorage.getItem('vedanta_intro_seen') === 'true');
+
+  // Remove pre-rendered SEO content once React mounts (avoid hidden-text duplicates for JS crawlers)
+  useEffect(() => {
+    const seoNodes = document.querySelectorAll('.seo-content, #seo-content-css');
+    seoNodes.forEach((n) => n?.parentNode?.removeChild(n));
+  }, []);
   const goToPage = useCallback((pageId) => {
     const next = canonicalizePage(pageId);
     setActivePage(next);

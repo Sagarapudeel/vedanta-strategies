@@ -2,6 +2,29 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { PUBLIC_PAGES, DEFAULT_OG_IMAGE, applySeoToHtml, getSiteUrl } from './src/lib/seoConfig.js';
 import { initialData } from './src/data/initialData.js';
+import { renderPage } from './prerender-content.js';
+
+// CSS to hide pre-rendered SEO content from normal users but keep it visible to crawlers.
+// Crawlers that don't execute JS will see this content. Crawlers that DO execute JS
+// will see the React-rendered content instead (which looks better). No duplication issue
+// because the SEO content is hidden with display:none which crawlers still index.
+const SEO_HIDDEN_CSS = `<style id="seo-content-css">
+.seo-content {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.seo-content img {
+  max-width: 100%;
+  height: auto;
+}
+</style>`;
 
 export function seoStaticPages() {
   return {
@@ -20,13 +43,25 @@ export function seoStaticPages() {
 
         for (const page of PUBLIC_PAGES) {
           const canonical = `${siteUrl}${page.path}`;
-          const injected = applySeoToHtml(html, {
+          let injected = applySeoToHtml(html, {
             title: page.title,
             description: page.description,
             canonical,
             ogImage,
             lang: 'en'
           });
+
+          // Inject pre-rendered crawlable content before </body>
+          const renderer = renderPage[page.id];
+          if (renderer) {
+            const seoContent = renderer();
+            // Add the CSS + content before the closing </body> tag
+            injected = injected.replace(
+              '</body>',
+              `${SEO_HIDDEN_CSS}\n${seoContent}\n</body>`
+            );
+          }
+
           if (page.path === '/') {
             fs.writeFileSync(indexPath, injected);
             continue;
