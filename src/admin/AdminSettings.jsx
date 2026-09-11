@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Save, CheckCircle, RotateCcw, Globe, Sparkles, MapPin, Clock, Megaphone } from 'lucide-react';
+import { Settings, Save, CheckCircle, RotateCcw, Globe, MapPin, Clock, Megaphone } from 'lucide-react';
 
 export default function AdminSettings({ siteSettings = {}, updateSettings, resetStoreToDefault }) {
   const [activeLangTab, setActiveLangTab] = useState('en');
@@ -7,11 +7,11 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
 
   const [formData, setFormData] = useState({
     siteName: siteSettings.siteName || 'Vedanta Strategies',
-    officialEmail: siteSettings.officialEmail || 'info@vedantastrategies.com',
-    supportEmail: siteSettings.supportEmail || 'support@vedantastrategies.com',
+    officialEmail: siteSettings.officialEmail || 'info.vedantastrategies@gmail.com',
+    supportEmail: siteSettings.supportEmail || 'info.vedantastrategies@gmail.com',
     primaryPhone: siteSettings.primaryPhone || '+977 1-4421098',
-    mobilePhone: siteSettings.mobilePhone || '+977 9801234567',
-    whatsappNumber: siteSettings.whatsappNumber || '9779801234567',
+    mobilePhone: siteSettings.mobilePhone || '+977 9747887598',
+    whatsappNumber: siteSettings.whatsappNumber || '9779747887598',
     
     // Bilingual Campus Address
     address_en: siteSettings.address_en || siteSettings.address || 'Bagbazar, Kathmandu 44600, Nepal',

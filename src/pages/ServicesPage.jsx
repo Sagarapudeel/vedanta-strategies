@@ -5,7 +5,8 @@ import {
   TrendingUp, 
   Share2, 
   Cpu, 
-  Sparkles, 
+  Palette, 
+  PenTool, 
   CheckCircle, 
   ArrowRight, 
   Award, 
@@ -16,56 +17,23 @@ import {
 
 export default function ServicesPage({ currentLang, services = [], openLeadModal, setActivePage }) {
   const t = translations[currentLang] || translations.en;
+  const [activeServiceId, setActiveServiceId] = useState(services[0]?.id || '');
 
   const iconMap = {
     TrendingUp: <TrendingUp size={28} />,
     Share2: <Share2 size={28} />,
     Cpu: <Cpu size={28} />,
-    Sparkles: <Sparkles size={28} />
+    Palette: <Palette size={28} />,
+    Sparkles: <Palette size={28} />
   };
 
-  const pricingTiers = [
-    {
-      name: "Starter Package",
-      idealFor: "Small local businesses, clinics, and new shops",
-      price: "Rs. 25,000",
-      period: "/ month",
-      features: [
-        "Managing Facebook & Instagram page",
-        "8 custom designed visual posts per month",
-        "Running targeted Meta ads for WhatsApp inquiries",
-        "Weekly spend and inquiry summary on WhatsApp"
-      ],
-      popular: false
-    },
-    {
-      name: "Growth Package",
-      idealFor: "Colleges, established clinics, and active brands",
-      price: "Rs. 48,000",
-      period: "/ month",
-      features: [
-        "Full Facebook, Instagram & LinkedIn management",
-        "16 custom graphic posts + 4 edited video reels per month",
-        "Meta & Google search ad management",
-        "WhatsApp auto-responder setup for customer inquiries",
-        "Dedicated campaign manager with weekly review call"
-      ],
-      popular: true
-    },
-    {
-      name: "Institutional / Campaign",
-      idealFor: "College admission seasons, school campaigns & NGOs",
-      price: "Custom",
-      period: "per project",
-      features: [
-        "Comprehensive admission or awareness campaign",
-        "Campus promotional video & student interview reels",
-        "High-volume lead handling & WhatsApp routing",
-        "On-site photography and event coverage"
-      ],
-      popular: false
-    }
+  const packageMeta = [
+    { key: 'starter', name: 'Starter Package', nameNe: 'स्टार्टर प्याकेज' },
+    { key: 'growth', name: 'Growth Package', nameNe: 'ग्रोथ प्याकेज' },
+    { key: 'enterprise', name: 'Institutional / Custom', nameNe: 'संस्थागत / कस्टम' }
   ];
+
+  const activeService = services.find((s) => s.id === activeServiceId) || services[0];
 
   return (
     <div className="page-wrapper">
@@ -84,7 +52,7 @@ export default function ServicesPage({ currentLang, services = [], openLeadModal
             <div key={srv.id} className="glass-card service-card">
               <div className="service-card-header">
                 <div className="service-card-icon">
-                  {iconMap[srv.icon] || <Sparkles size={28} />}
+                  {iconMap[srv.icon] || <PenTool size={28} />}
                 </div>
                 <span className="service-card-tag">
                   {getLangText(srv, 'tag', currentLang) || srv.tag}
@@ -157,60 +125,88 @@ export default function ServicesPage({ currentLang, services = [], openLeadModal
           </div>
         </div>
 
-        {/* 3. Pricing Packages */}
+        {/* 3. Pricing Packages (dynamic from configured services) */}
+        {activeService && (
         <div className="services-section-wrapper">
           <div className="section-header">
             <span className="section-badge">{t.services.pricingBadge}</span>
             <h2 className="section-title">{t.services.pricingTitle}</h2>
-            <p className="section-subtitle">Transparent engagement models without hidden commissions.</p>
+            <p className="section-subtitle">{currentLang === 'ne' ? 'कुनै लुकेको कमिसन छैन — पारदर्शी सम्झौता।' : 'Transparent engagement models without hidden commissions.'}</p>
+          </div>
+
+          {/* Service selector */}
+          <div className="pricing-service-tabs">
+            {services.map((srv) => (
+              <button
+                key={srv.id}
+                className={`pricing-service-tab ${activeService.id === srv.id ? 'active' : ''}`}
+                onClick={() => setActiveServiceId(srv.id)}
+              >
+                {getLangText(srv, 'title', currentLang) || srv.title}
+              </button>
+            ))}
           </div>
 
           <div className="pricing-grid">
-            {pricingTiers.map((tier, idx) => (
-              <div 
-                key={idx} 
-                className={`mindrisers-card ${tier.popular ? 'pricing-card-featured' : ''}`} 
-                style={{ padding: '36px 30px', position: 'relative' }}
-              >
-                {tier.popular && (
-                  <div className="pricing-card-badge">
-                    MOST POPULAR
-                  </div>
-                )}
-
-                <h3 style={{ fontSize: '1.5rem', color: 'var(--brand-navy)', marginBottom: '8px' }}>{tier.name}</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '24px', minHeight: '40px' }}>
-                  {tier.idealFor}
-                </p>
-
-                <div style={{ marginBottom: '28px' }}>
-                  <span className="pricing-card-price">
-                    {tier.price}
-                  </span>
-                  <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}> {tier.period}</span>
-                </div>
-
-                <ul className="pricing-card-features">
-                  {tier.features.map((feat, fIdx) => (
-                    <li key={fIdx}>
-                      <CheckCircle size={16} color="#1C2F4D" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button 
-                  className={`btn ${tier.popular ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ width: '100%' }}
-                  onClick={() => openLeadModal('services')}
+            {packageMeta.map((tier) => {
+              const price = (activeService.packages && activeService.packages[tier.key]) || (currentLang === 'ne' ? 'कस्टम' : 'Custom');
+              const isEnterprise = tier.key === 'enterprise';
+              return (
+                <div 
+                  key={tier.key} 
+                  className={`mindrisers-card ${tier.key === 'growth' ? 'pricing-card-featured' : ''}`} 
+                  style={{ padding: '36px 30px', position: 'relative' }}
                 >
-                  <span>Select Package</span>
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            ))}
+                  {tier.key === 'growth' && (
+                    <div className="pricing-card-badge">
+                      {currentLang === 'ne' ? 'लोकप्रिय' : 'MOST POPULAR'}
+                    </div>
+                  )}
+
+                  <h3 style={{ fontSize: '1.5rem', color: 'var(--brand-navy)', marginBottom: '8px' }}>
+                    {currentLang === 'ne' ? tier.nameNe : tier.name}
+                  </h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '24px', minHeight: '40px' }}>
+                    {isEnterprise
+                      ? (currentLang === 'ne' ? 'म्यापिङ·बुकिङ·अनुकूलित सम्झौता' : 'Mapped, scoped, and agreed to your exact needs')
+                      : (currentLang === 'ne' ? 'महिनाको सक्रिय व्यवस्थापन' : 'Active monthly management & delivery')}
+                  </p>
+
+                  <div style={{ marginBottom: '28px' }}>
+                    <span className="pricing-card-price">
+                      {price}
+                    </span>
+                  </div>
+
+                  <div style={{ marginBottom: '28px', color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: '1.6', minHeight: '80px' }}>
+                    {getLangText(activeService, 'shortDesc', currentLang) || activeService.shortDesc}
+                  </div>
+
+                  <ul className="pricing-card-features">
+                    {(getLangArray(activeService, 'deliverables', currentLang).length > 0
+                      ? getLangArray(activeService, 'deliverables', currentLang)
+                      : (activeService.deliverables || [])).map((feat, fIdx) => (
+                      <li key={fIdx}>
+                        <CheckCircle size={16} color="#1C2F4D" style={{ flexShrink: 0, marginTop: '2px' }} />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button 
+                    className="btn btn-primary"
+                    style={{ width: '100%' }}
+                    onClick={() => openLeadModal('services')}
+                  >
+                    <span>{currentLang === 'ne' ? 'प्याकेज छान्नुहोस्' : 'Select Package'}</span>
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
+        )}
 
         {/* 4. Consultation Banner */}
         <div className="mindrisers-card newsletter-cta">

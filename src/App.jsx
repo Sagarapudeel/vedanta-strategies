@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import LeadModal from './components/LeadModal';
 import CourseDetailModal from './components/CourseDetailModal';
+import LogoIntroAnimation from './components/LogoIntroAnimation';
+import UpcomingBatchNotification from './components/UpcomingBatchNotification';
 import ErrorBoundary from './components/ErrorBoundary';
 
 // Public Pages
@@ -37,20 +39,19 @@ import AdminContent from './admin/AdminContent';
 import AdminPartners from './admin/AdminPartners';
 import AdminUsers from './admin/AdminUsers';
 import AdminMedia from './admin/AdminMedia';
-import { getLangText } from './utils/langHelper';
+
 import { loadAdminFromSession, signOutAdmin } from './lib/auth';
 import { isSupabaseConfigured } from './lib/supabase';
 import SeoHead from './components/SeoHead';
 import { parseLocationPage, pathForPage, canonicalizePage } from './lib/seoConfig';
 import { syncBrowserUrl } from './lib/routing';
 
-import { Megaphone } from 'lucide-react';
-
 export default function App() {
   const store = useDataStore();
   const [currentLang, setCurrentLang] = useState('en');
   const [activePage, setActivePage] = useState(() => parseLocationPage());
   const [searchTerm, setSearchTerm] = useState('');
+  const [introDone, setIntroDone] = useState(() => sessionStorage.getItem('vedanta_intro_seen') === 'true');
   const goToPage = useCallback((pageId) => {
     const next = canonicalizePage(pageId);
     setActivePage(next);
@@ -298,25 +299,21 @@ export default function App() {
   return (
     <div>
       {seo}
+      {/* Brand Opening Animation — plays once per session unless skipped */}
+      {!introDone && <LogoIntroAnimation onComplete={() => setIntroDone(true)} />}
+
       {(!isSupabaseConfigured || store.error) && (
         <div style={{ background: '#7c2d12', color: '#fed7aa', padding: '8px 16px', textAlign: 'center', fontSize: '0.82rem', fontWeight: '600' }}>
           {store.error || 'Supabase is not configured. Copy .env.example to .env.local.'}
         </div>
       )}
-      {/* Top Announcement Bar */}
-      {getLangText(store.siteSettings, 'announcementText', currentLang) && (
-        <div className="site-announcement-bar">
-          <Megaphone size={14} />
-          <span>{getLangText(store.siteSettings, 'announcementText', currentLang)}</span>
-          <button 
-            onClick={() => openLeadModal('training')}
-            style={{ background: '#B68A28', color: '#fff', border: 'none', borderRadius: 'var(--radius-full)', padding: '2px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer', marginLeft: '6px' }}
-          >
-            {currentLang === 'ne' ? 'अहिले भर्ना हुनुहोस् →' : 'Apply Now →'}
-          </button>
-        </div>
-      )}
-
+      {/* Batch Notification — popup once per session, then slim bar */}
+      <UpcomingBatchNotification
+        currentLang={currentLang}
+        courses={store.courses}
+        media={store.media || {}}
+        openLeadModal={openLeadModal}
+      />
       {/* Main Sticky Navbar */}
       <Navbar
         currentLang={currentLang}
@@ -352,6 +349,7 @@ export default function App() {
             <WhoWeArePage
               currentLang={currentLang}
               siteContent={store.siteContent}
+              media={store.media}
               openLeadModal={openLeadModal}
               setActivePage={goToPage}
             />
@@ -464,25 +462,28 @@ export default function App() {
         onSearch={handleSiteSearch}
       />
 
-      {/* Lead Inquiry Dynamic Modal */}
-      <LeadModal
-        isOpen={leadModal.isOpen}
-        onClose={closeLeadModal}
-        defaultPurpose={leadModal.purpose}
-        defaultCourseId={leadModal.courseId}
-        courses={store.courses}
-        onLeadSubmit={handleLeadSubmit}
-        currentLang={currentLang}
-      />
+      <ErrorBoundary>
+        <LeadModal
+          isOpen={leadModal.isOpen}
+          onClose={closeLeadModal}
+          defaultPurpose={leadModal.purpose}
+          defaultCourseId={leadModal.courseId}
+          courses={store.courses}
+          onLeadSubmit={handleLeadSubmit}
+          currentLang={currentLang}
+        />
+      </ErrorBoundary>
 
       {/* Course Detail Modal */}
-      <CourseDetailModal
-        course={courseModal.course}
-        isOpen={courseModal.isOpen}
-        onClose={closeCourseModal}
-        onEnroll={(courseId) => openLeadModal('training', courseId)}
-        currentLang={currentLang}
-      />
+      <ErrorBoundary>
+        <CourseDetailModal
+          course={courseModal.course}
+          isOpen={courseModal.isOpen}
+          onClose={closeCourseModal}
+          onEnroll={(courseId) => openLeadModal('training', courseId)}
+          currentLang={currentLang}
+        />
+      </ErrorBoundary>
     </div>
   );
 }

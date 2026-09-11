@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
-import { X, CheckCircle, Send, MessageCircle, Sparkles } from 'lucide-react';
+import { X, CheckCircle, Send, MessageCircle } from 'lucide-react';
 
 export default function LeadModal({ 
   isOpen, 
@@ -89,7 +89,7 @@ export default function LeadModal({
             </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
               <a
-                href={`https://wa.me/9779801234567?text=${encodeURIComponent(`Hello, I just submitted an inquiry for ${formData.purpose}. My name is ${formData.name}.`)}`}
+                href={`https://wa.me/9779747887598?text=${encodeURIComponent(`Hello, I just submitted an inquiry for ${formData.purpose}. My name is ${formData.name}.`)}`}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-primary"
@@ -106,7 +106,7 @@ export default function LeadModal({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
               <span className="section-badge" style={{ marginBottom: 0 }}>
-                <Sparkles size={13} /> {currentLang === 'ne' ? 'सिधा सम्पर्क' : 'QUICK INQUIRY'}
+                {currentLang === 'ne' ? 'सिधा सम्पर्क' : 'QUICK INQUIRY'}
               </span>
             </div>
             <h2 style={{ fontSize: '1.75rem', marginBottom: '8px', color: '#fff' }}>

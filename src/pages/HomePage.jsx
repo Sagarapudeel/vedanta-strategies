@@ -4,13 +4,11 @@ import { getLangText } from '../utils/langHelper';
 import { pathForPage } from '../lib/seoConfig';
 import {
   ArrowRight,
-  Sparkles,
   BookOpen,
   Video,
   Share2,
   CheckCircle,
   Play,
-  Star,
   Clock,
   Award,
   TrendingUp,
@@ -36,6 +34,7 @@ const partnerLogos = [
 
 export default function HomePage({
   currentLang,
+  siteContent = {},
   partners = [],
   courses = [],
   services = [],
@@ -49,6 +48,16 @@ export default function HomePage({
   openCourseModal
 }) {
   const t = translations[currentLang] || translations.en;
+  const siteHero = siteContent?.hero || {};
+  const sitePillars = siteContent?.pillars || {};
+  const siteCourses = siteContent?.courses || {};
+  const siteWhyUs = siteContent?.whyUs || {};
+  const siteTestimonials = siteContent?.testimonials || {};
+  const siteBlog = siteContent?.blog || {};
+  const siteCta = siteContent?.cta || {};
+  const sitePartners = siteContent?.partners || {};
+  const T = (obj, field, fallback = '') => getLangText(obj, field, currentLang) || fallback;
+
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [heroSearch, setHeroSearch] = useState('');
 
@@ -75,92 +84,101 @@ export default function HomePage({
 
   return (
     <div>
-      {/* 1. HERO — Deerwalk photo-backed hero with dark overlay */}
+      {/* 1. HERO — Dual-path hero: Training (left) + Services (right) */}
       <section
-        className="hero-dark"
-        style={{ backgroundImage: `linear-gradient(135deg, rgba(28, 47, 77, 0.84) 0%, rgba(28, 47, 77, 0.68) 100%), url("${media?.heroImage || "/images/hero.jpg"}")` }}
+        className="hero-dark hero-dual"
+        style={{ backgroundImage: `linear-gradient(135deg, rgba(28, 47, 77, 0.9) 0%, rgba(28, 47, 77, 0.82) 100%), url("${media?.heroImage || "/images/hero.jpg"}")` }}
       >
         {/* Subtle dot grid texture */}
         <div className="hero-dark-dot-grid" />
         {/* Gold accent line top */}
         <div className="hero-dark-gold-line" />
 
-        <div className="hero-grid">
+        <div className="container">
+          <div className="dual-hero-grid">
 
-          {/* LEFT — Text */}
-          <div>
-            {/* Heading */}
-            <h1 className="hero-heading">
-              {t.hero.titleStart}
-              <span className="hero-heading-gold">{t.hero.titleHighlight}</span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="hero-subtitle">
-              {t.hero.subtitle}
-            </p>
-
-            {/* Horizontal mini-stats */}
-            <div className="hero-mini-stats">
-              {[
-                { num: '120+', label: 'Batches Run' },
-                { num: '15,000+', label: 'Students Trained' },
-                { num: '6 Yrs', label: 'In Kathmandu' },
-              ].map((s, i) => (
-                <div key={i} className="hero-mini-stat">
-                  <div className="hero-mini-stat-num">{s.num}</div>
-                  <div className="hero-mini-stat-label">{s.label}</div>
+            {/* LEFT — TRAINING PATH */}
+            <div className="dual-hero-panel dual-hero-training">
+              <div className="dual-hero-panel-topline">
+                <div className="dual-hero-panel-icon">
+                  <BookOpen size={22} color="#1C2F4D" />
                 </div>
-              ))}
-            </div>
-
-            {/* CTAs */}
-            <div className="hero-cta-group">
-              <button
-                onClick={() => openLeadModal('training')}
-                className="btn-hero-gold"
-              >
-                {currentLang === 'ne' ? 'सिट बुक गर्नुहोस्' : 'Book Your Seat →'}
-              </button>
-              <a
-                href={pathForPage('individual-training')}
-                onClick={(e) => { e.preventDefault(); setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                className="btn-hero-outline"
-              >
-                {currentLang === 'ne' ? 'पाठ्यक्रमहरू' : 'View Courses'}
-              </a>
-            </div>
-          </div>
-
-          {/* RIGHT — Photo Card */}
-          <div className="hero-photo-wrap">
-            {/* Decorative gold ring */}
-            <div className="hero-photo-deco-ring-1" />
-            <div className="hero-photo-deco-ring-2" />
-
-            {/* Photo */}
-            <div className="hero-photo-inner">
-              <img
-                src={media?.heroImage || "/images/hero.jpg"}
-                alt={media?.heroImageAlt || "Vedanta Strategies Training Workshop"}
-                className="hero-photo-img"
-              />
-              {/* Subtle top scrim */}
-              <div className="hero-photo-scrim" />
-            </div>
-
-            {/* Floating "Next Batch" badge */}
-            <div className="hero-floating-badge">
-              <div className="hero-floating-badge-icon">
-                <Award size={18} color="#1C2F4D" />
+                <span className="dual-hero-tag">{T(siteHero, 'trnTag', t.hero.trnTag)}</span>
               </div>
-              <div>
-                <div className="hero-floating-badge-title">Next Batch — October</div>
-                <div className="hero-floating-badge-sub">Limited seats available</div>
+
+              <h2 className="dual-hero-title">
+                {T(siteHero, 'title', t.hero.titleStart)}
+                <span className="hero-heading-gold">{T(siteHero, 'titleHighlight', t.hero.titleHighlight)}</span>
+              </h2>
+
+              <p className="dual-hero-sub">{T(siteHero, 'subtitle', t.hero.subtitle)}</p>
+
+              <div className="dual-hero-cta-row">
+                <button onClick={() => openLeadModal('training')} className="btn-hero-gold">
+                  {T(siteHero, 'ctaPrimary', currentLang === 'ne' ? 'सिट बुक गर्नुहोस्' : 'Book Your Seat →')}
+                </button>
+                <a
+                  href={pathForPage('individual-training')}
+                  onClick={(e) => { e.preventDefault(); setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="btn-hero-outline"
+                >
+                  {T(siteHero, 'ctaSecondary', currentLang === 'ne' ? 'पाठ्यक्रमहरू' : 'View Courses')}
+                </a>
+              </div>
+
+              <div className="dual-hero-stats">
+                <div className="dual-hero-stat">
+                  <div className="dual-hero-stat-num">{T(siteHero, 'stat1Number', t.hero.stat1Number)}</div>
+                  <div className="dual-hero-stat-label">{T(siteHero, 'stat1Label', t.hero.stat1Label)}</div>
+                </div>
+                <div className="dual-hero-stat-divider" />
+                <div className="dual-hero-stat">
+                  <div className="dual-hero-stat-num">{T(siteHero, 'stat2Number', t.hero.stat2Number)}</div>
+                  <div className="dual-hero-stat-label">{T(siteHero, 'stat2Label', t.hero.stat2Label)}</div>
+                </div>
               </div>
             </div>
-          </div>
 
+            {/* RIGHT — SERVICES PATH */}
+            <div className="dual-hero-panel dual-hero-services">
+              <div className="dual-hero-panel-topline">
+                <div className="dual-hero-panel-icon">
+                  <TrendingUp size={22} color="#1C2F4D" />
+                </div>
+                <span className="dual-hero-tag">{T(siteHero, 'svcTag', t.hero.svcTag)}</span>
+              </div>
+
+              <h2 className="dual-hero-title">{T(siteHero, 'svcTitle', t.hero.svcTitle)}</h2>
+
+              <p className="dual-hero-sub">{T(siteHero, 'svcSubtitle', t.hero.svcSubtitle)}</p>
+
+              <div className="dual-hero-cta-row">
+                <button onClick={() => openLeadModal('services')} className="btn-hero-gold">
+                  {T(siteHero, 'svcBtn', t.hero.svcBtn)}
+                </button>
+                <a
+                  href={pathForPage('services')}
+                  onClick={(e) => { e.preventDefault(); setActivePage('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="btn-hero-outline"
+                >
+                  {currentLang === 'ne' ? 'सबै सेवाहरू' : 'Explore All Services'}
+                </a>
+              </div>
+
+              <div className="dual-hero-stats">
+                <div className="dual-hero-stat">
+                  <div className="dual-hero-stat-num">{T(siteHero, 'stat3Number', t.hero.stat3Number)}</div>
+                  <div className="dual-hero-stat-label">{T(siteHero, 'stat3Label', t.hero.stat3Label)}</div>
+                </div>
+                <div className="dual-hero-stat-divider" />
+                <div className="dual-hero-stat">
+                  <div className="dual-hero-stat-num">{T(siteHero, 'stat4Number', t.hero.stat4Number)}</div>
+                  <div className="dual-hero-stat-label">{T(siteHero, 'stat4Label', t.hero.stat4Label)}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
@@ -171,10 +189,10 @@ export default function HomePage({
             <div className="section-label">
               <span className="section-label-num">01</span>
               <div className="section-label-line"></div>
-              <span className="section-label-text">{t.pillars.badge}</span>
+              <span className="section-label-text">{T(sitePillars, 'badge', t.pillars.badge)}</span>
             </div>
-            <h2 className="section-title">{t.pillars.title}</h2>
-            <p className="section-subtitle">{t.pillars.subtitle}</p>
+            <h2 className="section-title">{T(sitePillars, 'title', t.pillars.title)}</h2>
+            <p className="section-subtitle">{T(sitePillars, 'subtitle', t.pillars.subtitle)}</p>
           </div>
 
           <div className="pillars-grid">
@@ -185,20 +203,20 @@ export default function HomePage({
                 <BookOpen size={26} />
               </div>
               <span className="pillar-card-tag">
-                {t.pillars.p1Tag}
+                {T(sitePillars, 'learning_tag', t.pillars.p1Tag)}
               </span>
-              <h3 className="pillar-card-heading">{t.pillars.p1Title}</h3>
-              <p className="pillar-card-desc">{t.pillars.p1Desc}</p>
+              <h3 className="pillar-card-heading">{T(sitePillars, 'learning_title', t.pillars.p1Title)}</h3>
+              <p className="pillar-card-desc">{T(sitePillars, 'learning_desc', t.pillars.p1Desc)}</p>
 
               <ul className="pillar-card-list">
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {t.pillars.p1F1}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'learning_f1', t.pillars.p1F1)}
                 </li>
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {t.pillars.p1F2}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'learning_f2', t.pillars.p1F2)}
                 </li>
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {t.pillars.p1F3}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'learning_f3', t.pillars.p1F3)}
                 </li>
               </ul>
 
@@ -207,7 +225,7 @@ export default function HomePage({
                 className="btn btn-outline-gold"
                 onClick={(e) => { e.preventDefault(); setActivePage('individual-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
-                <span>{t.pillars.p1Btn}</span>
+                <span>{T(sitePillars, 'learning_btn', t.pillars.p1Btn)}</span>
                 <ArrowRight size={15} />
               </a>
             </div>
@@ -218,26 +236,24 @@ export default function HomePage({
                 <GraduationCap size={26} />
               </div>
               <span className="pillar-card-tag">
-                {currentLang === 'ne' ? 'संस्थागत कार्यक्रम' : 'INSTITUTIONAL TRACK'}
+                {T(sitePillars, 'institution_tag', currentLang === 'ne' ? 'संस्थागत कार्यक्रम' : 'INSTITUTIONAL PROGRAMS')}
               </span>
               <h3 className="pillar-card-heading">
-                {currentLang === 'ne' ? '२. विद्यालय तथा कलेज बुटक्याम्प' : '2. Institutional Bootcamps'}
+                {T(sitePillars, 'institution_title', t.pillars.p2Title)}
               </h3>
               <p className="pillar-card-desc">
-                {currentLang === 'ne' 
-                  ? 'शिक्षक तथा विद्यार्थीहरूका लागि प्रयोगात्मक एआई, तथ्य-जाँच र अनलाइन सुरक्षा कार्यशाला।' 
-                  : 'Customized AI tools, media literacy, and digital safety workshops designed for campuses and faculties across Nepal.'}
+                {T(sitePillars, 'institution_desc', t.pillars.p2Desc)}
               </p>
 
               <ul className="pillar-card-list">
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {currentLang === 'ne' ? 'तपाईंकै कलेज वा विद्यालय परिसरमा' : 'On-campus workshops or hybrid cohorts'}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'institution_f1', t.pillars.p2F1)}
                 </li>
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {currentLang === 'ne' ? 'शिक्षकहरूका लागि एआई पाठयोजना अभ्यास' : 'Teacher prompt templates & curriculum aids'}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'institution_f2', t.pillars.p2F2)}
                 </li>
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {currentLang === 'ne' ? 'प्रमाणित वेदान्त संस्थागत प्रमाणपत्र' : 'Verified digital credentialing for trainees'}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'institution_f3', t.pillars.p2F3)}
                 </li>
               </ul>
 
@@ -247,7 +263,7 @@ export default function HomePage({
                 style={{ color: 'var(--brand-navy)', borderColor: 'rgba(28, 47, 77, 0.3)' }}
                 onClick={(e) => { e.preventDefault(); setActivePage('institutional-training'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
-                <span>{currentLang === 'ne' ? 'संस्थागत कार्यक्रम हेर्नुहोस्' : 'View Institutional Programs'}</span>
+                <span>{T(sitePillars, 'institution_btn', t.pillars.p2Btn)}</span>
                 <ArrowRight size={15} />
               </a>
             </div>
@@ -258,20 +274,20 @@ export default function HomePage({
                 <Share2 size={26} />
               </div>
               <span className="pillar-card-tag">
-                {t.pillars.p3Tag}
+                {T(sitePillars, 'collaboration_tag', t.pillars.p3Tag)}
               </span>
-              <h3 className="pillar-card-heading">{t.pillars.p3Title}</h3>
-              <p className="pillar-card-desc">{t.pillars.p3Desc}</p>
+              <h3 className="pillar-card-heading">{T(sitePillars, 'collaboration_title', t.pillars.p3Title)}</h3>
+              <p className="pillar-card-desc">{T(sitePillars, 'collaboration_desc', t.pillars.p3Desc)}</p>
 
               <ul className="pillar-card-list">
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {t.pillars.p3F1}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'collaboration_f1', t.pillars.p3F1)}
                 </li>
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {t.pillars.p3F2}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'collaboration_f2', t.pillars.p3F2)}
                 </li>
                 <li>
-                  <CheckCircle size={15} color="var(--brand-navy)" /> {t.pillars.p3F3}
+                  <CheckCircle size={15} color="var(--brand-navy)" /> {T(sitePillars, 'collaboration_f3', t.pillars.p3F3)}
                 </li>
               </ul>
 
@@ -280,7 +296,7 @@ export default function HomePage({
                 className="btn btn-navy"
                 onClick={(e) => { e.preventDefault(); setActivePage('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
-                <span>{t.pillars.p3Btn}</span>
+                <span>{T(sitePillars, 'collaboration_btn', t.pillars.p3Btn)}</span>
                 <ArrowRight size={15} />
               </a>
             </div>
@@ -296,10 +312,10 @@ export default function HomePage({
             <div className="section-label">
               <span className="section-label-num">02</span>
               <div className="section-label-line"></div>
-              <span className="section-label-text">{t.courses.badge}</span>
+              <span className="section-label-text">{T(siteCourses, 'badge', t.courses.badge)}</span>
             </div>
-            <h2 className="section-title">{t.courses.title}</h2>
-            <p className="section-subtitle">{t.courses.subtitle}</p>
+            <h2 className="section-title">{T(siteCourses, 'title', t.courses.title)}</h2>
+            <p className="section-subtitle">{T(siteCourses, 'subtitle', t.courses.subtitle)}</p>
           </div>
 
           <div className="pillars-grid">
@@ -343,26 +359,6 @@ export default function HomePage({
             ))}
           </div>
 
-          {/* Institutional Free Demo Banner */}
-          <div className="cta-banner">
-            <div>
-              <div className="cta-banner-heading">
-                {t.courses.freeDemoBanner}
-              </div>
-              <div className="cta-banner-desc">
-                We conduct 60-minute practical demonstration sessions on generative AI and media literacy for school faculty and students.
-              </div>
-            </div>
-
-            <button
-              className="btn btn-primary"
-              onClick={() => openLeadModal('institution')}
-            >
-              <Sparkles size={16} />
-              <span>{t.courses.freeDemoBtn}</span>
-            </button>
-          </div>
-
         </div>
       </section>
 
@@ -372,7 +368,7 @@ export default function HomePage({
       <section className="partner-strip-section">
         <div className="container" style={{ marginBottom: '28px' }}>
           <div className="partner-strip-title">
-            {currentLang === 'ne' ? 'नेपालका विद्यालय, कलेज तथा संस्थाहरूको विश्वास' : 'TRUSTED BY SCHOOLS, COLLEGES & ORGANIZATIONS IN NEPAL'}
+            {T(sitePartners, 'title', currentLang === 'ne' ? 'नेपालका संस्था तथा व्यवसायहरूको विश्वास' : 'TRUSTED BY ORGANIZATIONS & BUSINESSES ACROSS NEPAL')}
           </div>
         </div>
 
@@ -443,33 +439,33 @@ export default function HomePage({
       <section className="section-py">
         <div className="container">
           <div className="section-header">
-            <span className="section-badge">{t.whyUs.badge}</span>
-            <h2 className="section-title">{t.whyUs.title}</h2>
-            <p className="section-subtitle">We bridge the gap between classroom theory and real-world execution.</p>
+            <span className="section-badge">{T(siteWhyUs, 'badge', t.whyUs.badge)}</span>
+            <h2 className="section-title">{T(siteWhyUs, 'title', t.whyUs.title)}</h2>
+            <p className="section-subtitle">{T(siteWhyUs, 'subtitle', 'We bridge the gap between classroom theory and real-world execution.')}</p>
           </div>
 
           <div className="process-grid">
             <div className="mindrisers-card process-card">
               <div className="process-step-num">01</div>
-              <h3 className="process-title" style={{ color: 'var(--brand-navy)' }}>{t.whyUs.p1Title}</h3>
+              <h3 className="process-title" style={{ color: 'var(--brand-navy)' }}>{T(siteWhyUs, 'p1Title', t.whyUs.p1Title)}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.65' }}>
-                {t.whyUs.p1Desc}
+                {T(siteWhyUs, 'p1Desc', t.whyUs.p1Desc)}
               </p>
             </div>
 
             <div className="mindrisers-card process-card">
               <div className="process-step-num" style={{ color: 'var(--brand-navy)' }}>02</div>
-              <h3 className="process-title" style={{ color: 'var(--brand-navy)' }}>{t.whyUs.p2Title}</h3>
+              <h3 className="process-title" style={{ color: 'var(--brand-navy)' }}>{T(siteWhyUs, 'p2Title', t.whyUs.p2Title)}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.65' }}>
-                {t.whyUs.p2Desc}
+                {T(siteWhyUs, 'p2Desc', t.whyUs.p2Desc)}
               </p>
             </div>
 
             <div className="mindrisers-card process-card">
               <div className="process-step-num" style={{ color: 'var(--brand-navy)' }}>03</div>
-              <h3 className="process-title" style={{ color: 'var(--brand-navy)' }}>{t.whyUs.p3Title}</h3>
+              <h3 className="process-title" style={{ color: 'var(--brand-navy)' }}>{T(siteWhyUs, 'p3Title', t.whyUs.p3Title)}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.65' }}>
-                {t.whyUs.p3Desc}
+                {T(siteWhyUs, 'p3Desc', t.whyUs.p3Desc)}
               </p>
             </div>
           </div>
@@ -487,13 +483,13 @@ export default function HomePage({
           {/* Header */}
           <div className="testimonials-header">
             <div className="hero-badge-location">
-              ★ {t.testimonials.badge}
+              {T(siteTestimonials, 'badge', t.testimonials.badge)}
             </div>
             <h2 className="testimonials-header-title">
-              {t.testimonials.title}
+              {T(siteTestimonials, 'title', t.testimonials.title)}
             </h2>
             <p className="testimonials-header-subtitle">
-              {t.testimonials.subtitle}
+              {T(siteTestimonials, 'subtitle', t.testimonials.subtitle)}
             </p>
           </div>
 
@@ -520,11 +516,6 @@ export default function HomePage({
                     ) : (
                       initials
                     )}
-                  </div>
-
-                  {/* Stars */}
-                  <div className="flex gap-1">
-                    {[...Array(5)].map((_, si) => <Star key={si} size={15} fill="var(--brand-navy)" color="var(--brand-navy)" />)}
                   </div>
 
                   {/* Quote */}
@@ -559,9 +550,9 @@ export default function HomePage({
       <section className="section-py">
         <div className="container">
           <div className="section-header">
-            <span className="section-badge">ARTICLES & GUIDES</span>
-            <h2 className="section-title">Practical Guides from Our Instructors</h2>
-            <p className="section-subtitle">Real tips on using AI effectively, saving advertising budget, and producing media in Nepal.</p>
+            <span className="section-badge">{T(siteBlog, 'badge', 'ARTICLES & GUIDES')}</span>
+            <h2 className="section-title">{T(siteBlog, 'title', 'Practical Guides from Our Instructors')}</h2>
+            <p className="section-subtitle">{T(siteBlog, 'subtitle', 'Real tips on using AI effectively, saving advertising budget, and producing media in Nepal.')}</p>
           </div>
 
           <div className="pillars-grid">
@@ -587,7 +578,7 @@ export default function HomePage({
                     onClick={(e) => { e.preventDefault(); setActivePage('blog'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                     style={{ background: 'transparent', border: 'none', color: 'var(--brand-navy)', fontWeight: '700', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
                   >
-                    Read Guide ›
+                    {T(siteBlog, 'readLink', 'Read Guide ›')}
                   </a>
                 </div>
               </div>
@@ -600,22 +591,22 @@ export default function HomePage({
       <section className="hero-cta-section">
         <div className="container" style={{ maxWidth: '720px' }}>
           <span className="hero-badge-location">
-            VISIT OR MESSAGE US
+            {T(siteCta, 'badge', currentLang === 'ne' ? 'हामीलाई सम्पर्क गर्नुहोस्' : 'VISIT OR MESSAGE US')}
           </span>
           <h2 className="hero-cta-section-heading">
-            {currentLang === 'ne' ? 'सोधपुछ गर्न वा हाम्रो कार्यालय आउन चाहनुहुन्छ?' : 'Have a question or want to visit our campus?'}
+            {T(siteCta, 'title', currentLang === 'ne' ? 'सोधपुछ गर्न वा हाम्रो कार्यालय आउन चाहनुहुन्छ?' : 'Have a question or want to visit our office?')}
           </h2>
           <p className="hero-cta-section-desc">
-            {currentLang === 'ne'
+            {T(siteCta, 'desc', currentLang === 'ne'
               ? 'आगामी तालिम ब्याच, संस्थागत कार्यशाला वा डिजिटल मार्केटिङ परामर्शका लागि तपाईंलाई हाम्रो बागबजार कार्यालयमा हार्दिक स्वागत छ।'
-              : 'Whether you want to join an upcoming training cohort, discuss customized institutional workshops, or grow your business, you are always welcome to drop by our Bagbazar campus.'}
+              : 'Whether you want to join an upcoming training cohort, discuss customized institutional workshops, or grow your business, you are always welcome to drop by our Bagbazar office.')}
           </p>
           <div className="hero-cta-group">
             <button className="btn btn-primary btn-lg" onClick={() => openLeadModal('general')}>
-              <span>Talk to Our Team</span>
+              <span>{T(siteCta, 'btn', 'Talk to Our Team')}</span>
             </button>
             <a href={pathForPage('contact')} className="btn btn-secondary btn-lg" onClick={(e) => { e.preventDefault(); setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              <span>View Office Location & Map</span>
+              <span>{T(siteCta, 'btnSecondary', currentLang === 'ne' ? 'कार्यालयको स्थान हेर्नुहोस्' : 'View Office Location & Map')}</span>
               <ArrowRight size={15} />
             </a>
           </div>

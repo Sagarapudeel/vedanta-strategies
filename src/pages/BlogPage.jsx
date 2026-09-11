@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
-import { BookOpen, Clock, Calendar, User, Search, X, Sparkles, ArrowRight } from 'lucide-react';
+import { BookOpen, Clock, Calendar, User, Search, X, ArrowRight } from 'lucide-react';
 
 export default function BlogPage({ currentLang, blogPosts = [], openLeadModal }) {
   const t = translations[currentLang] || translations.en;
@@ -134,7 +134,7 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
             }
           </p>
           <button className="btn btn-primary" onClick={() => openLeadModal('general')}>
-            <Sparkles size={16} /> {currentLang === 'ne' ? 'निःशुल्क न्यूजलेटर सदस्यता' : 'Subscribe to Free Newsletter'}
+            {currentLang === 'ne' ? 'निःशुल्क न्यूजलेटर सदस्यता' : 'Subscribe to Free Newsletter'}
           </button>
         </div>
 

@@ -5,7 +5,6 @@ import {
   Building2, 
   GraduationCap, 
   Users, 
-  Sparkles, 
   CheckCircle, 
   ArrowRight, 
   Clock, 
@@ -205,7 +204,6 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
             className="btn btn-primary btn-lg"
             onClick={() => openLeadModal('institution')}
           >
-            <Sparkles size={16} />
             <span>Request Free Demo Session</span>
           </button>
         </div>

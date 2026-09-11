@@ -15,8 +15,7 @@ import {
   Save, 
   Lock,
   Globe,
-  Inbox,
-  Sparkles
+  Inbox
 } from 'lucide-react';
 
 export default function AdminUsers({

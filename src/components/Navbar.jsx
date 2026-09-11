@@ -10,7 +10,6 @@ import {
   Menu, 
   X, 
   BookOpen, 
-  Sparkles, 
   Share2, 
   Cpu, 
   ChevronRight,
@@ -85,23 +84,23 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
       {/* 1. Top Utility Contact Bar (Site-wide Consistent Settings) */}
       <div className="top-utility-bar">
         <div className="container top-utility-flex">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <MapPin size={13} color="var(--brand-navy)" />
+              <span>{getLangText(siteSettings, 'address', currentLang) || siteSettings?.address_en || siteSettings?.address || 'Bagbazar, Kathmandu 44600, Nepal'}</span>
+            </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Phone size={13} color="var(--brand-navy)" />
               <span>{siteSettings?.primaryPhone || '+977 1-4421098'}{siteSettings?.mobilePhone ? ` / ${siteSettings.mobilePhone}` : ''}</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Mail size={13} color="var(--brand-navy)" />
-              <span>{siteSettings?.officialEmail || 'info@vedantastrategies.com'}</span>
-            </span>
             <span className="hidden md:flex" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <MapPin size={13} color="var(--brand-navy)" />
-              <span>{getLangText(siteSettings, 'address', currentLang) || siteSettings?.address_en || siteSettings?.address || 'Bagbazar, Kathmandu 44600, Nepal'}</span>
+              <Mail size={13} color="var(--brand-navy)" />
+              <span>{siteSettings?.officialEmail || 'info.vedantastrategies@gmail.com'}</span>
             </span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem' }}>Sun–Fri: 9am–6pm</span>
+            <span style={{ color: '#64748b', fontSize: '0.78rem' }}>{getLangText(siteSettings, 'officeHours', currentLang) || siteSettings?.officeHours || 'Sunday to Friday: 9:00 AM – 6:00 PM'}</span>
             <button
               onClick={toggleLanguage}
               style={{ background: 'rgba(23,38,66,0.06)', border: '1px solid var(--border-color)', color: 'var(--brand-navy)', padding: '2px 10px', borderRadius: 'var(--radius-full)', fontSize: '0.75rem', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
@@ -397,7 +396,11 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
               <div className="mobile-drawer-meta">
                 {getLangText(siteSettings, 'address', currentLang) || siteSettings?.address_en || 'Bagbazar, Kathmandu 44600, Nepal'}
                 <br />
-                {siteSettings?.primaryPhone || '+977 1-4421098'}
+                {siteSettings?.primaryPhone || '+977 1-4421098'}{siteSettings?.mobilePhone ? ` / ${siteSettings.mobilePhone}` : ''}
+                <br />
+                {siteSettings?.officialEmail || 'info.vedantastrategies@gmail.com'}
+                <br />
+                {getLangText(siteSettings, 'officeHours', currentLang) || siteSettings?.officeHours || 'Sunday to Friday: 9:00 AM – 6:00 PM'}
               </div>
               <button
                 className="btn btn-primary"

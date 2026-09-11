@@ -4,7 +4,6 @@ import {
   BookOpen, 
   Layers, 
   TrendingUp, 
-  Sparkles, 
   ArrowRight, 
   UserCheck, 
   Clock, 

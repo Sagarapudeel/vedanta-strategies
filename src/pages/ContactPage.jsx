@@ -9,7 +9,6 @@ import {
   MessageCircle, 
   Send, 
   CheckCircle, 
-  Sparkles,
   Building2,
   Calendar,
   ExternalLink
@@ -107,7 +106,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
                       {currentLang === 'ne' ? 'इमेल सम्पर्क' : 'Email Inquiries'}
                     </div>
                     <div className="contact-info-value">
-                      {siteSettings?.officialEmail || 'info@vedantastrategies.com'}
+                      {siteSettings?.officialEmail || 'info.vedantastrategies@gmail.com'}
                     </div>
                   </div>
                 </div>
@@ -130,7 +129,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
               {/* Direct WhatsApp CTA */}
               <div className="contact-whatsapp-cta">
                 <a
-                  href={`https://wa.me/${siteSettings?.whatsappNumber || '9779801234567'}?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Bagbazar campus or enquire about programs.')}`}
+                  href={`https://wa.me/${siteSettings?.whatsappNumber || '9779747887598'}?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Bagbazar campus or enquire about programs.')}`}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-primary"
@@ -147,7 +146,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
               <div className="map-header-bar">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', color: 'var(--brand-navy)', fontWeight: '700' }}>
                   <MapPin size={16} color="var(--brand-maroon)" />
-                  <span>Bagbazar, Kathmandu Location</span>
+                  <span>Vedanta Strategies — Bagbazar, Kathmandu</span>
                 </div>
                 <a
                   href={mapUrl}

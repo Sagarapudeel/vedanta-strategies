@@ -6,7 +6,7 @@ export default function WhatsAppWidget({ whatsappNumber, currentLang, onSearch }
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const cleanNumber = (whatsappNumber || '9779801234567').replace(/[^0-9]/g, '');
+  const cleanNumber = (whatsappNumber || '9779747887598').replace(/[^0-9]/g, '');
   const greetingText = currentLang === 'ne'
     ? 'नमस्ते Vedanta Strategies, म तपाईंको तालिम र सेवाहरूबारे थप बुझ्न चाहन्छु।'
     : 'Hello Vedanta Strategies! I would like to inquire about your training courses and media services.';

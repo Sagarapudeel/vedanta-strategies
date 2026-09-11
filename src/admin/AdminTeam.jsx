@@ -21,7 +21,10 @@ export default function AdminTeam({
     bio_en: '',
     bio_ne: '',
     photo: '',
-    avatar: 'VS'
+    avatar: 'VS',
+    facebookUrl: '',
+    instagramUrl: '',
+    linkedinUrl: ''
   });
 
   const handleOpenAdd = () => {
@@ -36,7 +39,10 @@ export default function AdminTeam({
       bio_en: '',
       bio_ne: '',
       photo: '',
-      avatar: 'VS'
+      avatar: 'VS',
+      facebookUrl: '',
+      instagramUrl: '',
+      linkedinUrl: ''
     });
     setModalOpen(true);
   };
@@ -53,7 +59,10 @@ export default function AdminTeam({
       bio_en: member.bio_en || member.bio || '',
       bio_ne: member.bio_ne || '',
       photo: member.photo || '',
-      avatar: member.avatar || 'VS'
+      avatar: member.avatar || 'VS',
+      facebookUrl: member.facebookUrl || '',
+      instagramUrl: member.instagramUrl || '',
+      linkedinUrl: member.linkedinUrl || ''
     });
     setModalOpen(true);
   };
@@ -72,7 +81,10 @@ export default function AdminTeam({
       bio_en: formData.bio_en,
       bio_ne: formData.bio_ne,
       photo: formData.photo || '',
-      avatar: formData.avatar || (formData.name ? formData.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'VS')
+      avatar: formData.avatar || (formData.name ? formData.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'VS'),
+      facebookUrl: formData.facebookUrl || '',
+      instagramUrl: formData.instagramUrl || '',
+      linkedinUrl: formData.linkedinUrl || ''
     };
 
     if (editingMember && updateTeamMember) {
@@ -303,6 +315,33 @@ export default function AdminTeam({
                   </div>
                 </>
               )}
+
+              <div className="form-group" style={{ marginBottom: '14px', borderTop: '1px solid var(--border-subtle)', paddingTop: '16px' }}>
+                <label className="form-label">Social Profiles (optional — shown on Team cards)</label>
+                <input
+                  type="url"
+                  className="form-input"
+                  value={formData.facebookUrl}
+                  onChange={(e) => setFormData({ ...formData, facebookUrl: e.target.value })}
+                  placeholder="https://facebook.com/yourprofile"
+                />
+                <input
+                  type="url"
+                  className="form-input"
+                  style={{ marginTop: '8px' }}
+                  value={formData.instagramUrl}
+                  onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
+                  placeholder="https://instagram.com/yourprofile"
+                />
+                <input
+                  type="url"
+                  className="form-input"
+                  style={{ marginTop: '8px' }}
+                  value={formData.linkedinUrl}
+                  onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
+                  placeholder="https://linkedin.com/in/yourprofile"
+                />
+              </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                 <button type="button" className="btn btn-secondary" onClick={() => setModalOpen(false)}>

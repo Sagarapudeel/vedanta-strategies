@@ -3,15 +3,7 @@ import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
 import { 
   Quote, 
-  MapPin, 
-  Award, 
-  CheckCircle, 
-  ArrowRight, 
-  Sparkles, 
-  Mail, 
-  MessageCircle,
-  Building2,
-  Calendar
+  MapPin
 } from 'lucide-react';
 
 export default function CeoMessagePage({ currentLang, siteContent, openLeadModal, setActivePage }) {
@@ -148,7 +140,6 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                       className="btn btn-primary btn-sm"
                       onClick={() => openLeadModal('general')}
                     >
-                      <Sparkles size={14} />
                       <span>{currentLang === 'ne' ? 'परामर्शका लागि सम्पर्क' : 'Reach Out Directly'}</span>
                     </button>
                     <button 
@@ -167,35 +158,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
           </div>
         </div>
 
-        {/* 3 Core Principles from the CEO */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-navy)' }}>
-            <h4 style={{ fontSize: '1.15rem', color: 'var(--brand-navy)', marginBottom: '8px', fontWeight: '700' }}>
-              {currentLang === 'ne' ? '१. अभ्यासमा आधारित सिकाइ' : '1. Zero Dry Theory'}
-            </h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', margin: 0 }}>
-              No slides without execution. Every lesson requires active input on your laptop with live tools.
-            </p>
-          </div>
-
-          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-navy)' }}>
-            <h4 style={{ fontSize: '1.15rem', color: 'var(--brand-navy)', marginBottom: '8px', fontWeight: '700' }}>
-              {currentLang === 'ne' ? '२. स्थानीय बजार सान्दर्भिकता' : '2. Built for Nepal\'s Market'}
-            </h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', margin: 0 }}>
-              Workflows and ad strategies tailored for Kathmandu consumers, schools, colleges, and local companies.
-            </p>
-          </div>
-
-          <div className="mindrisers-card" style={{ padding: '28px', borderLeft: '4px solid var(--brand-navy)' }}>
-            <h4 style={{ fontSize: '1.15rem', color: 'var(--brand-navy)', marginBottom: '8px', fontWeight: '700' }}>
-              {currentLang === 'ne' ? '३. प्रशिक्षकको व्यक्तिगत उत्तरदायित्व' : '3. Mentor Accountability'}
-            </h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', margin: 0 }}>
-              Class sizes are limited to 15 students to guarantee individual attention on assignments and projects.
-            </p>
-          </div>
-        </div>
+        {/* 3 Core Principles cards removed per client requirement */}
 
       </div>
     </div>

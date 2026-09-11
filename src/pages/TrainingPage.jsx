@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { translations } from '../translations';
 import { getLangText, getLangArray } from '../utils/langHelper';
 import { 
-  Sparkles, 
   Search, 
   Clock, 
   Award, 
@@ -449,7 +448,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
             onClick={() => openLeadModal('institution')}
             style={{ fontWeight: '700' }}
           >
-            <Sparkles size={18} /> {t.courses.freeDemoBtn}
+            {t.courses.freeDemoBtn}
           </button>
         </div>
 

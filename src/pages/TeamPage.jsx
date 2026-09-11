@@ -1,11 +1,29 @@
 import React, { useState, useMemo } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
-import { 
-  Mail, 
-  Sparkles, 
-  ArrowRight
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+
+const FacebookIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const InstagramIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
+const LinkedinIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v1.5" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 export default function TeamPage({ currentLang, teamMembers = [], openLeadModal, setActivePage }) {
   const t = translations[currentLang] || translations.en;
@@ -100,23 +118,42 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
                 {getLangText(member, 'role', currentLang) || member.role}
               </div>
 
-              <div style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '16px', fontWeight: '600' }}>
-                {getLangText(member, 'specialty', currentLang) || member.specialty}
-              </div>
+              <div style={{ flexGrow: 1 }} />
 
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.65', margin: '0 0 20px 0', flexGrow: 1 }}>
-                {getLangText(member, 'bio', currentLang) || member.bio}
-              </p>
-
-              <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'center', gap: '12px' }}>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  style={{ fontSize: '0.8rem', padding: '6px 14px' }}
-                  onClick={() => openLeadModal('general')}
-                >
-                  <Mail size={13} />
-                  <span>Connect</span>
-                </button>
+              <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                {member.facebookUrl && (
+                  <a
+                    href={member.facebookUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${member.name} on Facebook`}
+                    className="team-social-link"
+                  >
+                    <FacebookIcon size={18} />
+                  </a>
+                )}
+                {member.instagramUrl && (
+                  <a
+                    href={member.instagramUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${member.name} on Instagram`}
+                    className="team-social-link"
+                  >
+                    <InstagramIcon size={18} />
+                  </a>
+                )}
+                {member.linkedinUrl && (
+                  <a
+                    href={member.linkedinUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${member.name} on LinkedIn`}
+                    className="team-social-link"
+                  >
+                    <LinkedinIcon size={18} />
+                  </a>
+                )}
               </div>
             </div>
           ))}

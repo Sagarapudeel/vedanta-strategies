@@ -11,7 +11,6 @@ import {
   BookOpen,
   Calendar,
   Layers,
-  Sparkles,
   HelpCircle,
   ChevronDown
 } from 'lucide-react';

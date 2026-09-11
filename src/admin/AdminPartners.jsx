@@ -11,7 +11,6 @@ import {
   CheckCircle,
   Eye,
   ExternalLink,
-  Sparkles,
   Upload,
   Image as ImageIcon,
   AlertCircle
@@ -184,7 +183,6 @@ export default function AdminPartners({
 
       {/* Info Banner on Display Logic */}
       <div style={{ background: 'rgba(197, 154, 63, 0.08)', border: '1px solid rgba(197, 154, 63, 0.25)', borderRadius: 'var(--radius-md)', padding: '14px 20px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <Sparkles size={20} color="#C59A3F" style={{ flexShrink: 0 }} />
         <div style={{ fontSize: '0.88rem', color: '#e2e8f0', lineHeight: '1.5' }}>
           <strong style={{ color: '#fbbf24' }}>Main Section Display Rule: </strong>
           Institutions with an uploaded image will <strong>ONLY show their logo image</strong> on the homepage marquee. If no image is provided, the institute's name and monogram badge are automatically shown instead.

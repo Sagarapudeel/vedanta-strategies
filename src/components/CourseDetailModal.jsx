@@ -1,17 +1,21 @@
-import React from 'react';
-import { X, Clock, MapPin, Calendar, Award, CheckCircle2, Download, UserCheck, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Clock, MapPin, Calendar, Award, CheckCircle2, Download, UserCheck } from 'lucide-react';
 import { getLangText, getLangArray } from '../utils/langHelper';
 
 export default function CourseDetailModal({ course, isOpen, onClose, onEnroll, currentLang = 'en' }) {
+  const [syllabusNote, setSyllabusNote] = useState(false);
+
   if (!isOpen || !course) return null;
 
-  const title = getLangText(course, 'title', currentLang) || course.title;
-  const tagline = getLangText(course, 'tagline', currentLang) || course.tagline;
-  const duration = getLangText(course, 'duration', currentLang) || course.duration;
-  const mode = getLangText(course, 'mode', currentLang) || course.mode;
+  const title = getLangText(course, 'title', currentLang) || course.title || 'Course Details';
+  const tagline = getLangText(course, 'tagline', currentLang) || course.tagline || '';
+  const duration = getLangText(course, 'duration', currentLang) || course.duration || '';
+  const mode = getLangText(course, 'mode', currentLang) || course.mode || '';
   const nextBatch = getLangText(course, 'nextBatch', currentLang) || course.nextBatch || (currentLang === 'ne' ? 'नियमित भर्ना जारी' : 'Ongoing Enrollment');
   const curriculumList = getLangArray(course, 'curriculum', currentLang);
-  const displayCurriculum = curriculumList.length > 0 ? curriculumList : (course.curriculum || []);
+  const rawCurriculum = Array.isArray(course.curriculum) ? course.curriculum : [];
+  const displayCurriculum = curriculumList.length > 0 ? curriculumList : rawCurriculum;
+  const structuredModules = Array.isArray(course.structuredModules) ? course.structuredModules : [];
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -77,8 +81,8 @@ export default function CourseDetailModal({ course, isOpen, onClose, onEnroll, c
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {/* If course has structured modules */}
-            {Array.isArray(course.structuredModules) && course.structuredModules.length > 0 ? (
-              course.structuredModules.map((mod, idx) => (
+            {structuredModules.length > 0 ? (
+              structuredModules.map((mod, idx) => (
                 <div 
                   key={idx}
                   style={{
@@ -102,14 +106,14 @@ export default function CourseDetailModal({ course, isOpen, onClose, onEnroll, c
                       {mod.topics.map((t, tIdx) => (
                         <li key={tIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#cbd5e1' }}>
                           <CheckCircle2 size={13} color="#B68A28" style={{ flexShrink: 0 }} />
-                          <span>{t}</span>
+                          <span>{typeof t === 'string' ? t : ''}</span>
                         </li>
                       ))}
                     </ul>
                   )}
                 </div>
               ))
-            ) : (
+            ) : displayCurriculum.length > 0 ? (
               /* Fallback to line-by-line curriculum with sub-topic parsing */
               displayCurriculum.map((mod, idx) => {
                 const isString = typeof mod === 'string';
@@ -137,15 +141,21 @@ export default function CourseDetailModal({ course, isOpen, onClose, onEnroll, c
                       {header ? (
                         <>
                           <span style={{ fontWeight: '700', color: '#fff' }}>{header}: </span>
-                          <span>{body}</span>
+                          <span>{typeof body === 'string' ? body : ''}</span>
                         </>
                       ) : (
-                        body
+                        typeof body === 'string' ? body : ''
                       )}
                     </div>
                   </div>
                 );
               })
+            ) : (
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.6' }}>
+                {currentLang === 'ne'
+                  ? 'यस कोर्सको विस्तृत पाठ्यक्रम अहिले तयार भइरहेको छ। पूर्ण सिलेबस प्राप्त गर्न कृपया सम्पर्क गर्नुहोस्।'
+                  : 'The detailed syllabus for this course is being finalized. Please contact us for the complete module breakdown.'}
+              </div>
             )}
           </div>
         </div>
@@ -161,25 +171,34 @@ export default function CourseDetailModal({ course, isOpen, onClose, onEnroll, c
           </div>
 
           <div style={{ display: 'flex', gap: '12px' }}>
-            <button 
+            <button
               className="btn btn-secondary"
-              onClick={() => alert(`Syllabus for "${course.title}" has been prepared! Starting PDF download...`)}
+              onClick={() => setSyllabusNote(true)}
             >
               <Download size={16} />
-              <span>Syllabus PDF</span>
+              <span>{currentLang === 'ne' ? 'सिलेबस PDF' : 'Syllabus PDF'}</span>
             </button>
-            <button 
+            <button
               className="btn btn-primary"
               onClick={() => {
                 onClose();
                 onEnroll(course.id);
               }}
             >
-              <Sparkles size={16} />
-              <span>Enroll In Batch</span>
+              <UserCheck size={16} />
+              <span>{currentLang === 'ne' ? 'ब्याचमा भर्ना' : 'Enroll In Batch'}</span>
             </button>
           </div>
         </div>
+
+        {/* Syllabus PDF availability note */}
+        {syllabusNote && (
+          <div style={{ marginTop: '16px', padding: '16px 18px', borderRadius: 'var(--radius-sm)', background: 'rgba(182, 138, 40, 0.1)', border: '1px dashed rgba(182, 138, 40, 0.45)', color: 'var(--text-light)', fontSize: '0.9rem', lineHeight: '1.6' }}>
+            {currentLang === 'ne'
+              ? 'विस्तृत PDF सिलेबस तपाईंको व्हाट्सएप / इमेलमा पठाइनेछ। नम्बर: +977 9747887598 वा info.vedantastrategies@gmail.com मा सम्पर्क गर्नुहोस्।'
+              : 'The detailed PDF syllabus will be shared on your WhatsApp / email. Reach us at +977 9747887598 or info.vedantastrategies@gmail.com.'}
+          </div>
+        )}
 
       </div>
     </div>

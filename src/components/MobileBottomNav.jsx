@@ -2,7 +2,7 @@ import React from 'react';
 import { BookOpen, Briefcase, Phone, MessageCircle, Home } from 'lucide-react';
 
 export default function MobileBottomNav({ activePage, setActivePage, openLeadModal, whatsappNumber }) {
-  const cleanNumber = (whatsappNumber || '9779801234567').replace(/[^0-9]/g, '');
+  const cleanNumber = (whatsappNumber || '9779747887598').replace(/[^0-9]/g, '');
 
   const handleNav = (page) => {
     setActivePage(page);

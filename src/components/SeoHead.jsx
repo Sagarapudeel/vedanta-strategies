@@ -93,7 +93,7 @@ export default function SeoHead({ pageId, currentLang, siteSettings }) {
       || siteSettings?.address
       || 'Bagbazar, Kathmandu 44600, Nepal';
     const phone = siteSettings?.primaryPhone || '+977 1-4421098';
-    const email = siteSettings?.officialEmail || 'info@vedantastrategies.com';
+    const email = siteSettings?.officialEmail || 'info.vedantastrategies@gmail.com';
     const name = siteSettings?.siteName || DEFAULT_SITE_NAME;
 
     upsertJsonLd('seo-jsonld', {

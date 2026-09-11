@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, PlusCircle, Trash2, Edit2, Star, Globe, CheckCircle } from 'lucide-react';
+import { MessageSquare, PlusCircle, Trash2, Edit2, Globe, CheckCircle } from 'lucide-react';
 import ImageInput from './ImageInput';
 
 export default function AdminTestimonials({ 
@@ -99,11 +99,6 @@ export default function AdminTestimonials({
         {testimonials.map((t) => (
           <div key={t.id} className="glass-card" style={{ padding: '28px', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div style={{ display: 'flex', gap: '2px' }}>
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={15} fill="#f59e0b" color="#f59e0b" />
-                ))}
-              </div>
               <span className="course-category-badge">{t.type}</span>
             </div>
 

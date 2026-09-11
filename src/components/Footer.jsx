@@ -116,10 +116,10 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
               </li>
               <li>
                 <div className="footer-service-title">
-                  {currentLang === 'ne' ? '२. संस्थागत बुटक्याम्प' : '2. Institutional Bootcamps'}
+                  {currentLang === 'ne' ? '२. संस्थागत कार्यक्रम' : '2. Organizational Programs & Consulting'}
                 </div>
                 <div className="footer-service-desc">
-                  {currentLang === 'ne' ? 'कलेज, विद्यालय र संघसंस्थाहरूका लागि विशेष एआई र डिजिटल साक्षरता' : 'Customized AI & digital literacy workshops for colleges and schools'}
+                  {currentLang === 'ne' ? 'संस्था र टिमहरूका लागि एआई साक्षरता, डिजिटल रणनीति र मिडिया साक्षरता कार्यक्रम' : 'Customized AI literacy, digital strategy, and media verification workshops for organizations'}
                 </div>
               </li>
               <li>
@@ -149,7 +149,7 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
               </div>
               <div className="footer-contact-row">
                 <Mail size={16} color="var(--brand-navy)" style={{ flexShrink: 0 }} />
-                <span>{siteSettings?.officialEmail || 'info@vedantastrategies.com'}</span>
+                <span>{siteSettings?.officialEmail || 'info.vedantastrategies@gmail.com'}</span>
               </div>
               <div className="footer-contact-row">
                 <Clock size={16} color="var(--brand-navy)" style={{ flexShrink: 0 }} />

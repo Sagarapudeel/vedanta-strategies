@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
-import { Sparkles, TrendingUp, CheckCircle, ArrowRight, Layers, Target, Award } from 'lucide-react';
+import { TrendingUp, CheckCircle, ArrowRight, Layers, Target, Award } from 'lucide-react';
 
 export default function PortfolioPage({ currentLang, portfolioItems = [], openLeadModal }) {
   const t = translations[currentLang] || translations.en;
