@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { loadEnv } from 'vite';
 import { PUBLIC_PAGES, DEFAULT_OG_IMAGE, applySeoToHtml, getSiteUrl } from './src/lib/seoConfig.js';
 import { initialData } from './src/data/initialData.js';
-import { renderPage } from './prerender-content.js';
+import { renderPage, setLiveStore } from './prerender-content.js';
 
 const SITE_STORE_ROW = 'site_store'; // supabase table
 const SITE_STORE_ID = 'default';
@@ -95,11 +96,30 @@ export function seoStaticPages() {
         const siteUrl = getSiteUrl();
         const ogImage = `${siteUrl}${DEFAULT_OG_IMAGE}`;
 
+        // ⚠ .env.local is NOT auto-injected into process.env by Vite for config/plugin
+        // code — only into import.meta.env for client code. We MUST call loadEnv()
+        // explicitly so the build-time Supabase fetch actually sees the anon key.
+        // Otherwise process.env.VITE_SUPABASE_URL is undefined → fetch returns null →
+        // prerender falls back to the hardcoded initialData CEO name. This was the
+        // real cause of "CEO is X in the admin panel but crawlers can't find it."
+        const envMode = process.env.NODE_ENV || 'production';
+        const loaded = loadEnv(envMode, process.cwd(), '');
+        const supabaseUrl = loaded.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = loaded.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+
         // Load the LIVE CMS store at build time so admin panel edits are pre-rendered.
         const liveStore = await loadLiveStore(
-          process.env.VITE_SUPABASE_URL,
-          process.env.VITE_SUPABASE_ANON_KEY
+          supabaseUrl,
+          supabaseAnonKey
         );
+
+        // Apply the live store to the prerender module's module-scope data
+        // (about/siteContent) so every renderer uses the CURRENT CEO name etc.
+        // The renderers read that scope, NOT the renderer() argument, so we
+        // must call setLiveStore here rather than passing liveStore into renderers.
+        if (liveStore) {
+          setLiveStore(liveStore);
+        }
 
         for (const page of PUBLIC_PAGES) {
           const canonical = `${siteUrl}${page.path}`;

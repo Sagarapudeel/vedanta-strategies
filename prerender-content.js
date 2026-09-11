@@ -7,9 +7,58 @@
 
 import { initialData } from './src/data/initialData.js';
 
+// Mirrors dataStore.js's mergeCms semantics for the prerender: merge the LIVE
+// CMS store over initialData so admin-panel edits (e.g. CEO name in "CEO's
+// Message") are pre-rendered, while initialData defaults win where the CMS
+// omits required values (maps, lat/lng). dataStore keeps its own merge private,
+// so we keep a tiny local equivalent here rather than importing a bogus name.
+function mergePrerenderStore(cmsStore) {
+  const base = initialData;
+  const live = cmsStore || {};
+  const siteSettings = {
+    ...base.siteSettings,
+    ...(live.siteSettings || {}),
+    latitude: base.siteSettings.latitude,
+    longitude: base.siteSettings.longitude,
+    mapsUrl: base.siteSettings.mapsUrl,
+    mapsEmbed: base.siteSettings.mapsEmbed
+  };
+  return {
+    ...base,
+    ...live,
+    siteSettings,
+    partners: (live.partners && live.partners.length > 0) ? live.partners : base.partners,
+    teamMembers: (live.teamMembers && live.teamMembers.length > 0) ? live.teamMembers : base.teamMembers,
+    blogPosts: (live.blogPosts && live.blogPosts.length > 0) ? live.blogPosts : base.blogPosts,
+    siteContent: live.siteContent ? {
+      ...base.siteContent,
+      ...live.siteContent,
+      about: { ...(base.siteContent.about || {}), ...(live.siteContent.about || {}) }
+    } : base.siteContent,
+    media: { ...(base.media || {}), ...(live.media || {}) }
+  };
+}
+
 const SITE_URL = 'https://vedantastrategies.com';
-const siteContent = initialData.siteContent || {};
-const about = siteContent.about || {};
+
+// Mutable module data. The build plugin replaces these with the LIVE CMS store
+// (from Supabase) via setLiveStore() before rendering, so admin panel edits
+// (e.g. CEO name in "CEO's Message") appear in the crawlable HTML. Falls back
+// to initialData when the project is unconfigured or the fetch fails.
+let siteContent = initialData.siteContent || {};
+let about = siteContent.about || {};
+let currentData = initialData;
+
+// Set the data used by every renderer. Called by vite.seoPlugin.js after it
+// fetches the live store at build time. Merge keeps all fields consistent with
+// the runtime app's mergeCms behavior (defaults from initialData win where the
+// CMS omits required values like maps).
+export function setLiveStore(cmsStore) {
+  const merged = mergePrerenderStore(cmsStore || initialData);
+  siteContent = merged.siteContent || initialData.siteContent || {};
+  about = siteContent.about || {};
+  currentData = merged;
+}
 
 function img(src, alt, extra = '') {
   if (!src) return '';
@@ -59,6 +108,21 @@ function renderHome() {
 
       <h2>What People Say About Us</h2>
       ${testimonials}
+
+      <h2>Meet the Founder & CEO</h2>
+      ${(function () {
+        const fName = getLangText(about, 'ceoName', 'en') || 'Er. Suman Adhikari';
+        const fTitle = getLangText(about, 'ceoTitle', 'en') || 'Founder & Chief Executive Officer';
+        const fBio = getLangText(about, 'ceoBio', 'en') || '';
+        const fPhoto = about.ceoPhoto || '/images/ceo.jpg';
+        return `<article>
+          ${img(fPhoto, `Portrait of ${fName}, Founder and CEO of Vedanta Strategies`)}
+          <h3>${esc(fName)}</h3>
+          <p><strong>${esc(fTitle)}</strong></p>
+          ${fBio ? `<p>${esc(fBio)}</p>` : ''}
+          <p><a href="/ceo-message">Read the founder's full message</a></p>
+        </article>`;
+      })()}
 
       <h2>Our Partners</h2>
       <ul>${partners}</ul>
