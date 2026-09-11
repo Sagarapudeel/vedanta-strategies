@@ -4,6 +4,60 @@ import { PUBLIC_PAGES, DEFAULT_OG_IMAGE, applySeoToHtml, getSiteUrl } from './sr
 import { initialData } from './src/data/initialData.js';
 import { renderPage } from './prerender-content.js';
 
+const SITE_STORE_ROW = 'site_store'; // supabase table
+const SITE_STORE_ID = 'default';
+
+function mergeCmsStore(parsed = {}) {
+  const siteSettings = {
+    ...initialData.siteSettings,
+    ...(parsed.siteSettings || {}),
+    latitude: initialData.siteSettings.latitude,
+    longitude: initialData.siteSettings.longitude,
+    mapsUrl: initialData.siteSettings.mapsUrl,
+    mapsEmbed: initialData.siteSettings.mapsEmbed
+  };
+  return {
+    ...initialData,
+    ...parsed,
+    partners: (parsed.partners && parsed.partners.length > 0) ? parsed.partners : initialData.partners,
+    teamMembers: (parsed.teamMembers && parsed.teamMembers.length > 0) ? parsed.teamMembers : initialData.teamMembers,
+    blogPosts: (parsed.blogPosts && parsed.blogPosts.length > 0) ? parsed.blogPosts : initialData.blogPosts,
+    testimonials: (parsed.testimonials && parsed.testimonials.length > 0) ? parsed.testimonials : initialData.testimonials,
+    siteContent: parsed.siteContent ? {
+      ...initialData.siteContent,
+      ...parsed.siteContent,
+      about: { ...initialData.siteContent.about, ...(parsed.siteContent.about || {}) }
+    } : initialData.siteContent,
+    siteSettings,
+    media: { ...(initialData.media || {}), ...(parsed.media || {}) }
+  };
+}
+
+// Fetch the LIVE CMS store from Supabase at build time so the pre-rendered
+// SEO content reflects admin panel edits. Falls back to initialData if the
+// project is not configured or the fetch fails. Only the public anon key is
+// used (same key shipped in the client bundle); RLS still protects the data.
+async function loadLiveStore(url, anonKey) {
+  if (!url || !anonKey) return null;
+  try {
+    const res = await fetch(`${url}/rest/v1/${SITE_STORE_ROW}?select=data&id=eq.${SITE_STORE_ID}`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`
+      },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    const data = rows && rows[0]?.data;
+    if (!data) return null;
+    return mergeCmsStore(data);
+  } catch (err) {
+    console.warn('[seo] Live CMS fetch failed, using initialData:', err?.message || err);
+    return null;
+  }
+}
+
 // CSS to hide pre-rendered SEO content from normal users but keep it visible to crawlers.
 // Crawlers that don't execute JS will see this content. Crawlers that DO execute JS
 // will see the React-rendered content instead (which looks better). No duplication issue
@@ -32,7 +86,7 @@ export function seoStaticPages() {
     apply: 'build',
     closeBundle: {
       sequential: true,
-      handler() {
+      async handler() {
         const dist = path.resolve('dist');
         const indexPath = path.join(dist, 'index.html');
         if (!fs.existsSync(indexPath)) return;
@@ -40,6 +94,12 @@ export function seoStaticPages() {
         const html = fs.readFileSync(indexPath, 'utf8');
         const siteUrl = getSiteUrl();
         const ogImage = `${siteUrl}${DEFAULT_OG_IMAGE}`;
+
+        // Load the LIVE CMS store at build time so admin panel edits are pre-rendered.
+        const liveStore = await loadLiveStore(
+          process.env.VITE_SUPABASE_URL,
+          process.env.VITE_SUPABASE_ANON_KEY
+        );
 
         for (const page of PUBLIC_PAGES) {
           const canonical = `${siteUrl}${page.path}`;
@@ -54,7 +114,7 @@ export function seoStaticPages() {
           // Inject pre-rendered crawlable content before </body>
           const renderer = renderPage[page.id];
           if (renderer) {
-            const seoContent = renderer();
+            const seoContent = renderer(liveStore || initialData);
             // Add the CSS + content before the closing </body> tag
             injected = injected.replace(
               '</body>',
