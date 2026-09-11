@@ -99,7 +99,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
       tagline_ne: '',
       duration_en: '6 Weeks (36 Hours)',
       duration_ne: '६ हप्ता (३६ घण्टा)',
-      mode_en: 'Bagbazar Campus or Live Online',
+      mode_en: 'Bagbazar Office or Live Online',
       mode_ne: 'बागबजार क्याम्पस वा प्रत्यक्ष अनलाइन',
       nextBatch_en: 'Sunday, 15th Ashoj (Morning 7:00 AM & Evening 5:30 PM)',
       nextBatch_ne: 'आइतबार, १५ असोज (बिहान ७:०० र बेलुकी ५:३०)',
@@ -124,7 +124,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
       tagline_ne: course.tagline_ne || '',
       duration_en: course.duration_en || course.duration || '6 Weeks (36 Hours)',
       duration_ne: course.duration_ne || '',
-      mode_en: course.mode_en || course.mode || 'Bagbazar Campus',
+      mode_en: course.mode_en || course.mode || 'Bagbazar Office',
       mode_ne: course.mode_ne || '',
       nextBatch_en: course.nextBatch_en || course.nextBatch || '',
       nextBatch_ne: course.nextBatch_ne || '',
@@ -431,13 +431,13 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label">Campus Mode (English)</label>
+                      <label className="form-label">Mode (English)</label>
                       <input
                         type="text"
                         value={formData.mode_en}
                         onChange={(e) => setFormData({ ...formData, mode_en: e.target.value })}
                         className="form-input"
-                        placeholder="e.g. Bagbazar Campus or Live Online"
+                        placeholder="e.g. Bagbazar Office or Live Online"
                       />
                     </div>
                   </div>

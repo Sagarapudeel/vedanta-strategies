@@ -107,7 +107,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                 <div style={{ padding: '14px 22px', background: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
                   <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--brand-navy)', fontFamily: 'var(--font-heading)' }}>
-                    Bagbazar Campus
+                    Bagbazar Office
                   </div>
                   <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>Central Kathmandu Hub</div>
                 </div>
@@ -279,7 +279,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
 
         <div className="mindrisers-card" style={{ padding: '44px 32px', textAlign: 'center', maxWidth: '760px', margin: '0 auto', border: '1px solid var(--border-color)', background: '#ffffff' }}>
           <h3 style={{ fontSize: '1.8rem', marginBottom: '12px', color: 'var(--brand-navy)', fontWeight: '800' }}>
-            {currentLang === 'ne' ? 'हाम्रो बागबजार कार्यालय आउनुहोस्' : 'Visit Our Campus at Bagbazar'}
+            {currentLang === 'ne' ? 'हामीलाई भेट्नुहोस्' : 'Visit Us'}
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', marginBottom: '24px', lineHeight: '1.65' }}>
             {currentLang === 'ne'
@@ -291,7 +291,7 @@ export default function AboutPage({ currentLang, siteContent, teamMembers = [], 
               {currentLang === 'ne' ? 'टोलीसँग परामर्श गर्नुहोस्' : 'Schedule a Consultation'}
             </button>
             <button className="btn btn-secondary" onClick={() => { setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              {currentLang === 'ne' ? 'कार्यालय ठेगाना र नक्सा' : 'Get Campus Directions'}
+              {currentLang === 'ne' ? 'कार्यालय ठेगाना र नक्सा' : 'Get Directions'}
             </button>
           </div>
         </div>

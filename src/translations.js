@@ -27,7 +27,7 @@ export const translations = {
       trnTag: "TRAINING & COURSES",
       titleStart: "Hands-on AI & Digital Skills Training — ",
       titleHighlight: "Right Here in Kathmandu",
-      subtitle: "Learn ChatGPT, prompt engineering, media literacy, and digital marketing from active practitioners — small batches at our Bagbazar campus, on your own laptop.",
+      subtitle: "Learn ChatGPT, prompt engineering, media literacy, and digital marketing from active practitioners — small batches at our Bagbazar office, on your own laptop.",
       btnPrimary: "View Course Batches",
       btnSecondary: "Book a Consultation",
       svcTag: "SERVICES FOR BUSINESSES & ORGANIZATIONS",

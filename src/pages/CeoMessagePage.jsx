@@ -46,20 +46,12 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
 
         {/* Executive Letter Grid */}
         <div 
-          className="mindrisers-card" 
-          style={{ 
-            padding: '48px', 
-            background: 'linear-gradient(145deg, #ffffff 0%, #fcfbf9 100%)',
-            border: '1px solid rgba(28, 47, 77, 0.4)',
-            boxShadow: 'var(--shadow-md)',
-            position: 'relative',
-            marginBottom: '64px'
-          }}
+          className="mindrisers-card ceo-letter-card" 
         >
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '56px', alignItems: 'start' }}>
+          <div className="ceo-layout-grid">
             
             {/* Left: CEO Portrait with Subtle Luxury Animation */}
-            <div>
+            <div className="ceo-portrait-col">
               <div className="ceo-portrait-frame">
                 <img 
                   src={ceoPhoto} 
@@ -78,7 +70,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
               </div>
 
               {/* CEO Identity Meta Box */}
-              <div style={{ marginTop: '20px', textAlign: 'center', background: '#ffffff', padding: '18px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+              <div className="ceo-identity-meta">
                 <h3 style={{ fontSize: '1.35rem', color: 'var(--brand-navy)', marginBottom: '4px', fontWeight: '800' }}>
                   {ceoName}
                 </h3>
@@ -96,15 +88,15 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
             </div>
 
             {/* Right: The Executive Message */}
-            <div style={{ position: 'relative' }}>
-              <Quote size={56} color="rgba(28, 47, 77, 0.2)" style={{ position: 'absolute', top: '-24px', left: '-16px', zIndex: 0 }} />
+            <div className="ceo-message-col">
+              <Quote size={56} color="rgba(28, 47, 77, 0.2)" className="ceo-quote-mark" />
               
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--brand-navy)', fontWeight: '800', marginBottom: '16px' }}>
+                <div className="ceo-message-eyebrow">
                   {currentLang === 'ne' ? 'संस्थापकको पत्र' : 'A PERSONAL LETTER TO LEARNERS & PARTNERS'}
                 </div>
 
-                <blockquote style={{ fontSize: '1.12rem', color: 'var(--brand-navy)', lineHeight: '1.9', fontStyle: 'italic', marginBottom: '28px', margin: 0, fontWeight: '500' }}>
+                <blockquote className="ceo-letter-bq">
                   "{ceoMessage}"
                 </blockquote>
 
@@ -112,7 +104,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                   <p style={{ marginBottom: '16px' }}>
                     {currentLang === 'ne'
                       ? 'हाम्रो उद्देश्य केवल कक्षा कोठामा विद्यार्थीलाई प्रमाणपत्र वितरण गर्नु होइन। हामी चाहन्छौं कि हाम्रा प्रत्येक प्रशिक्षार्थीले आफ्नो ल्यापटप खोलेर वास्तविक ग्राहकका लागि काम गर्न सकून्, नेपाली बजारको मनोविज्ञान बुझ्न सकून् र तत्काल आम्दानी वा संस्थागत सुधार गर्न सक्षम होउन्।'
-                      : 'Our benchmark is never how many certificates we print. It is whether a student or faculty member can sit with their laptop, configure enterprise AI workflows with confidence, optimize a real advertising budget, and produce measurable outcomes for themselves or their campus.'}
+                      : 'Our benchmark is never how many certificates we print. It is whether a student or faculty member can sit with their laptop, configure enterprise AI workflows with confidence, optimize a real advertising budget, and produce measurable outcomes for themselves or their institution.'}
                   </p>
                   <p style={{ margin: 0 }}>
                     {currentLang === 'ne'
@@ -122,7 +114,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                 </div>
 
                 {/* Credentials & Signature Line */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', paddingTop: '24px', borderTop: '2px solid rgba(28, 47, 77, 0.25)' }}>
+                <div className="ceo-signature-row">
                   <div>
                     <div style={{ fontWeight: '800', color: 'var(--brand-navy)', fontSize: '1.1rem', fontFamily: 'var(--font-heading)' }}>
                       {ceoName}
@@ -135,7 +127,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '10px' }}>
+                  <div className="ceo-footer-buttons">
                     <button 
                       className="btn btn-primary btn-sm"
                       onClick={() => openLeadModal('general')}
@@ -147,7 +139,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
                       onClick={() => { setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                     >
                       <MapPin size={14} />
-                      <span>{currentLang === 'ne' ? 'कार्यालय भेट्नुहोस्' : 'Visit Campus'}</span>
+                      <span>{currentLang === 'ne' ? 'हामीलाई भेट्नुहोस्' : 'Visit Us'}</span>
                     </button>
                   </div>
                 </div>

@@ -129,7 +129,7 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
               {/* Direct WhatsApp CTA */}
               <div className="contact-whatsapp-cta">
                 <a
-                  href={`https://wa.me/${siteSettings?.whatsappNumber || '9779747887598'}?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Bagbazar campus or enquire about programs.')}`}
+                  href={`https://wa.me/${siteSettings?.whatsappNumber || '9779747887598'}?text=${encodeURIComponent('Hello Vedanta Strategies! I would like to schedule a visit to your Bagbazar office or enquire about programs.')}`}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-primary"

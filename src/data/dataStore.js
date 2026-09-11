@@ -34,6 +34,9 @@ function mergeCms(parsed = {}) {
     ...initialData,
     ...parsed,
     partners: (parsed.partners && parsed.partners.length > 0) ? parsed.partners : initialData.partners,
+    teamMembers: (parsed.teamMembers && parsed.teamMembers.length > 0) ? parsed.teamMembers : initialData.teamMembers,
+    blogPosts: (parsed.blogPosts && parsed.blogPosts.length > 0) ? parsed.blogPosts : initialData.blogPosts,
+    testimonials: (parsed.testimonials && parsed.testimonials.length > 0) ? parsed.testimonials : initialData.testimonials,
     siteContent: parsed.siteContent ? {
       ...initialData.siteContent,
       ...parsed.siteContent,

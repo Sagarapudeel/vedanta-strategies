@@ -14,7 +14,7 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
       title_ne: siteContent?.hero?.title_ne || 'व्यावहारिक एआई तथा डिजिटल सीप तालिम ',
       titleHighlight_en: siteContent?.hero?.titleHighlight_en || 'for Nepal',
       titleHighlight_ne: siteContent?.hero?.titleHighlight_ne || 'नेपालमै बागबजारबाट',
-      subtitle_en: siteContent?.hero?.subtitle_en || 'Learn ChatGPT, prompt engineering, media literacy, and digital marketing from active practitioners — small batches at our Bagbazar campus, on your own laptop.',
+      subtitle_en: siteContent?.hero?.subtitle_en || 'Learn ChatGPT, prompt engineering, media literacy, and digital marketing from active practitioners — small batches at our Bagbazar office, on your own laptop.',
       subtitle_ne: siteContent?.hero?.subtitle_ne || 'सक्रिय पेसाकर्मी प्रशिक्षकहरूबाट च्याटजीपीटी, प्रम्प्ट इन्जिनियरिङ, मिडिया साक्षरता र डिजिटल मार्केटिङ सिक्नुहोस् — बागबजार क्याम्पसमा साना ब्याचहरूमा, आफ्नै ल्यापटपमा।',
       trnTag_en: siteContent?.hero?.trnTag_en || 'TRAINING & COURSES',
       trnTag_ne: siteContent?.hero?.trnTag_ne || 'तालिम तथा पाठ्यक्रमहरू',

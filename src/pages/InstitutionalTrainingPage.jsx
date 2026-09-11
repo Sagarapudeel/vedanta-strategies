@@ -60,7 +60,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
 
   const institutionalPerks = [
     {
-      title_en: "On-Campus Delivery",
+      title_en: "On-Site Delivery",
       title_ne: "तपाईंकै क्याम्पस परिसरमा",
       desc_en: "Our mentor team travels to your school or college anywhere across Nepal with complete workshop materials."
     },
@@ -88,7 +88,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
         : "How do customized bootcamps work for schools and colleges?",
       a: currentLang === 'ne'
         ? "हाम्रो संस्थागत टोलीले साझेदार क्याम्पसहरूसँग समन्वय गरी २ दिनदेखि ४ हप्तासम्मका अनुकूलित बुटक्याम्पहरू सञ्चालन गर्छ। हामी कार्यशाला सामग्री, एआई प्रम्प्ट टेम्प्लेट र व्यावहारिक केस स्टडी उपलब्ध गराउँछौं।"
-        : "Our institutional team designs customized 2-day to 4-week bootcamps directly inside partner campuses. We provide all workshop materials, AI sandbox environments, and faculty training manuals."
+        : "Our institutional team designs customized 2-day to 4-week bootcamps directly inside partner institutions. We provide all workshop materials, AI sandbox environments, and faculty training manuals."
     },
     {
       q: currentLang === 'ne'
@@ -196,7 +196,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
               Book a Free Practical AI Demo for Your Faculty
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.6', margin: 0 }}>
-              We visit your campus to demonstrate live AI prompt templates, fact-checking workflows, and digital tools before you plan any formal cohort.
+              We visit your institution to demonstrate live AI prompt templates, fact-checking workflows, and digital tools before you plan any formal cohort.
             </p>
           </div>
 
@@ -342,7 +342,7 @@ export default function InstitutionalTrainingPage({ currentLang, courses = [], o
               Looking for open cohorts for yourself?
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', margin: 0 }}>
-              Join upcoming small-batch cohorts (max 15) at our Bagbazar campus for AI workflows, performance marketing, and video creation.
+              Join upcoming small-batch cohorts (max 15) at our Bagbazar office for AI workflows, performance marketing, and video creation.
             </p>
           </div>
 

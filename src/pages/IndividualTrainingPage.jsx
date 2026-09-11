@@ -64,7 +64,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
         : "Are classes conducted physically at Bagbazar or online?",
       a: currentLang === 'ne'
         ? "हामी दुवै माध्यम उपलब्ध गराउँछौं! हाम्रा तालिमहरू काठमाडौंको बागबजारस्थित भौतिक कम्प्युटर ल्याबमा सञ्चालन हुन्छन्, साथै उपत्यका बाहिरका विद्यार्थीका लागि प्रत्यक्ष अनलाइन प्रसारण पनि उपलब्ध छ।"
-        : "We offer both! Trainees can attend physical hands-on sessions at our Bagbazar campus computer lab, or join live interactive online streams with screen-share guidance."
+        : "We offer both! Trainees can attend physical hands-on sessions at our Bagbazar office computer lab, or join live interactive online streams with screen-share guidance."
     },
     {
       q: currentLang === 'ne'
@@ -263,7 +263,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
               Looking for workshops for your School or College?
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', margin: 0 }}>
-              We conduct customized AI bootcamps, teacher prompt development, and student credentialing directly at your campus.
+              We conduct customized AI bootcamps, teacher prompt development, and student credentialing directly at your institution.
             </p>
           </div>
 

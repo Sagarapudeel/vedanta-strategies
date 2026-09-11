@@ -182,7 +182,7 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
               Are you a practitioner passionate about teaching?
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
-              We are constantly looking for practical instructors, AI researchers, and digital marketing leads in Kathmandu to lead weekend cohorts and campus bootcamps.
+              We are constantly looking for practical instructors, AI researchers, and digital marketing leads in Kathmandu to lead weekend cohorts and on-site bootcamps.
             </p>
           </div>
 

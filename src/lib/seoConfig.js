@@ -61,7 +61,7 @@ export const PUBLIC_PAGES = [
     title: 'Institutional Programs & School Workshops | Vedanta Strategies',
     titleNe: 'संस्थागत कार्यक्रम | वेदान्त स्ट्र्याटेजीज',
     description:
-      'On-campus AI literacy bootcamps and teacher training for schools, colleges, and organizations in Nepal.',
+      'On-site AI literacy bootcamps and teacher training for schools, colleges, and organizations in Nepal.',
     descriptionNe:
       'नेपालका विद्यालय, कलेज र संस्थाहरूका लागि क्याम्पसमा एआई साक्षरता बुटक्याम्प र शिक्षक तालिम।'
   },
@@ -98,10 +98,10 @@ export const PUBLIC_PAGES = [
   {
     id: 'gallery',
     path: '/gallery',
-    title: 'Photo Gallery | Campus & Workshop Photos | Vedanta Strategies',
+    title: 'Photo Gallery | Workshop & Training Photos | Vedanta Strategies',
     titleNe: 'फोटो ग्यालेरी | वेदान्त स्ट्र्याटेजीज',
     description:
-      'Photos from Vedanta Strategies workshops, training sessions, production work, and the Bagbazar campus in Kathmandu.',
+      'Photos from Vedanta Strategies workshops, training sessions, production work, and the Bagbazar office in Kathmandu.',
     descriptionNe:
       'वेदान्त स्ट्र्याटेजीजका कार्यशाला, तालिम सत्र, प्रोडक्सन र काठमाडौंको बागबजार क्याम्पसका तस्बिरहरू।'
   },

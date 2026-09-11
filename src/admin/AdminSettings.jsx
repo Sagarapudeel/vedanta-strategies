@@ -13,7 +13,7 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
     mobilePhone: siteSettings.mobilePhone || '+977 9747887598',
     whatsappNumber: siteSettings.whatsappNumber || '9779747887598',
     
-    // Bilingual Campus Address
+    // Bilingual Office Address
     address_en: siteSettings.address_en || siteSettings.address || 'Bagbazar, Kathmandu 44600, Nepal',
     address_ne: siteSettings.address_ne || 'बागबजार, काठमाडौं ४४६००, नेपाल',
     mapsUrl: siteSettings.mapsUrl || 'https://maps.google.com/?cid=2818761487808049031',
@@ -62,7 +62,7 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
         <div>
           <h1 style={{ fontSize: '2rem', color: '#fff', marginBottom: '8px' }}>Global Site Settings & CMS</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-            Full control over campus address, operating hours, announcement bar, and social channels with dedicated English and Nepali fields.
+            Full control over office address, operating hours, announcement bar, and social channels with dedicated English and Nepali fields.
           </p>
         </div>
 
@@ -127,17 +127,17 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
 
       <form onSubmit={handleSubmit}>
         
-        {/* Localized Campus Info Card */}
+        {/* Localized Office Info Card */}
         <div className="admin-card" style={{ marginBottom: '28px' }}>
           <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <MapPin size={18} color="#C59A3F" />
-            <span>Campus Location & Announcement ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</span>
+            <span>Office Location & Announcement ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</span>
           </h3>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }}>
             <div className="form-group">
               <label className="form-label">
-                Campus & Office Address ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
+                Office & Address ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
               </label>
               <input
                 type="text"

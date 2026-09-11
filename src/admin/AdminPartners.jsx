@@ -195,7 +195,7 @@ export default function AdminPartners({
           <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', top: '12px', left: '12px' }} />
           <input
             type="text"
-            placeholder="Search partners by name or campus..."
+            placeholder="Search partners by name or location..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="form-input"
@@ -376,7 +376,7 @@ export default function AdminPartners({
                       </div>
                       <div className="client-logo-sub">
                         {activeLangTab === 'en' 
-                          ? (formData.sub_en || 'Campus / Location') 
+                          ? (formData.sub_en || 'Location') 
                           : (formData.sub_ne || formData.sub_en || 'क्याम्पस / क्षेत्र')
                         }
                       </div>
@@ -495,13 +495,13 @@ export default function AdminPartners({
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Campus / Category Tagline (English)</label>
+                    <label className="form-label">Location / Category Tagline (English)</label>
                     <input
                       type="text"
                       className="form-input"
                       value={formData.sub_en}
                       onChange={(e) => setFormData({ ...formData, sub_en: e.target.value })}
-                      placeholder="e.g. Balkumari & Bagbazar Campuses"
+                      placeholder="e.g. Balkumari & Bagbazar"
                     />
                   </div>
                 </div>
@@ -522,7 +522,7 @@ export default function AdminPartners({
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Campus / Category Tagline (नेपाली विवरण)</label>
+                    <label className="form-label">Location / Category Tagline (नेपाली विवरण)</label>
                     <input
                       type="text"
                       className="form-input"

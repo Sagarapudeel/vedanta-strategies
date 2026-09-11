@@ -8,8 +8,8 @@ export default function WhoWeArePage({ currentLang, siteContent, media = {}, ope
 
   const whoWeAreText = getLangText(siteContent?.about, 'whoWeAre', currentLang) || (
     currentLang === 'ne'
-      ? 'वेदान्त स्ट्राटेजिज काठमाडौंको व्यावहारिक तालिम एकेडेमी र डिजिटल रणनीति साझेदार हो। बागबजारस्थित हाम्रो क्याम्पसमा विद्यार्थी र पेसाकर्मीहरूलाई व्यावहारिक एआई र डिजिटल सीप सिकाउँछौं, र त्यही टिमले व्यवसाय तथा संस्थाहरूको नतिजामुखी मार्केटिङ पनि सञ्चालन गर्छ। सिकाइ र कार्यान्वयन — एउटै टिमका दुई ढोका।'
-      : 'Vedanta Strategies is Kathmandu\'s hands-on training academy and digital strategy partner. At our Bagbazar campus we equip students and professionals with practical AI and digital skills, and the same team runs performance marketing for businesses and organizations. Learning and execution — two doors, one team.'
+      ? 'वेदान्त स्ट्राटेजिज काठमाडौंको व्यावहारिक तालिम एकेडेमी र डिजिटल रणनीति साझेदार हो। बागबजारस्थित हाम्रो कार्यालयमा विद्यार्थी र पेसाकर्मीहरूलाई व्यावहारिक एआई र डिजिटल सीप सिकाउँछौं, र त्यही टिमले व्यवसाय तथा संस्थाहरूको नतिजामुखी मार्केटिङ पनि सञ्चालन गर्छ। सिकाइ र कार्यान्वयन — एउटै टिमका दुई ढोका।'
+      : 'Vedanta Strategies is Kathmandu\'s hands-on training academy and digital strategy partner. At our Bagbazar office we equip students and professionals with practical AI and digital skills, and the same team runs performance marketing for businesses and organizations. Learning and execution — two doors, one team.'
   );
 
   const photo = media?.heroImage || media?.campusImage || '/images/hero.jpg';
@@ -54,12 +54,12 @@ export default function WhoWeArePage({ currentLang, siteContent, media = {}, ope
           </div>
         </section>
 
-        {/* Visit Campus CTA Card */}
+        {/* Visit Us CTA Card */}
         <div className="mindrisers-card" style={{ padding: '44px 32px', textAlign: 'center', maxWidth: '760px', margin: '0 auto', border: '1px solid var(--border-color)', background: '#ffffff' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--brand-navy)', marginBottom: '10px' }}>
             <MapPin size={20} />
             <h3 style={{ fontSize: '1.8rem', margin: 0, color: 'var(--brand-navy)', fontWeight: '800' }}>
-              {currentLang === 'ne' ? 'हाम्रो बागबजार कार्यालय आउनुहोस्' : 'Visit Our Campus at Bagbazar'}
+              {currentLang === 'ne' ? 'हामीलाई भेट्नुहोस्' : 'Visit Us'}
             </h3>
           </div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', marginBottom: '24px', lineHeight: '1.65' }}>
@@ -73,7 +73,7 @@ export default function WhoWeArePage({ currentLang, siteContent, media = {}, ope
             </button>
             <button className="btn btn-secondary" onClick={() => { setActivePage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
               <ArrowRight size={16} />
-              {currentLang === 'ne' ? 'कार्यालय ठेगाना र नक्सा' : 'View Campus Directions & Map'}
+              {currentLang === 'ne' ? 'कार्यालय ठेगाना र नक्सा' : 'View Directions & Map'}
             </button>
           </div>
         </div>

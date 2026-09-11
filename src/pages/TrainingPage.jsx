@@ -100,7 +100,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
         : "Are the training programs available online or physical in Kathmandu?",
       a: currentLang === 'ne'
         ? "हामी दुवै माध्यम उपलब्ध गराउँछौं! हाम्रा धेरैजसो कोर्सहरू हाइब्रिड संरचनामा आधारित छन्: काठमाडौंको बागबजारस्थित हाम्रो क्याम्पसमा प्रयोगात्मक ल्याब अभ्यास, साथै उपत्यका बाहिरका विद्यार्थीका लागि प्रत्यक्ष अनलाइन प्रसारण र रेकर्डिङ।"
-        : "We offer both! Most courses feature a hybrid structure: physical studio sessions at our Bagbazar campus in Kathmandu, accompanied by live HD online streaming and recorded access for students outside the Valley."
+        : "We offer both! Most courses feature a hybrid structure: physical studio sessions at our Bagbazar office in Kathmandu, accompanied by live HD online streaming and recorded access for students outside the Valley."
     },
     {
       q: currentLang === 'ne'
@@ -108,7 +108,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
         : "How does the 'For Schools & Colleges' institution track work?",
       a: currentLang === 'ne'
         ? "हाम्रो संस्थागत टोलीले साझेदार क्याम्पसहरूमा २ दिनदेखि ४ हप्तासम्मका अनुकूलित बुटक्याम्पहरू सञ्चालन गर्छ। हामी सम्पूर्ण कार्यशाला सामग्री, एआई अभ्यास वातावरण र शिक्षक प्रशिक्षण गाइड उपलब्ध गराउँछौं।"
-        : "Our institutional team designs customized 2-day to 4-week bootcamps directly inside partner campuses. We provide all workshop materials, AI sandbox environments, and faculty training manuals."
+        : "Our institutional team designs customized 2-day to 4-week bootcamps directly inside partner institutions. We provide all workshop materials, AI sandbox environments, and faculty training manuals."
     },
     {
       q: currentLang === 'ne'
@@ -239,7 +239,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
                 <CheckCircle size={15} color="#1C2F4D" /> Laptop-First Practice
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#1C2F4D" /> Bagbazar Campus
+                <CheckCircle size={15} color="#1C2F4D" /> Bagbazar Office
               </span>
             </div>
           </div>
@@ -258,7 +258,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
             </div>
             <div style={{ display: 'flex', gap: '16px', fontSize: '0.82rem', color: '#334155', fontWeight: '600' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CheckCircle size={15} color="#1C2F4D" /> On-Campus Delivery
+                <CheckCircle size={15} color="#1C2F4D" /> On-Site Delivery
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <CheckCircle size={15} color="#1C2F4D" /> Faculty Handbooks
@@ -435,7 +435,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
             <h3 style={{ fontSize: '1.75rem', color: 'var(--brand-navy)', marginBottom: '10px', lineHeight: '1.25' }}>
               {currentLang === 'ne' 
                 ? 'तपाईंको क्याम्पसमा व्यावहारिक एआई तथा डिजिटल साक्षरता सत्र सञ्चालन गर्नुहोस्' 
-                : 'Host a Hands-On AI & Digital Skills Session at Your Campus'}
+                : 'Host a Hands-On AI & Digital Skills Session at Your Institution'}
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.96rem', lineHeight: '1.65' }}>
               {currentLang === 'ne'
@@ -460,7 +460,7 @@ export default function TrainingPage({ currentLang, courses = [], openCourseModa
             <p className="section-subtitle">
               {currentLang === 'ne' 
                 ? 'ब्याच समय, कम्प्युटर ल्याब, स्थान र प्रमाणीकरण बारे जान्नैपर्ने विवरणहरू।'
-                : 'Everything you need to know about batch timing, campus facilities, and certifications.'}
+                : 'Everything you need to know about batch timing, facilities, and certifications.'}
             </p>
           </div>
 

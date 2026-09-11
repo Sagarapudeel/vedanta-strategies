@@ -13,6 +13,7 @@ import {
   SearchX
 } from 'lucide-react';
 import { PUBLIC_PAGES } from '../lib/seoConfig';
+import { searchStaticContent } from '../lib/staticSearchIndex';
 
 const norm = (value) => String(value || '').toLowerCase();
 
@@ -105,6 +106,56 @@ export default function SearchPage({ query: initialQuery, onQueryChange, store, 
       .filter((m) => has(m.searchable));
     push('team', Users, currentLang === 'ne' ? 'टिम सदस्यहरू' : 'Team Members', team);
 
+    // Testimonials (author name, role/position, and quote)
+    const testimonials = (store?.testimonials || [])
+      .map((t) => ({
+        id: t.id,
+        title: t.author,
+        subtitle: currentLang === 'ne' ? t.role_ne || t.role : t.role_en || t.role,
+        page: 'home',
+        searchable: [
+          t.author,
+          t.role, t.role_en, t.role_ne,
+          t.type,
+          t.name, t.name_en, t.name_ne,
+          t.position, t.position_en, t.position_ne,
+          t.quote, t.quote_en, t.quote_ne
+        ].join(' ')
+      }))
+      .filter((t) => has(t.searchable));
+    push('testimonials', Users, currentLang === 'ne' ? 'प्रशंसापत्रहरू' : 'Testimonials', testimonials);
+
+    // CEO name & message
+    const about = store?.siteContent?.about || {};
+    const ceoName = about.ceoName_en || about.ceoName || 'Er. Suman Adhikari';
+    const ceoNameNe = about.ceoName_ne || ceoName;
+    const ceoTitle = about.ceoTitle_en || about.ceoTitle || 'Founder & Chief Executive Officer';
+    const ceoTitleNe = about.ceoTitle_ne || ceoTitle;
+    const ceoSearchable = [
+      ceoName, ceoNameNe,
+      ceoTitle, ceoTitleNe,
+      about.ceoBio_en, about.ceoBio_ne,
+      about.ceoMessage_en, about.ceoMessage_ne,
+      about.ceoBio, about.ceoMessage
+    ]
+      .filter(Boolean)
+      .join(' ');
+    if (has(ceoSearchable)) {
+      groups.push({
+        slug: 'ceo',
+        icon: FileText,
+        label: currentLang === 'ne' ? 'प्रमुख कार्यकारी अधिकृत' : 'Founder & CEO',
+        items: [
+          {
+            id: 'ceo-default',
+            title: currentLang === 'ne' ? ceoNameNe : ceoName,
+            subtitle: currentLang === 'ne' ? ceoTitleNe : ceoTitle,
+            page: 'ceo-message'
+          }
+        ]
+      });
+    }
+
     // Partners
     const partners = (store?.partners || [])
       .map((p) => ({
@@ -153,6 +204,24 @@ export default function SearchPage({ query: initialQuery, onQueryChange, store, 
       }))
       .filter((p) => has(p.searchable));
     push('pages', Globe, currentLang === 'ne' ? 'पृष्ठहरू' : 'Pages', pages);
+
+    // Hard-coded site content (full-text across all pages)
+    const staticPages = searchStaticContent(q);
+    const coveredPages = new Set(groups.flatMap((g) => g.items.map((i) => i.page)));
+    const staticItems = staticPages
+      .filter((pid) => !coveredPages.has(pid))
+      .map((pid) => {
+        const p = PUBLIC_PAGES.find((pp) => pp.id === pid) || { id: pid, title: pid, titleNe: pid };
+        return {
+          id: `static-${pid}`,
+          title: currentLang === 'ne' ? p.titleNe : p.title,
+          subtitle: currentLang === 'ne' ? 'साइट सामग्री' : 'Site content',
+          page: pid
+        };
+      });
+    if (staticItems.length > 0) {
+      push('static', FileText, currentLang === 'ne' ? 'अन्य साइट सामग्री' : 'All Site Content', staticItems);
+    }
 
     return groups;
   }, [q, store, currentLang]);

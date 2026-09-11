@@ -158,7 +158,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 <Building2 size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.aboutWhoWeAre || 'Who We Are'}</div>
-                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Our mission, values & Bagbazar campus</div>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Our mission, values & Bagbazar office</div>
                 </div>
               </a>
               <a
@@ -217,7 +217,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 <GraduationCap size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{t.nav.trainingInstitution || 'Institutional Programs'}</div>
-                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>On-campus bootcamps & teacher AI literacy</div>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>On-site bootcamps & teacher AI literacy</div>
                 </div>
               </a>
             </div>
@@ -267,7 +267,7 @@ export default function Navbar({ currentLang, setLang, activePage, setActivePage
                 <Image size={16} color="var(--brand-navy)" />
                 <div>
                   <div>{currentLang === 'ne' ? 'फोटो' : 'Photos'}</div>
-                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Campus, workshops & production glimpses</div>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 'normal' }}>Workshops & production glimpses</div>
                 </div>
               </a>
               <a
