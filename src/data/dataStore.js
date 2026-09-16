@@ -19,29 +19,51 @@ function stripCmsMeta(store) {
 function mergeCms(parsed = {}) {
   const siteSettings = {
     ...initialData.siteSettings,
-    ...(parsed.siteSettings || {}),
-    latitude: initialData.siteSettings.latitude,
-    longitude: initialData.siteSettings.longitude,
-    mapsUrl: initialData.siteSettings.mapsUrl,
-    mapsEmbed: initialData.siteSettings.mapsEmbed
+    ...(parsed.siteSettings || {})
   };
   if (siteSettings.address_en?.includes('Putalisadak') || siteSettings.address?.includes('Putalisadak')) {
     siteSettings.address_en = initialData.siteSettings.address_en;
     siteSettings.address_ne = initialData.siteSettings.address_ne;
     siteSettings.address = initialData.siteSettings.address_en;
   }
+  // Sanitize legacy fake partners if lingering in remote CMS
+  const fakePartnerNames = ['apex', 'kathmandu model college', 'valley tech', 'milestone', 'rural heritage', 'himalayan naturals', 'techfin', 'kathmandu media lab'];
+  const rawPartners = Array.isArray(parsed.partners) ? parsed.partners : initialData.partners;
+  const partners = rawPartners.filter(p => !fakePartnerNames.some(fake => (p.name_en || p.name || '').toLowerCase().includes(fake)));
+
+  // Sanitize legacy fake testimonials if lingering in remote CMS
+  const fakeTestimonialNames = ['ramesh khadka', 'sunita maharjan', 'bikash adhikari'];
+  const rawTestimonials = Array.isArray(parsed.testimonials) ? parsed.testimonials : initialData.testimonials;
+  const testimonials = rawTestimonials.filter(t => !fakeTestimonialNames.some(fake => (t.author || '').toLowerCase().includes(fake)));
+
+  // Sanitize legacy fake stats
+  let siteContent = parsed.siteContent ? {
+    ...initialData.siteContent,
+    ...parsed.siteContent,
+    about: { ...initialData.siteContent.about, ...(parsed.siteContent.about || {}) }
+  } : initialData.siteContent;
+
+  if (Array.isArray(siteContent.stats)) {
+    const hasLegacyFabricatedStats = siteContent.stats.some(s => 
+      s.value === '4,500+' || s.value === '28+' || s.value === '50+' ||
+      (s.label_en || '').toLowerCase().includes('partner schools')
+    );
+    if (hasLegacyFabricatedStats) {
+      siteContent = {
+        ...siteContent,
+        stats: initialData.siteContent.stats
+      };
+    }
+  }
+
   return {
     ...initialData,
     ...parsed,
-    partners: (parsed.partners && parsed.partners.length > 0) ? parsed.partners : initialData.partners,
+    partners,
     teamMembers: (parsed.teamMembers && parsed.teamMembers.length > 0) ? parsed.teamMembers : initialData.teamMembers,
     blogPosts: (parsed.blogPosts && parsed.blogPosts.length > 0) ? parsed.blogPosts : initialData.blogPosts,
-    testimonials: (parsed.testimonials && parsed.testimonials.length > 0) ? parsed.testimonials : initialData.testimonials,
-    siteContent: parsed.siteContent ? {
-      ...initialData.siteContent,
-      ...parsed.siteContent,
-      about: { ...initialData.siteContent.about, ...(parsed.siteContent.about || {}) }
-    } : initialData.siteContent,
+    testimonials,
+    siteContent,
     siteSettings,
     media: { ...(initialData.media || {}), ...(parsed.media || {}) }
   };

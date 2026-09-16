@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Globe, Save, CheckCircle, RefreshCw, Eye, AlertCircle, Upload, Image, User, Camera } from 'lucide-react';
-import { uploadMediaFile } from '../lib/uploadMedia';
+import { Globe, Save, CheckCircle, PlusCircle, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 
-export default function AdminContent({ siteContent = {}, updateSiteContent, resetStoreToDefault }) {
+export default function AdminContent({ siteContent = {}, updateSiteContent }) {
   const [activeLangTab, setActiveLangTab] = useState('en');
   const [savedSuccess, setSavedSuccess] = useState(false);
   
@@ -38,10 +37,10 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
       floatSub_ne: siteContent?.hero?.floatSub_ne || 'सीमित सिट उपलब्ध'
     },
     stats: siteContent?.stats || [
-      { id: 'stat-1', value: '4,500+', label_en: 'Learners & Professionals Reached', label_ne: 'तालिमप्राप्त विद्यार्थी तथा कर्मचारी' },
-      { id: 'stat-2', value: '28+', label_en: 'Organizations & Businesses Served', label_ne: 'सहकार्य गरिएका संस्थाहरू' },
-      { id: 'stat-3', value: '50+', label_en: 'Workshops & Seminars Conducted', label_ne: 'सञ्चालित कार्यशाला तथा सेमिनारहरू' },
-      { id: 'stat-4', value: '15', label_en: 'Max Students Per Batch Guarantee', label_ne: 'प्रति ब्याच अधिकतम १५ जना मात्र' }
+      { id: 'stat-1', value: 'Cohort 1', label_en: 'Now Enrolling First Batch', label_ne: 'पहिलो ब्याच भर्ना प्रारम्भ' },
+      { id: 'stat-2', value: '15 Max', label_en: 'Students Per Batch Guarantee', label_ne: 'प्रति ब्याच अधिकतम १५ जना मात्र' },
+      { id: 'stat-3', value: '100%', label_en: 'Hands-on Practical & Laptop-Driven', label_ne: 'शतप्रतिशत व्यावहारिक र ल्यापटप अभ्यास' },
+      { id: 'stat-4', value: 'Bagbazar', label_en: 'In-Person Learning Hub, Kathmandu', label_ne: 'काठमाडौंको बागबजारस्थित भौतिक हब' }
     ],
     pillars: {
       badge_en: siteContent?.pillars?.badge_en || 'WHAT WE DO',
@@ -145,21 +144,6 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
       readLink_en: siteContent?.blog?.readLink_en || 'Read Guide ›',
       readLink_ne: siteContent?.blog?.readLink_ne || 'मार्गदर्शन पढ्नुहोस् ›'
     },
-    about: {
-      story_en: siteContent?.about?.story_en || 'We started Vedanta Strategies in Kathmandu with a simple conviction: technology training in Nepal shouldn\'t be about dry slideshows or confusing buzzwords. It should be hands-on, practical, and immediately useful for your daily job, college studies, or local business.',
-      story_ne: siteContent?.about?.story_ne || 'हामीले काठमाडौंमा एउटा स्पष्ट उद्देश्यका साथ वेदान्त स्ट्राटेजिज सुरु गरेका हौँ: नेपालमा प्रविधि तालिम केवल जटिल सैद्धान्तिक स्लाइडहरूमा सीमित हुनुहुँदैन। यो व्यावहारिक, हातैले गर्ने अभ्यास र दैनिक कार्यालय वा व्यवसायमा तत्काल उपयोगी हुनुपर्छ।',
-      whoWeAre_en: siteContent?.about?.whoWeAre_en || 'Vedanta Strategies is a strategic consultancy and hands-on training hub located in Bagbazar, Kathmandu. We equip students, working professionals, and organizations with deployable capabilities across Artificial Intelligence tools, performance digital marketing, and modern institutional management.',
-      whoWeAre_ne: siteContent?.about?.whoWeAre_ne || 'वेदान्त स्ट्राटेजिज काठमाडौंको बागबजारस्थित एक रणनीतिक परामर्श तथा व्यावहारिक तालिम हब हो। हामी विद्यार्थी, कार्यरत जनशक्ति र संस्थाहरूलाई व्यावहारिक एआई टुल्स, नतिजामुखी डिजिटल मार्केटिङ र संस्थागत विकासमा पोख्त बनाउँछौँ।',
-      ceoName_en: siteContent?.about?.ceoName_en || 'Er. Suman Adhikari',
-      ceoName_ne: siteContent?.about?.ceoName_ne || 'इ. सुमन अधिकारी',
-      ceoTitle_en: siteContent?.about?.ceoTitle_en || 'Founder & Chief Executive Officer',
-      ceoTitle_ne: siteContent?.about?.ceoTitle_ne || 'संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
-      ceoPhoto: siteContent?.about?.ceoPhoto || '/images/ceo.jpg',
-      ceoBio_en: siteContent?.about?.ceoBio_en || 'Technology strategist, education innovator, and founder of Vedanta Strategies.',
-      ceoBio_ne: siteContent?.about?.ceoBio_ne || 'प्रविधि रणनीतिकार, शैक्षिक नवप्रवर्तक तथा वेदान्त स्ट्राटेजिजका संस्थापक।',
-      ceoMessage_en: siteContent?.about?.ceoMessage_en || 'At Vedanta Strategies, our founding purpose has always been crystal clear: to close the painful gap between academic credentials and real, productive workplace skills in Nepal. For too long, students and organizations have invested time in outdated syllabi and hollow buzzwords. We founded Vedanta to create an environment where every trainee learns on their own machine, works through actual live case studies, and leaves with skills they can deploy the very next day.',
-      ceoMessage_ne: siteContent?.about?.ceoMessage_ne || 'वेदान्त स्ट्राटेजिजमा हाम्रो मूल उद्देश्य सधैं स्पष्ट छ: नेपालमा औपचारिक शिक्षा र वास्तविक कार्यस्थलका सीपहरूबीचको खाडल पुर्नु। हामीले एउटा यस्तो सिकाइ वातावरण निर्माण गरेका छौँ जहाँ प्रत्येक प्रशिक्षार्थीले आफ्नै ल्यापटपमा वास्तविक परियोजनाहरूमा काम गरेर सीप हासिल गर्छन्।'
-    },
     cta: {
       badge_en: siteContent?.cta?.badge_en || 'VISIT OR MESSAGE US',
       badge_ne: siteContent?.cta?.badge_ne || 'हामीलाई सम्पर्क गर्नुहोस्',
@@ -189,33 +173,49 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
     });
   };
 
+  const handleAddStat = () => {
+    setFormData(prev => ({
+      ...prev,
+      stats: [
+        ...prev.stats,
+        {
+          id: `stat-${Date.now()}`,
+          value: '100%',
+          label_en: 'New Verified Metric',
+          label_ne: 'नयाँ प्रमाणित विवरण'
+        }
+      ]
+    }));
+  };
+
+  const handleDeleteStat = (idx) => {
+    if (formData.stats.length <= 1) {
+      alert('You must keep at least one statistic card.');
+      return;
+    }
+    setFormData(prev => ({
+      ...prev,
+      stats: prev.stats.filter((_, i) => i !== idx)
+    }));
+  };
+
+  const handleMoveStat = (idx, direction) => {
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= formData.stats.length) return;
+    setFormData(prev => {
+      const nextStats = [...prev.stats];
+      const temp = nextStats[idx];
+      nextStats[idx] = nextStats[targetIdx];
+      nextStats[targetIdx] = temp;
+      return { ...prev, stats: nextStats };
+    });
+  };
+
   const handlePillarChange = (field, val) => {
     setFormData(prev => ({
       ...prev,
       pillars: { ...prev.pillars, [field]: val }
     }));
-  };
-
-  const handleAboutChange = (field, val) => {
-    setFormData(prev => ({
-      ...prev,
-      about: { ...prev.about, [field]: val }
-    }));
-  };
-
-  const handleCeoPhotoUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (file.size > 10 * 1024 * 1024) {
-      alert('Please choose an image smaller than 10MB.');
-      return;
-    }
-    try {
-      const url = await uploadMediaFile(file, 'content');
-      handleAboutChange('ceoPhoto', url);
-    } catch (err) {
-      alert(err.message || 'Failed to upload CEO photo.');
-    }
   };
 
   const handleCtaChange = (field, val) => {
@@ -309,7 +309,7 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
           }}
         >
           <Globe size={16} color="#C59A3F" />
-          <span>🇬🇧 English Content</span>
+          <span>English Content</span>
         </button>
 
         <button
@@ -329,7 +329,7 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
           }}
         >
           <Globe size={16} color="#851C2C" />
-          <span>🇳🇵 नेपाली सामग्री (Nepali Content)</span>
+          <span>नेपाली सामग्री (Nepali Content)</span>
         </button>
       </div>
 
@@ -488,30 +488,111 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
 
         {/* SECTION 2: TRUST STATS */}
         <div className="admin-card" style={{ marginBottom: '28px' }}>
-          <h2 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '16px' }}>
-            Trust Stats & Institutional Proof ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
-          </h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h2 style={{ fontSize: '1.25rem', color: '#fff', margin: '0 0 4px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span>Founding Proof & Trust Metrics ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</span>
+              </h2>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                Author genuine founding metrics (Cohort 1, 15 Max Students, 100% Practical, Bagbazar Hub). Fully add, edit, reorder, or remove cards.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleAddStat}
+              className="btn btn-secondary btn-sm"
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', borderColor: '#C59A3F', color: '#C59A3F' }}
+            >
+              <PlusCircle size={16} />
+              <span>Add Metric Card</span>
+            </button>
+          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '18px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '18px' }}>
             {formData.stats.map((stat, idx) => (
-              <div key={stat.id} style={{ background: 'rgba(255,255,255,0.03)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                <div className="form-group" style={{ marginBottom: '10px' }}>
-                  <label className="form-label">Stat #{idx + 1} Number / Value</label>
+              <div 
+                key={stat.id || idx} 
+                style={{ 
+                  background: 'rgba(255,255,255,0.03)', 
+                  padding: '16px', 
+                  borderRadius: 'var(--radius-md)', 
+                  border: '1px solid var(--border-color)',
+                  position: 'relative'
+                }}
+              >
+                {/* Header with index, move controls, and delete */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#C59A3F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Metric #{idx + 1}
+                  </span>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <button
+                      type="button"
+                      onClick={() => handleMoveStat(idx, -1)}
+                      disabled={idx === 0}
+                      className="btn btn-secondary btn-sm"
+                      style={{ padding: '4px 6px', opacity: idx === 0 ? 0.3 : 1 }}
+                      title="Move Left / Up"
+                    >
+                      <ChevronUp size={14} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleMoveStat(idx, 1)}
+                      disabled={idx === formData.stats.length - 1}
+                      className="btn btn-secondary btn-sm"
+                      style={{ padding: '4px 6px', opacity: idx === formData.stats.length - 1 ? 0.3 : 1 }}
+                      title="Move Right / Down"
+                    >
+                      <ChevronDown size={14} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteStat(idx)}
+                      className="btn btn-secondary btn-sm"
+                      style={{ padding: '4px 6px', color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }}
+                      title="Delete Metric"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="form-group" style={{ marginBottom: '12px' }}>
+                  <label className="form-label" style={{ fontSize: '0.8rem', color: '#cbd5e1' }}>Metric Highlight / Value</label>
                   <input
                     type="text"
                     className="form-input"
+                    style={{ fontWeight: '700', fontSize: '1rem', color: '#fff' }}
                     value={stat.value}
                     onChange={(e) => handleStatChange(idx, 'value', e.target.value)}
+                    placeholder="e.g. Cohort 1, 15 Max, 100%, Bagbazar"
                   />
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Stat Description ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
+                <div className="form-group" style={{ marginBottom: '8px' }}>
+                  <label className="form-label" style={{ fontSize: '0.8rem', color: '#cbd5e1' }}>
+                    English Label
+                  </label>
                   <input
                     type="text"
                     className="form-input"
-                    value={activeLangTab === 'en' ? stat.label_en : stat.label_ne}
-                    onChange={(e) => handleStatChange(idx, activeLangTab === 'en' ? 'label_en' : 'label_ne', e.target.value)}
+                    value={stat.label_en || ''}
+                    onChange={(e) => handleStatChange(idx, 'label_en', e.target.value)}
+                    placeholder="e.g. Now Enrolling First Batch"
+                  />
+                </div>
+
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label" style={{ fontSize: '0.8rem', color: '#cbd5e1' }}>
+                    Nepali Label (नेपाली)
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={stat.label_ne || ''}
+                    onChange={(e) => handleStatChange(idx, 'label_ne', e.target.value)}
+                    placeholder="जस्तै: पहिलो ब्याच भर्ना प्रारम्भ"
                   />
                 </div>
               </div>
@@ -659,177 +740,7 @@ export default function AdminContent({ siteContent = {}, updateSiteContent, rese
             </div>
           </div>
         </div>
-
-        {/* SECTION 5: ABOUT PAGE (WHO WE ARE & MESSAGE FROM CEO) */}
-        <div className="admin-card" style={{ marginBottom: '28px' }}>
-          <h2 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '16px' }}>
-            About Us Sections ({activeLangTab === 'en' ? 'English' : 'नेपाली'})
-          </h2>
-
-          <div className="form-group" style={{ marginBottom: '16px' }}>
-            <label className="form-label">Who We Are Narrative</label>
-            <textarea
-              rows={3}
-              className="form-input"
-              value={activeLangTab === 'en' ? formData.about.whoWeAre_en : formData.about.whoWeAre_ne}
-              onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'whoWeAre_en' : 'whoWeAre_ne', e.target.value)}
-              placeholder="Authoritative description of Vedanta Strategies' identity, mission, and scope..."
-            />
-          </div>
-
-          <div className="form-group" style={{ marginBottom: '16px' }}>
-            <label className="form-label">Founding Story & Practical Philosophy</label>
-            <textarea
-              rows={3}
-              className="form-input"
-              value={activeLangTab === 'en' ? formData.about.story_en : formData.about.story_ne}
-              onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'story_en' : 'story_ne', e.target.value)}
-            />
-          </div>
-
-          <div style={{ padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', marginTop: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <h3 style={{ fontSize: '1.1rem', color: '#C59A3F', margin: 0 }}>
-                  Executive Leadership & CEO's Message
-                </h3>
-              </div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Appears on dedicated CEO's Message page with animated luxury portrait frame
-              </span>
-            </div>
-
-            {/* CEO Photo Upload & Live Animated Frame Preview */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginBottom: '20px', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 154, 63, 0.2)' }}>
-              {/* Photo Frame Preview */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ fontSize: '0.78rem', color: '#C59A3F', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '10px' }}>
-                  Live Animated Preview
-                </div>
-                <div 
-                  className="ceo-portrait-frame" 
-                  style={{ 
-                    width: '130px', 
-                    height: '160px', 
-                    borderRadius: '16px', 
-                    overflow: 'hidden',
-                    background: '#172642',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <img
-                    src={formData.about?.ceoPhoto || '/images/ceo.jpg'}
-                    alt="CEO Preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      const fallback = e.target.parentElement.querySelector('.admin-ceo-fallback');
-                      if (fallback) fallback.style.display = 'flex';
-                    }}
-                  />
-                  <div className="admin-ceo-fallback" style={{ display: 'none', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', padding: '10px', textAlign: 'center', fontSize: '0.75rem' }}>
-                    <User size={32} color="#C59A3F" />
-                    <span>No image</span>
-                  </div>
-                </div>
-                <span style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '8px' }}>Pulsing gold shimmer active</span>
-              </div>
-
-              {/* Photo Input Controls */}
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
-                <div className="form-group" style={{ margin: 0 }}>
-                  <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <Upload size={14} color="#C59A3F" /> Upload New CEO Portrait (File)
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleCeoPhotoUpload}
-                    className="form-input"
-                    style={{ padding: '6px 10px', fontSize: '0.82rem' }}
-                  />
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '4px' }}>
-                    Uploads a local image directly into browser database storage (PNG, JPG, WebP &lt; 3MB).
-                  </span>
-                </div>
-
-                <div className="form-group" style={{ margin: 0 }}>
-                  <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <Image size={14} color="#C59A3F" /> Or Image URL / Public Path
-                  </label>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <input
-                      type="text"
-                      className="form-input"
-                      value={formData.about?.ceoPhoto || ''}
-                      onChange={(e) => handleAboutChange('ceoPhoto', e.target.value)}
-                      placeholder="/images/ceo.jpg or https://..."
-                      style={{ fontSize: '0.85rem' }}
-                    />
-                    <button
-                      type="button"
-                      className="btn btn-secondary btn-sm"
-                      onClick={() => handleAboutChange('ceoPhoto', '/images/ceo.jpg')}
-                      title="Reset to default generated portrait"
-                    >
-                      Reset
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* CEO Identity Inputs */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginBottom: '14px' }}>
-              <div className="form-group">
-                <label className="form-label">CEO Full Name ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={activeLangTab === 'en' ? formData.about.ceoName_en : formData.about.ceoName_ne}
-                  onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoName_en' : 'ceoName_ne', e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">CEO Title / Designation ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={activeLangTab === 'en' ? formData.about.ceoTitle_en : formData.about.ceoTitle_ne}
-                  onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoTitle_en' : 'ceoTitle_ne', e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* CEO Short Bio / Credentials */}
-            <div className="form-group" style={{ marginBottom: '14px' }}>
-              <label className="form-label">CEO Short Bio & Credentials ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
-              <input
-                type="text"
-                className="form-input"
-                value={activeLangTab === 'en' ? (formData.about.ceoBio_en || '') : (formData.about.ceoBio_ne || '')}
-                onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoBio_en' : 'ceoBio_ne', e.target.value)}
-                placeholder="e.g. Technology strategist, education innovator, and founder of Vedanta Strategies."
-              />
-            </div>
-
-            {/* CEO Statement / Message */}
-            <div className="form-group">
-              <label className="form-label">Full Statement / Message ({activeLangTab === 'en' ? 'English' : 'नेपाली'})</label>
-              <textarea
-                rows={6}
-                className="form-input"
-                value={activeLangTab === 'en' ? formData.about.ceoMessage_en : formData.about.ceoMessage_ne}
-                onChange={(e) => handleAboutChange(activeLangTab === 'en' ? 'ceoMessage_en' : 'ceoMessage_ne', e.target.value)}
-                placeholder="Personal message from CEO on vision, hands-on learning, and career impact..."
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* SECTION 6: FINAL CTA BANNER */}
+        {/* FINAL CTA BANNER */}
         <div className="admin-card" style={{ marginBottom: '28px' }}>
           <h2 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '16px' }}>
             Final CTA Banner (bottom of homepage) ({activeLangTab === 'en' ? 'English' : 'नेपाली'})

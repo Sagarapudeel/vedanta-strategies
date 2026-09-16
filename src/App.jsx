@@ -22,6 +22,9 @@ import BlogPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import SearchPage from './pages/SearchPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Admin Pages
 import AdminLogin from './admin/AdminLogin';
@@ -36,6 +39,8 @@ import AdminTeam from './admin/AdminTeam';
 import AdminBlog from './admin/AdminBlog';
 import AdminSettings from './admin/AdminSettings';
 import AdminContent from './admin/AdminContent';
+import AdminWhoWeAre from './admin/AdminWhoWeAre';
+import AdminCeoMessage from './admin/AdminCeoMessage';
 import AdminPartners from './admin/AdminPartners';
 import AdminUsers from './admin/AdminUsers';
 import AdminMedia from './admin/AdminMedia';
@@ -155,6 +160,7 @@ export default function App() {
       pageId={activePage}
       currentLang={currentLang}
       siteSettings={store.siteSettings}
+      courses={store.courses}
     />
   );
 
@@ -213,6 +219,18 @@ export default function App() {
             siteContent={store.siteContent}
             updateSiteContent={store.updateSiteContent}
             resetStoreToDefault={store.resetStoreToDefault}
+          />
+        )}
+        {adminTab === 'who-we-are' && (
+          <AdminWhoWeAre
+            siteContent={store.siteContent}
+            updateSiteContent={store.updateSiteContent}
+          />
+        )}
+        {adminTab === 'ceo-message' && (
+          <AdminCeoMessage
+            siteContent={store.siteContent}
+            updateSiteContent={store.updateSiteContent}
           />
         )}
         {adminTab === 'partners' && (
@@ -380,12 +398,13 @@ export default function App() {
           )}
 
           {(activePage === 'individual-training' || activePage === 'training') && (
-            <IndividualTrainingPage
+          <IndividualTrainingPage
               currentLang={currentLang}
               courses={store.courses}
               openCourseModal={openCourseModal}
               openLeadModal={openLeadModal}
               setActivePage={goToPage}
+              media={store.media || {}}
             />
           )}
 
@@ -396,6 +415,7 @@ export default function App() {
               openCourseModal={openCourseModal}
               openLeadModal={openLeadModal}
               setActivePage={goToPage}
+              media={store.media || {}}
             />
           )}
 
@@ -405,6 +425,7 @@ export default function App() {
               services={store.services}
               openLeadModal={openLeadModal}
               setActivePage={goToPage}
+              media={store.media || {}}
             />
           )}
 
@@ -413,6 +434,7 @@ export default function App() {
               currentLang={currentLang}
               portfolioItems={store.portfolioItems}
               openLeadModal={openLeadModal}
+              media={store.media || {}}
             />
           )}
 
@@ -421,6 +443,7 @@ export default function App() {
               currentLang={currentLang}
               blogPosts={store.blogPosts}
               openLeadModal={openLeadModal}
+              media={store.media || {}}
             />
           )}
 
@@ -429,6 +452,7 @@ export default function App() {
               currentLang={currentLang}
               siteSettings={store.siteSettings}
               onLeadSubmit={handleLeadSubmit}
+              media={store.media || {}}
             />
           )}
 
@@ -448,6 +472,45 @@ export default function App() {
               store={store}
               goToPage={goToPage}
               currentLang={currentLang}
+            />
+          )}
+
+          {activePage === 'privacy-policy' && (
+            <PrivacyPolicyPage
+              currentLang={currentLang}
+              siteSettings={store.siteSettings}
+            />
+          )}
+
+          {activePage === 'terms-of-service' && (
+            <TermsPage
+              currentLang={currentLang}
+              siteSettings={store.siteSettings}
+            />
+          )}
+
+          {(![
+            'home',
+            'who-we-are',
+            'about',
+            'ceo-message',
+            'team',
+            'individual-training',
+            'training',
+            'institutional-training',
+            'services',
+            'portfolio',
+            'blog',
+            'contact',
+            'gallery',
+            'gallery-videos',
+            'search',
+            'privacy-policy',
+            'terms-of-service'
+          ].includes(activePage) || activePage === 'not-found') && (
+            <NotFoundPage
+              currentLang={currentLang}
+              setActivePage={goToPage}
             />
           )}
         </main>

@@ -12,6 +12,7 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
     primaryPhone: siteSettings.primaryPhone || '+977 1-4421098',
     mobilePhone: siteSettings.mobilePhone || '+977 9747887598',
     whatsappNumber: siteSettings.whatsappNumber || '9779747887598',
+    panVatNumber: siteSettings.panVatNumber || '',
     
     // Bilingual Office Address
     address_en: siteSettings.address_en || siteSettings.address || 'Bagbazar, Kathmandu 44600, Nepal',
@@ -101,7 +102,7 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
           }}
         >
           <Globe size={16} color="#C59A3F" />
-          <span>🇬🇧 English Settings & Copy</span>
+          <span>English Settings & Copy</span>
         </button>
 
         <button
@@ -121,7 +122,7 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
           }}
         >
           <Globe size={16} color="#851C2C" />
-          <span>🇳🇵 नेपाली सेटिङहरू (Nepali Settings & Copy)</span>
+          <span>नेपाली सेटिङहरू (Nepali Settings & Copy)</span>
         </button>
       </div>
 
@@ -160,6 +161,23 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
                 onChange={(e) => setFormData({ ...formData, mapsUrl: e.target.value })}
                 placeholder="https://maps.google.com/?cid=2818761487808049031"
               />
+              <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
+                The clickable link used on Contact page and footer map button.
+              </span>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Google Maps Embed URL (iframe src)</label>
+              <input
+                type="text"
+                className="form-input"
+                value={formData.mapsEmbed}
+                onChange={(e) => setFormData({ ...formData, mapsEmbed: e.target.value })}
+                placeholder="https://maps.google.com/maps?q=27.7033949,85.3177065&z=17&output=embed"
+              />
+              <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
+                Go to Google Maps, find your location, click Share → Embed a map → copy only the <strong>src="..."</strong> URL from the iframe code.
+              </span>
             </div>
 
             <div className="form-group">
@@ -257,6 +275,20 @@ export default function AdminSettings({ siteSettings = {}, updateSettings, reset
                 className="form-input"
                 placeholder="e.g. 9779801234567"
               />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Company Registration (PAN / VAT Number)</label>
+              <input
+                type="text"
+                value={formData.panVatNumber}
+                onChange={(e) => setFormData({ ...formData, panVatNumber: e.target.value })}
+                className="form-input"
+                placeholder="e.g. 601234567"
+              />
+              <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '4px', display: 'block' }}>
+                Displayed in the site footer alongside legal copyright. Leave blank if registration is in progress.
+              </span>
             </div>
           </div>
         </div>

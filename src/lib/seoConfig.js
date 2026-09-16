@@ -134,13 +134,35 @@ export const PUBLIC_PAGES = [
       'Visit Vedanta Strategies in Bagbazar, Kathmandu or enquire about AI training, institutional workshops, and production services.',
     descriptionNe:
       'बागबजार, काठमाडौंमा वेदान्त स्ट्र्याटेजीजमा आउनुहोस् वा एआई तालिम, संस्थागत कार्यशाला र प्रोडक्सन सेवाबारे सोधपुछ गर्नुहोस्।'
+  },
+  {
+    id: 'privacy-policy',
+    path: '/privacy-policy',
+    title: 'Privacy Policy | Vedanta Strategies Kathmandu',
+    titleNe: 'गोपनीयता नीति | वेदान्त स्ट्र्याटेजीज',
+    description:
+      'Privacy policy and data protection commitments of Vedanta Strategies in Bagbazar, Kathmandu, Nepal.',
+    descriptionNe:
+      'बागबजार, काठमाडौंस्थित वेदान्त स्ट्र्याटेजीजको गोपनीयता नीति तथा डाटा सुरक्षा प्रतिबद्धता।'
+  },
+  {
+    id: 'terms-of-service',
+    path: '/terms-of-service',
+    title: 'Terms of Service | Vedanta Strategies Kathmandu',
+    titleNe: 'सेवाका सर्तहरू | वेदान्त स्ट्र्याटेजीज',
+    description:
+      'Terms of service, course enrollment guidelines, and service agreements for Vedanta Strategies in Kathmandu.',
+    descriptionNe:
+      'वेदान्त स्ट्र्याटेजीजका सेवाका सर्तहरू, तालिम भर्ना मार्गदर्शन र सम्झौता व्यवस्थाहरू।'
   }
 ];
 
 export const PAGE_ALIASES = {
   about: 'who-we-are',
   training: 'individual-training',
-  production: 'services'
+  production: 'services',
+  privacy: 'privacy-policy',
+  terms: 'terms-of-service'
 };
 
 export const PUBLIC_PAGE_IDS = PUBLIC_PAGES.map((p) => p.id);
@@ -156,14 +178,16 @@ export function getSiteUrl() {
 export function canonicalizePage(pageId) {
   if (!pageId) return 'home';
   if (pageId === 'admin') return 'admin';
+  if (pageId === 'not-found') return 'not-found';
   const aliased = PAGE_ALIASES[pageId] || pageId;
   if (PUBLIC_PAGE_IDS.includes(aliased)) return aliased;
-  return 'home';
+  return 'not-found';
 }
 
 export function pathForPage(pageId) {
   const id = canonicalizePage(pageId);
   if (id === 'admin') return '/admin';
+  if (id === 'not-found') return '/404';
   const page = PUBLIC_PAGES.find((p) => p.id === id);
   return page ? page.path : '/';
 }
@@ -171,12 +195,24 @@ export function pathForPage(pageId) {
 export function pageFromPath(pathname) {
   const clean = (pathname || '/').replace(/\/+$/, '') || '/';
   if (clean === '/admin') return 'admin';
+  if (clean === '/404') return 'not-found';
   const page = PUBLIC_PAGES.find((p) => p.path === clean);
-  return page ? page.id : null;
+  return page ? page.id : 'not-found';
 }
 
 export function getPageSeo(pageId, lang = 'en') {
   const id = canonicalizePage(pageId);
+  if (id === 'not-found') {
+    const isNe = lang === 'ne';
+    return {
+      id: 'not-found',
+      path: '/404',
+      title: isNe ? 'पृष्ठ फेला परेन | वेदान्त स्ट्र्याटेजीज' : 'Page Not Found | Vedanta Strategies',
+      description: isNe
+        ? 'तपाईंले खोज्नुभएको पृष्ठ फेला परेन।'
+        : 'The page you are looking for could not be found.'
+    };
+  }
   const page = PUBLIC_PAGES.find((p) => p.id === id) || PUBLIC_PAGES[0];
   const isNe = lang === 'ne';
   return {
@@ -191,6 +227,7 @@ export function pageFromHash(hashRaw) {
   const hash = String(hashRaw || '').replace(/^#\/?/, '').split('?')[0];
   if (!hash) return null;
   if (hash === 'admin') return 'admin';
+  if (hash === '404' || hash === 'not-found') return 'not-found';
   const id = PAGE_ALIASES[hash] || hash;
   if (PUBLIC_PAGE_IDS.includes(id)) return id;
   return null;

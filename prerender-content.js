@@ -6,6 +6,7 @@
 // SECURITY: Only public-facing content is included. No API keys, admin data, or leads.
 
 import { initialData } from './src/data/initialData.js';
+import { getLangText } from './src/utils/langHelper.js';
 
 // Mirrors dataStore.js's mergeCms semantics for the prerender: merge the LIVE
 // CMS store over initialData so admin-panel edits (e.g. CEO name in "CEO's
@@ -23,18 +24,45 @@ function mergePrerenderStore(cmsStore) {
     mapsUrl: base.siteSettings.mapsUrl,
     mapsEmbed: base.siteSettings.mapsEmbed
   };
+  // Sanitize legacy fake partners if lingering in remote CMS
+  const fakePartnerNames = ['apex', 'kathmandu model college', 'valley tech', 'milestone', 'rural heritage', 'himalayan naturals', 'techfin', 'kathmandu media lab'];
+  const rawPartners = Array.isArray(live.partners) ? live.partners : base.partners;
+  const partners = rawPartners.filter(p => !fakePartnerNames.some(fake => (p.name_en || p.name || '').toLowerCase().includes(fake)));
+
+  // Sanitize legacy fake testimonials if lingering in remote CMS
+  const fakeTestimonialNames = ['ramesh khadka', 'sunita maharjan', 'bikash adhikari'];
+  const rawTestimonials = Array.isArray(live.testimonials) ? live.testimonials : base.testimonials;
+  const testimonials = rawTestimonials.filter(t => !fakeTestimonialNames.some(fake => (t.author || '').toLowerCase().includes(fake)));
+
+  // Sanitize legacy fake stats
+  let siteContent = live.siteContent ? {
+    ...base.siteContent,
+    ...live.siteContent,
+    about: { ...(base.siteContent.about || {}), ...(live.siteContent.about || {}) }
+  } : base.siteContent;
+
+  if (Array.isArray(siteContent.stats)) {
+    const hasLegacyFabricatedStats = siteContent.stats.some(s => 
+      s.value === '4,500+' || s.value === '28+' || s.value === '50+' ||
+      (s.label_en || '').toLowerCase().includes('partner schools')
+    );
+    if (hasLegacyFabricatedStats) {
+      siteContent = {
+        ...siteContent,
+        stats: base.siteContent.stats
+      };
+    }
+  }
+
   return {
     ...base,
     ...live,
     siteSettings,
-    partners: (live.partners && live.partners.length > 0) ? live.partners : base.partners,
-    teamMembers: (live.teamMembers && live.teamMembers.length > 0) ? live.teamMembers : base.teamMembers,
-    blogPosts: (live.blogPosts && live.blogPosts.length > 0) ? live.blogPosts : base.blogPosts,
-    siteContent: live.siteContent ? {
-      ...base.siteContent,
-      ...live.siteContent,
-      about: { ...(base.siteContent.about || {}), ...(live.siteContent.about || {}) }
-    } : base.siteContent,
+    partners,
+    testimonials,
+    teamMembers: Array.isArray(live.teamMembers) ? live.teamMembers : base.teamMembers,
+    blogPosts: Array.isArray(live.blogPosts) ? live.blogPosts : base.blogPosts,
+    siteContent,
     media: { ...(base.media || {}), ...(live.media || {}) }
   };
 }
@@ -77,19 +105,19 @@ function renderHome() {
     `<div class="seo-stat"><strong>${esc(s.value)}</strong> — ${esc(s.label_en)}</div>`
   ).join('\n');
 
-  const courses = (initialData.courses || []).slice(0, 6).map(c =>
+  const courses = (currentData.courses || initialData.courses || []).slice(0, 6).map(c =>
     `<li><strong>${esc(c.title_en || c.title)}</strong> — ${esc(c.tagline_en || c.tagline || '')} | ${esc(c.category || '')} | ${esc(c.mode || '')} | Rs. ${c.fee?.toLocaleString() || ''}</li>`
   ).join('\n');
 
-  const services = (initialData.services || []).map(s =>
+  const services = (currentData.services || initialData.services || []).map(s =>
     `<li><strong>${esc(s.title_en || s.title)}</strong> — ${esc(s.shortDesc_en || s.shortDesc || '')}</li>`
   ).join('\n');
 
-  const testimonials = (initialData.testimonials || []).map(t =>
+  const testimonials = (currentData.testimonials || []).map(t =>
     `<blockquote>"${esc(t.quote_en || t.quote || '')}" — <cite>${esc(t.author)} (${esc(t.role_en || t.role || '')})</cite></blockquote>`
   ).join('\n');
 
-  const partners = (initialData.partners || []).map(p =>
+  const partners = (currentData.partners || []).map(p =>
     `<li>${img(p.logo, p.name_en || p.name)} ${esc(p.name_en || p.name)}</li>`
   ).join('\n');
 
@@ -98,7 +126,7 @@ function renderHome() {
       <h1>${esc(hero.title_en || 'Vedanta Strategies')}</h1>
       <h2>${esc(hero.titleHighlight_en || 'Kathmandu')}</h2>
       <p>${esc(hero.subtitle_en || hero.subtitle || '')}</p>
-      ${img(hero.badge_en ? '/images/hero.jpg' : '/images/hero.jpg', hero.badge_en || 'Vedanta Strategies Training')}
+      ${img('/images/hero.webp', hero.badge_en || 'Vedanta Strategies Training')}
 
       <h2>Our Training Courses</h2>
       <ul>${courses}</ul>
@@ -106,15 +134,14 @@ function renderHome() {
       <h2>Our Services</h2>
       <ul>${services}</ul>
 
-      <h2>What People Say About Us</h2>
-      ${testimonials}
+      ${testimonials ? `<h2>What People Say About Us</h2>\n${testimonials}` : ''}
 
       <h2>Meet the Founder & CEO</h2>
       ${(function () {
         const fName = getLangText(about, 'ceoName', 'en') || 'Er. Suman Adhikari';
         const fTitle = getLangText(about, 'ceoTitle', 'en') || 'Founder & Chief Executive Officer';
         const fBio = getLangText(about, 'ceoBio', 'en') || '';
-        const fPhoto = about.ceoPhoto || '/images/ceo.jpg';
+        const fPhoto = about.ceoPhoto || '/images/ceo.webp';
         return `<article>
           ${img(fPhoto, `Portrait of ${fName}, Founder and CEO of Vedanta Strategies`)}
           <h3>${esc(fName)}</h3>
@@ -124,33 +151,73 @@ function renderHome() {
         </article>`;
       })()}
 
-      <h2>Our Partners</h2>
-      <ul>${partners}</ul>
+      ${partners ? `<h2>Our Partners</h2>\n<ul>${partners}</ul>` : ''}
 
-      <h2>Statistics</h2>
+      <h2>Our Approach & Cohort Highlights</h2>
       ${stats}
     </section>`;
 }
 
 // ─── WHO WE ARE ───
 function renderWhoWeAre() {
-  const aboutText = getLangText(about, 'whoWeAre', 'en') || 'Vedanta Strategies is Kathmandu\'s hands-on training academy and digital strategy partner.';
+  const title = getLangText(about, 'title', 'en') || 'Practical Learning, Strategic Thinking & Lasting Impact';
+  const subtitle = getLangText(about, 'subtitle', 'en') || 'A Kathmandu-based strategic learning academy and digital consulting firm committed to execution-driven training and measurable progress.';
+  const whoWeAreText = getLangText(about, 'whoWeAre', 'en') || 'Vedanta Strategies is a strategic consultancy and hands-on training hub located in Bagbazar, Kathmandu.';
+  const storyTitle = getLangText(about, 'storyTitle', 'en') || 'Our Story & Founding Purpose';
+  const storyText = getLangText(about, 'story', 'en') || 'We started Vedanta Strategies in Kathmandu with a simple conviction: technology training in Nepal shouldn\'t be about dry slideshows or confusing buzzwords.';
+  const missionTitle = getLangText(about, 'missionTitle', 'en') || 'Our Mission';
+  const missionText = getLangText(about, 'mission', 'en') || 'To democratize practical AI and modern digital skills across Nepal through high-touch, laptop-first mentoring.';
+  const visionTitle = getLangText(about, 'visionTitle', 'en') || 'Our Vision';
+  const visionText = getLangText(about, 'vision', 'en') || 'To become Nepal\'s benchmark hub for practical technology education, ethical media literacy, and performance digital growth.';
+
+  const valuesHtml = (about.values || []).map(v => 
+    `<li><strong>${esc(v.title_en || v.title)}</strong>: ${esc(v.desc_en || v.desc)}</li>`
+  ).join('\n');
+
+  const diffHtml = (about.differentiationPoints || []).map(d =>
+    `<li><strong>${esc(d.title_en || d.title)}</strong>: ${esc(d.desc_en || d.desc)}</li>`
+  ).join('\n');
+
+  const focusHtml = (about.focusAreas || []).map(f =>
+    `<li><strong>${esc(f.title_en || f.title)}</strong>: ${esc(f.desc_en || f.desc)}</li>`
+  ).join('\n');
+
+  const aboutPhoto = (currentData.media?.banners?.about) || '/images/studio.webp';
+
   return `
     <section class="seo-content" aria-label="Who We Are">
-      <h1>Who We Are — Vedanta Strategies</h1>
-      <p>${esc(aboutText)}</p>
-      ${img('/images/hero.jpg', 'Vedanta Strategies Bagbazar Kathmandu')}
-      <h2>Visit Us</h2>
-      <p>Our office and practical labs are located right at Bagbazar, Kathmandu. Feel free to visit us during office hours.</p>
-    </section>`;
-}
+      <h1>${esc(title)} — Vedanta Strategies</h1>
+      <p class="subtitle">${esc(subtitle)}</p>
+      <p>${esc(whoWeAreText)}</p>
+      ${img(aboutPhoto, 'Vedanta Strategies training hub and production studio in Bagbazar Kathmandu')}
 
-function getLangText(obj, field, lang) {
-  const langKey = `${field}_${lang}`;
-  if (obj[langKey]) return obj[langKey];
-  const enKey = `${field}_en`;
-  if (obj[enKey]) return obj[enKey];
-  return obj[field] || '';
+      <h2>${esc(storyTitle)}</h2>
+      <p>${esc(storyText)}</p>
+
+      <h2>${esc(missionTitle)}</h2>
+      <p>${esc(missionText)}</p>
+
+      <h2>${esc(visionTitle)}</h2>
+      <p>${esc(visionText)}</p>
+
+      <h2>Core Operating Values</h2>
+      <ul>
+        ${valuesHtml}
+      </ul>
+
+      <h2>Why Vedanta Strategies Feels Different</h2>
+      <ul>
+        ${diffHtml}
+      </ul>
+
+      <h2>Core Areas of Focus</h2>
+      <ul>
+        ${focusHtml}
+      </ul>
+
+      <h2>Visit Our In-Person Hub in Kathmandu</h2>
+      <p>Our practical classrooms and studio are located in Bagbazar, Kathmandu. In-person laptop training with maximum 15 learners per cohort.</p>
+    </section>`;
 }
 
 // ─── CEO MESSAGE ───
@@ -400,6 +467,36 @@ function renderSearch() {
     </section>`;
 }
 
+// ─── PRIVACY POLICY ───
+function renderPrivacyPolicy() {
+  return `
+    <section class="seo-content" aria-label="Privacy Policy">
+      <h1>Privacy Policy — Vedanta Strategies</h1>
+      <p>Vedanta Strategies Pvt. Ltd. is committed to protecting the privacy of our students, institutional partners, and website visitors in Nepal.</p>
+      <h2>Information We Collect</h2>
+      <p>We collect student enquiry details including name, email, phone number, and course interests solely to facilitate course enrollment, counseling, and direct communication.</p>
+      <h2>Data Usage &amp; Protection</h2>
+      <p>We do not sell, rent, or trade personal information to any third parties. All lead and enrollment records are handled confidentially.</p>
+      <h2>Contact for Privacy Enquiries</h2>
+      <p>Vedanta Strategies, Bagbazar, Kathmandu 44600, Nepal. Email: info.vedantastrategies@gmail.com | Phone: +977 1-4421098</p>
+    </section>`;
+}
+
+// ─── TERMS OF SERVICE ───
+function renderTermsOfService() {
+  return `
+    <section class="seo-content" aria-label="Terms of Service">
+      <h1>Terms of Service — Vedanta Strategies</h1>
+      <p>Terms and conditions governing course enrollments, institutional workshops, and creative production services with Vedanta Strategies Pvt. Ltd., Bagbazar, Kathmandu.</p>
+      <h2>Course Enrollment &amp; Attendance</h2>
+      <p>Admissions to practical cohorts operate on limited seat capacities (maximum 15 seats per cohort) to ensure high-touch mentoring. Seats are secured upon confirmed registration.</p>
+      <h2>Production &amp; Consulting Agreements</h2>
+      <p>All client production projects, podcast bookings, and institutional workshops are executed under clear project scopes and mutual agreements.</p>
+      <h2>Contact</h2>
+      <p>Bagbazar, Kathmandu 44600, Nepal. Phone: +977 1-4421098 | Email: info.vedantastrategies@gmail.com</p>
+    </section>`;
+}
+
 // ─── RENDER MAP ───
 export const renderPage = {
   home: renderHome,
@@ -415,4 +512,6 @@ export const renderPage = {
   'gallery-videos': renderGalleryVideos,
   contact: renderContact,
   search: renderSearch,
+  'privacy-policy': renderPrivacyPolicy,
+  'terms-of-service': renderTermsOfService,
 };

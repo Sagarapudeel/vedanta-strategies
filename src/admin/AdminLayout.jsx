@@ -39,6 +39,8 @@ export default function AdminLayout({
       label: 'Content',
       items: [
         { id: 'content', label: 'Page Content', icon: <Globe size={16} />, allowedRoles: ['super_admin', 'content_editor'] },
+        { id: 'who-we-are', label: 'Who We Are', icon: <FileText size={16} />, allowedRoles: ['super_admin', 'content_editor'] },
+        { id: 'ceo-message', label: "CEO's Message", icon: <UserCircle size={16} />, allowedRoles: ['super_admin', 'content_editor'] },
         { id: 'blog', label: 'Blog & Articles', icon: <FileText size={16} />, allowedRoles: ['super_admin', 'content_editor'] },
       ]
     },

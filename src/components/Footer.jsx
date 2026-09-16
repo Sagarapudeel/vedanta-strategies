@@ -186,11 +186,17 @@ export default function Footer({ currentLang, setActivePage, openLeadModal, site
         {/* Bottom Bar - Clean & Professional */}
         <div className="footer-bottom-bar">
           <div>
-            © {new Date().getFullYear()} Vedanta Strategies Pvt. Ltd. {siteSettings?.address ? siteSettings.address.split(',')[0] : 'Bagbazar'}, Kathmandu, Nepal. {currentLang === 'ne' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
+            © {new Date().getFullYear()} Vedanta Strategies Pvt. Ltd. {siteSettings?.address ? siteSettings.address.split(',')[0] : 'Bagbazar'}, Kathmandu, Nepal.
+            <span style={{ marginLeft: '8px', opacity: 0.85 }}>
+              {siteSettings?.panVatNumber 
+                ? `• PAN/VAT: ${siteSettings.panVatNumber}` 
+                : '• PAN/VAT: [Registration in Progress]'}
+            </span>
+            {' '}{currentLang === 'ne' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
           </div>
           <div className="footer-bottom-links">
-            <span className="footer-bottom-link" onClick={() => navigateTo('who-we-are')}>{t.nav.whoWeAre || (currentLang === 'ne' ? 'हाम्रो परिचय' : 'Who We Are')}</span>
-            <span className="footer-bottom-link" onClick={() => navigateTo('individual-training')}>{t.nav.individualTraining || (currentLang === 'ne' ? 'तालिम' : 'Training')}</span>
+            <span className="footer-bottom-link" onClick={() => navigateTo('privacy-policy')}>{currentLang === 'ne' ? 'गोपनीयता नीति' : 'Privacy Policy'}</span>
+            <span className="footer-bottom-link" onClick={() => navigateTo('terms-of-service')}>{currentLang === 'ne' ? 'सेवाका सर्तहरू' : 'Terms of Service'}</span>
             <span className="footer-bottom-link" onClick={() => navigateTo('contact')}>{t.nav.contact}</span>
           </div>
         </div>

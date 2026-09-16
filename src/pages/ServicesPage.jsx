@@ -15,7 +15,7 @@ import {
   ShieldCheck 
 } from 'lucide-react';
 
-export default function ServicesPage({ currentLang, services = [], openLeadModal, setActivePage }) {
+export default function ServicesPage({ currentLang, services = [], media = {}, openLeadModal, setActivePage }) {
   const t = translations[currentLang] || translations.en;
   const [activeServiceId, setActiveServiceId] = useState(services[0]?.id || '');
 
@@ -34,6 +34,7 @@ export default function ServicesPage({ currentLang, services = [], openLeadModal
   ];
 
   const activeService = services.find((s) => s.id === activeServiceId) || services[0];
+  const pageBanner = media?.banners?.services;
 
   return (
     <div className="page-wrapper">
@@ -46,13 +47,39 @@ export default function ServicesPage({ currentLang, services = [], openLeadModal
           <p className="section-subtitle">{t.services.subtitle}</p>
         </div>
 
+        {/* Optional Page Banner Image */}
+        {pageBanner && (
+          <div style={{ width: '100%', height: '220px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: '36px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+            <img
+              src={pageBanner}
+              alt="Services Banner"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+            />
+          </div>
+        )}
+
         {/* 1. Services Grid */}
         <div className="services-grid">
           {services.map((srv) => (
             <div key={srv.id} className="glass-card service-card">
+              {srv.image && (
+                <div style={{ width: '100%', height: '170px', borderRadius: '8px', overflow: 'hidden', marginBottom: '16px', border: '1px solid var(--border-subtle)', background: '#172642' }}>
+                  <img
+                    src={srv.image}
+                    alt={getLangText(srv, 'title', currentLang) || srv.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                  />
+                </div>
+              )}
               <div className="service-card-header">
                 <div className="service-card-icon">
-                  {iconMap[srv.icon] || <PenTool size={28} />}
+                  {srv.icon?.startsWith('http') || srv.icon?.startsWith('/') || srv.icon?.startsWith('data:') ? (
+                    <img src={srv.icon} alt="Icon" style={{ width: '28px', height: '28px', objectFit: 'contain' }} />
+                  ) : (
+                    iconMap[srv.icon] || <PenTool size={28} />
+                  )}
                 </div>
                 <span className="service-card-tag">
                   {getLangText(srv, 'tag', currentLang) || srv.tag}

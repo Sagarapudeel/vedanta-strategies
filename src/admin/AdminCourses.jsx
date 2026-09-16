@@ -289,7 +289,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                   </div>
                   {c.title_ne && (
                     <div style={{ fontSize: '0.82rem', color: '#C59A3F', marginTop: '2px' }}>
-                      🇳🇵 {c.title_ne}
+                      {c.title_ne}
                     </div>
                   )}
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '4px' }}>
@@ -370,7 +370,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                   fontSize: '0.85rem'
                 }}
               >
-                🇬🇧 English Content
+                English Content
               </button>
 
               <button
@@ -387,7 +387,7 @@ export default function AdminCourses({ courses = [], addCourse, updateCourse, de
                   fontSize: '0.85rem'
                 }}
               >
-                🇳🇵 नेपाली सामग्री (Nepali)
+                नेपाली सामग्री (Nepali)
               </button>
             </div>
 

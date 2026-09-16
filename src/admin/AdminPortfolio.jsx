@@ -132,7 +132,7 @@ export default function AdminPortfolio({
                   <div style={{ fontWeight: '700', color: '#fff' }}>{p.title_en || p.title}</div>
                   {p.title_ne && (
                     <div style={{ fontSize: '0.82rem', color: '#f59e0b', marginTop: '2px' }}>
-                      🇳🇵 {p.title_ne}
+                      {p.title_ne}
                     </div>
                   )}
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>
@@ -208,7 +208,7 @@ export default function AdminPortfolio({
                   fontSize: '0.85rem'
                 }}
               >
-                🇬🇧 English Version
+                English Version
               </button>
               <button
                 type="button"
@@ -224,7 +224,7 @@ export default function AdminPortfolio({
                   fontSize: '0.85rem'
                 }}
               >
-                🇳🇵 Nepali Version (नेपाली)
+                Nepali Version (नेपाली)
               </button>
             </div>
 

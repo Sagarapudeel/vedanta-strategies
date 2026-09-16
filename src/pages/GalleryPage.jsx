@@ -62,7 +62,7 @@ export default function GalleryPage({ media = {}, currentLang, kind = 'photos' }
                   <div key={photo.id}
                     onClick={() => setLightbox({ type: 'photo', item: photo })}
                     className="gallery-photo-thumb">
-                    <img src={photo.url} alt={photo.caption}
+                    <img src={photo.url} alt={photo.caption || 'Vedanta Strategies workshop and training photo'}
                       onError={e => { e.target.src = ''; e.target.style.background = '#f1f5f9'; e.target.style.minHeight = '120px'; }} />
                     <div className="gallery-thumb-overlay">
                       <ZoomIn size={28} color="#fff" className="gallery-zoom-icon" />

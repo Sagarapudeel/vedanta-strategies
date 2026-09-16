@@ -3,7 +3,7 @@ import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
 import { BookOpen, Clock, Calendar, User, Search, X, ArrowRight } from 'lucide-react';
 
-export default function BlogPage({ currentLang, blogPosts = [], openLeadModal }) {
+export default function BlogPage({ currentLang, blogPosts = [], openLeadModal, media = {} }) {
   const t = translations[currentLang] || translations.en;
   
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -33,8 +33,20 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
     return matchesCat && matchesSearch;
   });
 
+  const pageBanner = media?.banners?.blog || null;
+
   return (
     <div className="page-wrapper">
+      {pageBanner && (
+        <div style={{ width: '100%', maxHeight: '260px', overflow: 'hidden', marginBottom: '32px' }}>
+          <img
+            src={pageBanner}
+            alt="Blog & Resources - Vedanta Strategies"
+            style={{ width: '100%', height: '260px', objectFit: 'cover', display: 'block' }}
+            onError={e => { e.target.parentElement.style.display = 'none'; }}
+          />
+        </div>
+      )}
       <div className="container">
         
         {/* Header */}
@@ -151,9 +163,9 @@ export default function BlogPage({ currentLang, blogPosts = [], openLeadModal })
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{activeArticle.readTime}</span>
               </div>
 
-              <h1 style={{ fontSize: '2.2rem', color: '#fff', marginBottom: '16px', lineHeight: '1.2' }}>
+              <h2 style={{ fontSize: '2.2rem', color: '#fff', marginBottom: '16px', lineHeight: '1.2' }}>
                 {getLangText(activeArticle, 'title', currentLang)}
-              </h1>
+              </h2>
 
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '28px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>

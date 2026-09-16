@@ -46,7 +46,7 @@ function upsertJsonLd(id, data) {
   el.textContent = JSON.stringify(data);
 }
 
-export default function SeoHead({ pageId, currentLang, siteSettings }) {
+export default function SeoHead({ pageId, currentLang, siteSettings, courses = [] }) {
   useEffect(() => {
     const isAdmin = pageId === 'admin';
     const seo = getPageSeo(pageId, currentLang);
@@ -88,41 +88,95 @@ export default function SeoHead({ pageId, currentLang, siteSettings }) {
 
     if (isAdmin) return;
 
-    const address = getLangText(siteSettings, 'address', 'en')
-      || siteSettings?.address_en
-      || siteSettings?.address
-      || 'Bagbazar, Kathmandu 44600, Nepal';
     const phone = siteSettings?.primaryPhone || '+977 1-4421098';
     const email = siteSettings?.officialEmail || 'info.vedantastrategies@gmail.com';
     const name = siteSettings?.siteName || DEFAULT_SITE_NAME;
+
+    const socialLinks = [siteSettings?.facebookUrl, siteSettings?.linkedinUrl, siteSettings?.instagramUrl, siteSettings?.youtubeUrl].filter(
+      (u) => u && typeof u === 'string' && u.startsWith('http')
+    );
+
+    const courseSchemas = (courses || []).map((c) => ({
+      '@type': 'Course',
+      '@id': `${siteUrl}/individual-training#course-${c.id}`,
+      name: c.title_en || c.title,
+      description: c.tagline_en || c.tagline || c.title_en || c.title,
+      provider: {
+        '@type': 'EducationalOrganization',
+        name,
+        sameAs: siteUrl
+      },
+      offers: {
+        '@type': 'Offer',
+        price: c.fee || 14000,
+        priceCurrency: 'NPR',
+        category: 'Paid'
+      },
+      hasCourseInstance: {
+        '@type': 'CourseInstance',
+        courseMode: c.mode_en || c.mode || 'Blended',
+        courseWorkload: c.duration_en || c.duration || '6 Weeks'
+      }
+    }));
 
     upsertJsonLd('seo-jsonld', {
       '@context': 'https://schema.org',
       '@graph': [
         {
-          '@type': ['EducationalOrganization', 'LocalBusiness'],
+          '@type': 'EducationalOrganization',
           '@id': `${siteUrl}/#organization`,
           name,
+          legalName: 'Vedanta Strategies Pvt. Ltd.',
           url: siteUrl,
+          logo: `${siteUrl}/images/logo.png`,
           image: ogImage,
           email,
           telephone: phone,
           address: {
             '@type': 'PostalAddress',
-            streetAddress: address,
+            streetAddress: 'Bagbazar',
             addressLocality: 'Kathmandu',
+            postalCode: '44600',
             addressCountry: 'NP'
           },
-          geo: siteSettings?.latitude && siteSettings?.longitude
-            ? {
-                '@type': 'GeoCoordinates',
-                latitude: siteSettings.latitude,
-                longitude: siteSettings.longitude
-              }
-            : undefined,
-          sameAs: [siteSettings?.facebookUrl, siteSettings?.linkedinUrl, siteSettings?.instagramUrl, siteSettings?.youtubeUrl].filter(
-            (u) => u && u !== 'https://facebook.com' && u !== 'https://linkedin.com' && u !== 'https://instagram.com' && u !== 'https://youtube.com'
-          )
+          sameAs: socialLinks
+        },
+        {
+          '@type': 'LocalBusiness',
+          '@id': `${siteUrl}/#localbusiness`,
+          name,
+          url: siteUrl,
+          image: ogImage,
+          telephone: phone,
+          email,
+          priceRange: 'NPR',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Bagbazar',
+            addressLocality: 'Kathmandu',
+            postalCode: '44600',
+            addressCountry: 'NP'
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: siteSettings?.latitude || 27.7033949,
+            longitude: siteSettings?.longitude || 85.3177065
+          },
+          openingHoursSpecification: [
+            {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              opens: '09:00',
+              closes: '18:00'
+            },
+            {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Saturday'],
+              opens: '00:00',
+              closes: '00:00'
+            }
+          ],
+          sameAs: socialLinks
         },
         {
           '@type': 'WebSite',
@@ -157,10 +211,11 @@ export default function SeoHead({ pageId, currentLang, siteSettings }) {
               item: canonical
             }] : [])
           ]
-        }
+        },
+        ...courseSchemas
       ]
     });
-  }, [pageId, currentLang, siteSettings]);
+  }, [pageId, currentLang, siteSettings, courses]);
 
   return null;
 }

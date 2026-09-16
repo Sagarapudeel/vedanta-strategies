@@ -108,7 +108,7 @@ export default function AdminTestimonials({
 
             {t.quote_ne && (
               <p style={{ color: '#fbbf24', fontStyle: 'italic', fontSize: '0.85rem', lineHeight: '1.55', marginBottom: '16px', borderTop: '1px dashed var(--border-subtle)', paddingTop: '10px' }}>
-                🇳🇵 "{t.quote_ne}"
+                "{t.quote_ne}"
               </p>
             )}
 
@@ -185,7 +185,7 @@ export default function AdminTestimonials({
                   fontSize: '0.85rem'
                 }}
               >
-                🇬🇧 English Review
+                English Review
               </button>
               <button
                 type="button"
@@ -201,7 +201,7 @@ export default function AdminTestimonials({
                   fontSize: '0.85rem'
                 }}
               >
-                🇳🇵 Nepali Review (नेपाली)
+                Nepali Review (नेपाली)
               </button>
             </div>
 

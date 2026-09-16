@@ -122,7 +122,7 @@ export default function AdminBlog({
                   <div style={{ fontWeight: '700', color: '#fff' }}>{post.title_en || post.title}</div>
                   {post.title_ne && (
                     <div style={{ fontSize: '0.82rem', color: '#f59e0b', marginTop: '2px' }}>
-                      🇳🇵 {post.title_ne}
+                      {post.title_ne}
                     </div>
                   )}
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>
@@ -192,7 +192,7 @@ export default function AdminBlog({
                   fontSize: '0.85rem'
                 }}
               >
-                🇬🇧 English Article
+                English Article
               </button>
               <button
                 type="button"
@@ -208,7 +208,7 @@ export default function AdminBlog({
                   fontSize: '0.85rem'
                 }}
               >
-                🇳🇵 Nepali Article (नेपाली)
+                Nepali Article (नेपाली)
               </button>
             </div>
 

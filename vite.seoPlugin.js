@@ -20,10 +20,10 @@ function mergeCmsStore(parsed = {}) {
   return {
     ...initialData,
     ...parsed,
-    partners: (parsed.partners && parsed.partners.length > 0) ? parsed.partners : initialData.partners,
-    teamMembers: (parsed.teamMembers && parsed.teamMembers.length > 0) ? parsed.teamMembers : initialData.teamMembers,
-    blogPosts: (parsed.blogPosts && parsed.blogPosts.length > 0) ? parsed.blogPosts : initialData.blogPosts,
-    testimonials: (parsed.testimonials && parsed.testimonials.length > 0) ? parsed.testimonials : initialData.testimonials,
+    partners: Array.isArray(parsed.partners) ? parsed.partners : initialData.partners,
+    teamMembers: Array.isArray(parsed.teamMembers) ? parsed.teamMembers : initialData.teamMembers,
+    blogPosts: Array.isArray(parsed.blogPosts) ? parsed.blogPosts : initialData.blogPosts,
+    testimonials: Array.isArray(parsed.testimonials) ? parsed.testimonials : initialData.testimonials,
     siteContent: parsed.siteContent ? {
       ...initialData.siteContent,
       ...parsed.siteContent,

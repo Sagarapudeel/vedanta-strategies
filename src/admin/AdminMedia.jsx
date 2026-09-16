@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Image, Video, UploadCloud, Trash2, Plus, CheckCircle, Link, Play, ExternalLink } from 'lucide-react';
 import { uploadMediaFile } from '../lib/uploadMedia';
 import ImageInput from './ImageInput';
@@ -56,6 +56,27 @@ export default function AdminMedia({ media = {}, updateMedia, addGalleryPhoto, d
     banners: media.banners || {}
   });
 
+  useEffect(() => {
+    setLocalMedia({
+      heroImage: media.heroImage || '/images/hero.webp',
+      heroImageAlt: media.heroImageAlt || 'Vedanta Strategies Training Workshop',
+      siteLogo: media.siteLogo || '/images/logo.svg',
+      banners: media.banners || {}
+    });
+  }, [media]);
+
+  const bannerPages = [
+    { key: 'about', label: 'Who We Are (About) Page Banner' },
+    { key: 'training', label: 'Individual Training Page Banner' },
+    { key: 'institutional-training', label: 'Institutional Training Page Banner' },
+    { key: 'services', label: 'Services Page Banner' },
+    { key: 'portfolio', label: 'Portfolio Page Banner' },
+    { key: 'team', label: 'Team Page Banner' },
+    { key: 'blog', label: 'Blog & Insights Page Banner' },
+    { key: 'contact', label: 'Contact Page Banner' },
+    { key: 'gallery', label: 'Gallery Page Banner' }
+  ];
+
   // Video form
   const [newVideo, setNewVideo] = useState({ title: '', rawUrl: '' });
   const [videoPreview, setVideoPreview] = useState(null);
@@ -100,7 +121,10 @@ export default function AdminMedia({ media = {}, updateMedia, addGalleryPhoto, d
   const handlePhotoFile = async (file) => {
     if (!file?.type.startsWith('image/')) { alert('Please select an image file'); return; }
     setUploadingPhoto(true);
-    try { setNewPhotoUrl(await uploadMediaFile(file, 'gallery')); }
+    try { 
+      const photoContext = `${newPhotoCaption || 'workshop-training-bagbazar'}`;
+      setNewPhotoUrl(await uploadMediaFile(file, 'gallery', photoContext)); 
+    }
     catch (err) { alert(err.message || 'Failed to upload photo'); }
     finally { setUploadingPhoto(false); }
   };
@@ -161,12 +185,12 @@ export default function AdminMedia({ media = {}, updateMedia, addGalleryPhoto, d
           </SectionCard>
 
           <SectionCard icon={<Link size={20} />} title="Page Banner Images (Optional)">
-            <p style={{ color: 'var(--text-subtle)', fontSize: '0.84rem', marginBottom: '16px' }}>Header images for sub-pages. Leave blank to use default navy gradient.</p>
-            {['about', 'training', 'contact', 'gallery'].map(page => (
-              <ImageInput key={page}
-                label={`${page.charAt(0).toUpperCase() + page.slice(1)} Page Banner`}
-                value={localMedia.banners?.[page] || ''}
-                onChange={v => setLocalMedia(p => ({ ...p, banners: { ...(p.banners || {}), [page]: v } }))}
+            <p style={{ color: 'var(--text-subtle)', fontSize: '0.84rem', marginBottom: '16px' }}>Header images for sub-pages. Leave blank to use the default navy gradient.</p>
+            {bannerPages.map(({ key, label }) => (
+              <ImageInput key={key}
+                label={label}
+                value={localMedia.banners?.[key] || ''}
+                onChange={v => setLocalMedia(p => ({ ...p, banners: { ...(p.banners || {}), [key]: v } }))}
                 previewHeight={100} />
             ))}
           </SectionCard>

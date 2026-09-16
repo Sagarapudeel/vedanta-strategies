@@ -15,7 +15,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-export default function IndividualTrainingPage({ currentLang, courses = [], openCourseModal, openLeadModal, setActivePage }) {
+export default function IndividualTrainingPage({ currentLang, courses = [], openCourseModal, openLeadModal, setActivePage, media = {} }) {
   const t = translations[currentLang] || translations.en;
   
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -109,8 +109,20 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
     return () => { el?.remove(); };
   }, [currentLang]);
 
+  const pageBanner = media?.banners?.['individual-training'] || media?.banners?.training || null;
+
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
+      {pageBanner && (
+        <div style={{ width: '100%', maxHeight: '260px', overflow: 'hidden', marginBottom: '32px' }}>
+          <img
+            src={pageBanner}
+            alt="Individual Training - Vedanta Strategies"
+            style={{ width: '100%', height: '260px', objectFit: 'cover', display: 'block' }}
+            onError={e => { e.target.parentElement.style.display = 'none'; }}
+          />
+        </div>
+      )}
       <div className="container">
 
 
@@ -146,7 +158,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
                 style={{
                   width: '100%',
                   padding: '9px 12px 9px 36px',
-                  borderRadius: 'var(--radius-full)',
+                  borderRadius: '8px',
                   border: '1px solid var(--border-color)',
                   fontSize: '0.88rem',
                   outline: 'none',
@@ -164,7 +176,7 @@ export default function IndividualTrainingPage({ currentLang, courses = [], open
                 onClick={() => setSelectedCategory(cat)}
                 style={{
                   padding: '7px 16px',
-                  borderRadius: 'var(--radius-full)',
+                  borderRadius: '6px',
                   border: selectedCategory === cat ? '2px solid var(--brand-navy)' : '1px solid var(--border-color)',
                   background: selectedCategory === cat ? 'rgba(28, 47, 77, 0.08)' : '#ffffff',
                   color: selectedCategory === cat ? 'var(--brand-navy)' : 'var(--brand-navy)',

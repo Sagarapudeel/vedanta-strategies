@@ -37,27 +37,27 @@ export const initialData = {
     stats: [
       {
         id: "stat-1",
-        value: "4,500+",
-        label_en: "Learners & Professionals Reached",
-        label_ne: "तालिमप्राप्त विद्यार्थी तथा कर्मचारी"
+        value: "Cohort 1",
+        label_en: "Now Enrolling First Batch",
+        label_ne: "पहिलो ब्याच भर्ना प्रारम्भ"
       },
       {
         id: "stat-2",
-        value: "28+",
-        label_en: "Organizations & Businesses Served",
-        label_ne: "सहकार्य गरिएका संस्थाहरू"
+        value: "15 Max",
+        label_en: "Students Per Batch Guarantee",
+        label_ne: "प्रति ब्याच अधिकतम १५ जना मात्र"
       },
       {
         id: "stat-3",
-        value: "50+",
-        label_en: "Workshops & Seminars Conducted",
-        label_ne: "सञ्चालित कार्यशाला तथा सेमिनारहरू"
+        value: "100%",
+        label_en: "Hands-on Practical & Laptop-Driven",
+        label_ne: "शतप्रतिशत व्यावहारिक र ल्यापटप अभ्यास"
       },
       {
         id: "stat-4",
-        value: "15",
-        label_en: "Max Students Per Batch Guarantee",
-        label_ne: "प्रति ब्याच अधिकतम १५ जना मात्र"
+        value: "Bagbazar",
+        label_en: "In-Person Learning Hub, Kathmandu",
+        label_ne: "काठमाडौंको बागबजारस्थित भौतिक हब"
       }
     ],
     pillars: {
@@ -179,11 +179,111 @@ export const initialData = {
       title_ne: "नेपालका संस्था तथा व्यवसायहरूको विश्वास"
     },
     about: {
+      badge_en: "WHO WE ARE",
+      badge_ne: "हाम्रो परिचय",
+      title_en: "Practical Learning, Strategic Thinking & Lasting Impact",
+      title_ne: "व्यावहारिक सीप, रणनीतिक सोच र संस्थागत प्रभाव",
+      subtitle_en: "A Kathmandu-based strategic learning academy and digital consulting firm committed to execution-driven training and measurable progress.",
+      subtitle_ne: "हामी काठमाडौंस्थित प्रविधि प्रशिक्षक तथा डिजिटल रणनीतिकारहरूको समूह हौँ जसले नतिजामुखी काममा विश्वास गर्छौं।",
+      storyTitle_en: "Our Story & Background",
+      storyTitle_ne: "हाम्रो कथा र पृष्ठभूमि",
       story_en: "We started Vedanta Strategies in Kathmandu with a simple conviction: technology training in Nepal shouldn't be about dry slideshows or confusing buzzwords. It should be hands-on, practical, and immediately useful for your daily job, college studies, or local business.",
       story_ne: "हामीले काठमाडौंमा एउटा स्पष्ट उद्देश्यका साथ वेदान्त स्ट्राटेजिज सुरु गरेका हौँ: नेपालमा प्रविधि तालिम केवल जटिल सैद्धान्तिक स्लाइडहरूमा सीमित हुनुहुँदैन। यो व्यावहारिक, हातैले गर्ने अभ्यास र दैनिक कार्यालय वा व्यवसायमा तत्काल उपयोगी हुनुपर्छ।",
+      missionTitle_en: "Our Mission",
+      missionTitle_ne: "हाम्रो लक्ष्य (Mission)",
+      mission_en: "To democratize practical AI and modern digital skills across Nepal through high-touch, laptop-first mentoring and transparent strategic execution, empowering individuals and institutions to thrive in the modern digital economy.",
+      mission_ne: "नेपालभरका विद्यार्थी, पेसाकर्मी र संस्थाहरूलाई व्यावहारिक एआई तथा आधुनिक डिजिटल सीपहरूमा प्रत्यक्ष ल्यापटप अभ्यासमार्फत दक्ष बनाई विश्वव्यापी डिजिटल अर्थतन्त्रमा प्रतिस्पर्धी बनाउनु हाम्रो मुख्य लक्ष्य हो।",
+      visionTitle_en: "Our Vision",
+      visionTitle_ne: "हाम्रो दृष्टिकोण (Vision)",
+      vision_en: "To become Nepal's benchmark hub for practical technology education, ethical media literacy, and performance digital growth — recognized for measurable learner success and zero inflated promises.",
+      vision_ne: "व्यावहारिक प्रविधि शिक्षा, नैतिक मिडिया साक्षरता र नतिजामुखी डिजिटल वृद्धिका लागि नेपालकै अग्रणी, भरपर्दो र व्यावहारिक सिकाइ केन्द्रको रूपमा स्थापित हुनु।",
+      values: [
+        {
+          id: "val-1",
+          title_en: "Execution Over Theory",
+          title_ne: "सिद्धान्तभन्दा कार्यान्वयन",
+          desc_en: "Every session takes place on live software on your own laptop. We measure learning by what you build and deploy, not slides memorized.",
+          desc_ne: "हरेक कक्षा आफ्नै ल्यापटपमा वास्तविक सफ्टवेयरमा चल्छ। हामी कण्ठ गरेका कुराभन्दा तपाईंले निर्माण गरेका वास्तविक परियोजनाबाट सिकाइ मापन गर्छौं।"
+        },
+        {
+          id: "val-2",
+          title_en: "Radical Transparency & Integrity",
+          title_ne: "पूर्ण पारदर्शिता र इमानदारी",
+          desc_en: "We present honest, founding-stage realities. No fabricated partner logos, no fake student numbers, and no hollow placement guarantees.",
+          desc_ne: "हामी वास्तविक तथ्यमा विश्वास गर्छौं। कुनै नक्कली साझेदार, बनावटी संख्या वा खोक्रा आश्वासन हाम्रो संस्थामा पाइँदैन।"
+        },
+        {
+          id: "val-3",
+          title_en: "High-Touch Mentorship",
+          title_ne: "व्यक्तिगत प्रत्यक्ष मार्गदर्शन",
+          desc_en: "Batches are strictly capped at 15 learners so mentors know each student's name, workflow bottlenecks, and specific career goals.",
+          desc_ne: "ब्याचहरूमा अधिकतम १५ जना मात्र राखिन्छ ताकि प्रशिक्षकले प्रत्येक प्रशिक्षार्थीको कमजोरी र व्यक्तिगत लक्ष्य बुझेर सहयोग गर्न सकून्।"
+        },
+        {
+          id: "val-4",
+          title_en: "Nepal-Centric Relevance",
+          title_ne: "नेपाली परिवेश अनुकूल",
+          desc_en: "We tailor workflows to local payments, local client behaviors, Nepali language computing, and the practical constraints of Nepal's market.",
+          desc_ne: "हामी नेपाली भुक्तानी प्रणाली, स्थानीय बजार व्यवहार, नेपाली भाषा कम्प्युटिङ र नेपालको वास्तविक व्यापारिक आवश्यकताअनुसारका सीप सिकाउँछौं।"
+        }
+      ],
+      differentiationTitle_en: "Why Vedanta Strategies Feels Different",
+      differentiationTitle_ne: "वेदान्त स्ट्राटेजिज किन फरक छ",
+      differentiationSubtitle_en: "How our founding philosophy and teaching model separates us from conventional training institutes in Kathmandu.",
+      differentiationSubtitle_ne: "हाम्रो शिक्षण विधि र संस्थागत सोच काठमाडौंका परम्परागत इन्स्टिच्युटहरूभन्दा किन फरक छ।",
+      differentiationPoints: [
+        {
+          id: "diff-1",
+          title_en: "Active Practitioners, Not Textbook Lecturers",
+          title_ne: "सक्रिय पेसाकर्मी प्रशिक्षकहरू",
+          desc_en: "The exact same strategists who lead your classes are actively managing ad spend, prompt engineering pipelines, and media productions for real clients daily.",
+          desc_ne: "कक्षा लिने प्रशिक्षकहरू नै दैनिक रूपमा वास्तविक विज्ञापन, एआई वर्कफ्लो र मिडिया निर्माणमा प्रत्यक्ष संलग्न पेशेवरहरू हुन्।"
+        },
+        {
+          id: "diff-2",
+          title_en: "Dedicated In-Person Lab in Bagbazar",
+          title_ne: "बागबजारमा सुविधायुक्त भौतिक ल्याब",
+          desc_en: "Centrally located near City Bus Park and Putalisadak with high-speed internet, power backups, and collaborative workstations.",
+          desc_ne: "सिटी बसपार्क र पुतलीसडक नजिकै उच्च गतिको इन्टरनेट, पावर ब्याकअप र शान्त वातावरणसहितको आधुनिक कम्प्युटर ल्याब।"
+        },
+        {
+          id: "diff-3",
+          title_en: "Integrated Learning + Studio Production",
+          title_ne: "सिकाइ र स्टुडियो प्रोडक्सनको संगम",
+          desc_en: "Under one roof, we train talent and produce professional podcasts, corporate films, and brand media campaigns.",
+          desc_ne: "एउटै छानामुनि हामी व्यावहारिक जनशक्ति तयार गर्छौं र व्यावसायिक पोडकास्ट तथा भिडियो निर्माण सेवा प्रदान गर्छौं।"
+        }
+      ],
+      focusAreasTitle_en: "Our Core Areas of Focus",
+      focusAreasTitle_ne: "हाम्रा मुख्य कार्यक्षेत्रहरू",
+      focusAreasSubtitle_en: "Three dedicated capabilities where we deliver measurable excellence for individuals and institutions.",
+      focusAreasSubtitle_ne: "हाम्रा ३ मुख्य क्षेत्रहरू जहाँ हामी व्यक्ति तथा संस्थाहरूका लागि उत्कृष्ट नतिजा प्रदान गर्दछौं।",
+      focusAreas: [
+        {
+          id: "foc-1",
+          title_en: "AI & Modern Technology Literacy",
+          title_ne: "एआई तथा आधुनिक प्रविधि साक्षरता",
+          desc_en: "Empowering students, professionals, and school faculties to leverage ChatGPT, Claude, automate repetitive administrative tasks, and navigate digital tools safely.",
+          desc_ne: "विद्यार्थी, पेसाकर्मी र शिक्षकहरूलाई च्याटजीपीटी, क्लाउड, कार्यालय स्वचालन र सुरक्षित डिजिटल औजारहरू प्रयोग गर्न सक्षम बनाउने।"
+        },
+        {
+          id: "foc-2",
+          title_en: "Cinematic Production & Podcasts",
+          title_ne: "सिनेमाटिक भिडियो र पोडकास्ट निर्माण",
+          desc_en: "Full-cycle video storytelling, multi-camera podcast recording, and audio mastering from our Bagbazar studio facility.",
+          desc_ne: "बागबजारस्थित स्टुडियोबाट गुणस्तरीय भिडियो निर्माण, बहु-क्यामेरा पोडकास्ट रेकर्डिङ र ध्वनि सम्पादन सेवा।"
+        },
+        {
+          id: "foc-3",
+          title_en: "Digital Growth & Institutional Enablement",
+          title_ne: "डिजिटल रणनीति र संस्थागत परामर्श",
+          desc_en: "Meta & Google advertising, social media brand management, and customized on-campus bootcamps for colleges and schools.",
+          desc_ne: "मेटा र गुगल विज्ञापन व्यवस्थापन, ब्रान्डिङ र विद्यालय तथा कलेजहरूका लागि क्याम्पसमै सञ्चालन हुने अनुकूलित कार्यशाला।"
+        }
+      ],
       whoWeAre_en: "Vedanta Strategies is a strategic consultancy and hands-on training hub located in Bagbazar, Kathmandu. We equip students, working professionals, and organizations with deployable capabilities across Artificial Intelligence tools, performance digital marketing, and modern institutional management. We believe in execution over theory, mentor accountability, and building long-term capability for Nepal's digital workforce.",
       whoWeAre_ne: "वेदान्त स्ट्राटेजिज काठमाडौंको बागबजारस्थित एक रणनीतिक परामर्श तथा व्यावहारिक तालिम हब हो। हामी विद्यार्थी, कार्यरत जनशक्ति र संस्थाहरूलाई व्यावहारिक एआई टुल्स, नतिजामुखी डिजिटल मार्केटिङ र संस्थागत विकासमा पोख्त बनाउँछौँ। हामी सैद्धान्तिक भाषणभन्दा वास्तविक कार्यसम्पादन, प्रशिक्षकको प्रत्यक्ष निगरानी र नेपालको डिजिटल जनशक्तिलाई सक्षम बनाउन विश्वास गर्छौं।",
-      ceoPhoto: "/images/ceo.jpg",
+      ceoPhoto: "/images/ceo.webp",
       ceoName_en: "Er. Suman Adhikari",
       ceoName_ne: "इ. सुमन अधिकारी",
       ceoTitle_en: "Founder & Chief Executive Officer",
@@ -611,93 +711,59 @@ export const initialData = {
 
   portfolioItems: [
     {
-      id: "case-apex-college",
-      title: "Model College: 1,200+ Student Admission Inquiries",
-      title_en: "Model College: 1,200+ Student Admission Inquiries",
-      title_ne: "मोडल कलेज: १,२०० भन्दा बढी विद्यार्थी भर्ना सोधपुछ",
+      id: "case-lead-funnel",
+      title: "Targeted Local Lead Funnel Strategy",
+      title_en: "Targeted Local Lead Funnel Strategy",
+      title_ne: "लक्षित स्थानीय लिड फनेल रणनीति",
       pillar: "Collaboration",
-      client: "Kathmandu Valley College",
-      metric: "1,200+ Inquiries",
-      metric_en: "1,200+ Inquiries",
-      metric_ne: "१,२००+ सोधपुछ",
-      challenge_en: "The college was spending heavily on paper flyers and newspaper ads with very few students actually contacting them.",
-      challenge_ne: "कलेजले पर्चा-पम्पलेट र पत्रपत्रिकामा ठूलो खर्च गरिरहे पनि विद्यार्थीहरूको प्रत्यक्ष सम्पर्क निकै कम थियो।",
-      solution_en: "We ran targeted Facebook and Instagram video ads showing student projects with a direct button to chat on WhatsApp.",
-      solution_ne: "हामीले विद्यार्थीका परियोजना देखाउने भिडियो बनाई सीधै ह्वाट्सएप च्याट खुल्ने लक्षित सामाजिक सञ्जाल विज्ञापन चलायौँ।",
-      outcome_en: "Received over 1,200 genuine inquiries during admission season and cut marketing expenses by 35%.",
-      outcome_ne: "भर्नाको सिजनमा १,२०० भन्दा बढी प्रत्यक्ष सोधपुछ प्राप्त भयो र विज्ञापन खर्च ३५% ले घट्यो।"
+      client: "Performance Marketing Blueprint",
+      metric: "Direct WhatsApp Inquiries",
+      metric_en: "Direct WhatsApp Inquiries",
+      metric_ne: "प्रत्यक्ष ह्वाट्सएप सोधपुछ",
+      challenge_en: "Local businesses frequently burn marketing budget clicking default 'Boost Post' with zero measurable sales leads.",
+      challenge_ne: "काठमाडौंका धेरै व्यवसायहरूले बिना कुनै स्पष्ट फनेल 'बूस्ट पोस्ट' थिचेर विज्ञापन बजेट खेर फालिरहेका छन्।",
+      solution_en: "We design laser-targeted Meta campaigns directing qualified prospects straight into organized WhatsApp message flows.",
+      solution_ne: "हामीले लक्षित दर्शकलाई सिधै ह्वाट्सएपमा ल्याएर तत्काल सम्झौता र बिक्रीमा बदल्ने विज्ञापन संरचना तयार गरेका छौं।",
+      outcome_en: "Eliminates wasted impressions and delivers traceable customer conversations on a predictable daily budget.",
+      outcome_ne: "व्यर्थको विज्ञापन खर्च रोकेर निश्चित दैनिक बजेटमै वास्तविक ग्राहक सोधपुछ प्राप्त गर्न सकिन्छ।"
     },
     {
-      id: "case-media-literacy-nepal",
-      title: "Media Literacy Workshops Across 28 Schools",
-      title_en: "Media Literacy Workshops Across 28 Schools",
-      title_ne: "२८ विद्यालयहरूमा मिडिया साक्षरता कार्यशाला",
+      id: "case-media-verification",
+      title: "Media Verification & Fact-Checking Curriculum",
+      title_en: "Media Verification & Fact-Checking Curriculum",
+      title_ne: "मिडिया प्रमाणीकरण तथा तथ्य-जाँच पाठ्यक्रम",
       pillar: "Learning",
-      client: "District Education Initiative",
-      metric: "4,500+ Students",
-      metric_en: "4,500+ Students",
-      metric_ne: "४,५००+ विद्यार्थी",
-      challenge_en: "Students were easily misled by fake social media notices and viral rumors during exam periods.",
-      challenge_ne: "परीक्षाको समयमा सामाजिक सञ्जालमा फैलिने अफवाह र भ्रामक सूचनाबाट विद्यार्थीहरू छिट्टै प्रभावित भइरहेका थिए।",
-      solution_en: "Conducted 2-hour interactive workshops where students analyzed real viral posts and learned reverse image search.",
-      solution_ne: "२ घण्टे अन्तरक्रियात्मक कार्यशाला सञ्चालन गरी भाइरल पोस्टहरूको तथ्य-जाँच र रिभर्स इमेज सर्चको अभ्यास गराइयो।",
-      outcome_en: "Certified over 4,500 students and 180 teachers across 28 schools with high engagement.",
-      outcome_ne: "२८ विद्यालयका ४,५०० भन्दा बढी विद्यार्थी तथा १८० शिक्षकहरूलाई सफल तालिम र प्रमाणपत्र प्रदान गरियो।"
+      client: "Institutional Curriculum Framework",
+      metric: "100% Practical Labs",
+      metric_en: "100% Practical Labs",
+      metric_ne: "शतप्रतिशत प्रयोगात्मक अभ्यास",
+      challenge_en: "Students and educators in Nepal encounter viral deepfakes, manipulated notices, and unsourced social media rumors daily.",
+      challenge_ne: "नेपाली विद्यार्थी र शिक्षकहरू दैनिक रूपमा भाइरल डीपफेक, भ्रामक सूचना र अप्रमाणित सामाजिक सञ्जाल हल्लाको सामना गर्छन्।",
+      solution_en: "Developed an intensive, interactive module teaching reverse image search, prompt detection, and source credibility testing.",
+      solution_ne: "रिभर्स इमेज सर्च, एआई प्रम्प्ट पहिचान र स्रोतको आधिकारिकता जाँच्ने गहन प्रयोगात्मक मोड्युल निर्माण गरियो।",
+      outcome_en: "Equips participants with hands-on analytical skills to critically evaluate digital media before sharing.",
+      outcome_ne: "सहभागीहरूलाई कुनै पनि सामग्री सेयर गर्नुअघि तथ्य जाँच्न सक्ने व्यावहारिक क्षमता प्रदान गरिन्छ।"
     },
     {
-      id: "case-himalayan-herbal",
-      title: "Organic Kitchen: Tripling Daily Delivery Orders",
-      title_en: "Organic Kitchen: Tripling Daily Delivery Orders",
-      title_ne: "अर्ग्यानिक किचेन: दैनिक डेलिभरी अर्डरमा ३ गुणा वृद्धि",
-      pillar: "Collaboration",
-      client: "Kathmandu Organic Foods",
-      metric: "3x Delivery Orders",
-      metric_en: "3x Delivery Orders",
-      metric_ne: "३ गुणा अर्डर वृद्धि",
-      challenge_en: "A small local food brand struggling to get regular customers beyond their immediate neighborhood.",
-      challenge_ne: "स्थानीय उत्पादन भए पनि टोलभन्दा बाहिर नियमित ग्राहक पाउन संघर्ष गरिरहेको अवस्था थियो।",
-      solution_en: "Created short 20-second reels of their food preparation and ran simple location-based ads around Kathmandu and Lalitpur.",
-      solution_ne: "खाद्य सामग्री तयारीका २० सेकेन्डका छोटा रिल्स बनाएर काठमाडौं र ललितपुर क्षेत्रमा लक्षित विज्ञापन चलायौँ।",
-      outcome_en: "Daily delivery orders increased from 15 to over 50 orders within two months.",
-      outcome_ne: "दैनिक डेलिभरी अर्डर १५ बाट बढेर दुई महिनाभित्रै ५० भन्दा बढी पुग्यो।"
+      id: "case-ai-workflow",
+      title: "Workplace AI Automation & Productivity Framework",
+      title_en: "Workplace AI Automation & Productivity Framework",
+      title_ne: "कार्यस्थल एआई अटोमेसन तथा उत्पादकत्व खाका",
+      pillar: "Learning",
+      client: "Professional Skills Framework",
+      metric: "2+ Hours Daily Saved",
+      metric_en: "2+ Hours Daily Saved",
+      metric_ne: "दैनिक २+ घण्टा बचत",
+      challenge_en: "Professionals struggle to draft reports, handle client correspondence, and analyze data quickly using legacy manual steps.",
+      challenge_ne: "परम्परागत तरिकाले प्रतिवेदन लेखन, इमेल पत्राचार र डेटा विश्लेषण गर्दा दैनिक धेरै समय खेर जान्छ।",
+      solution_en: "Step-by-step training on personal laptops integrating Claude, ChatGPT, and automated spreadsheets for everyday office tasks.",
+      solution_ne: "आफ्नै ल्यापटपमा क्लाउड, च्याटजीपीटी र स्वचालित स्प्रेडसिट प्रयोग गरी दैनिक कार्यालय कार्य सरल बनाउने तालिम।",
+      outcome_en: "Enables working professionals to produce higher quality drafts and automate repetitive tasks reliably.",
+      outcome_ne: "पेसाकर्मीहरूलाई उच्च गुणस्तरको मस्यौदा तयार गर्न र दोहोरिने कामहरू सहजै स्वचालित गर्न सक्षम बनाउँछ।"
     }
   ],
 
-  testimonials: [
-    {
-      id: "t-1",
-      author: "Dr. Ramesh Khadka",
-      role: "Principal, Kathmandu Model College",
-      role_en: "Principal, Kathmandu Model College",
-      role_ne: "प्रधानाध्यापक, काठमाडौं मोडल कलेज",
-      type: "School Partner",
-      quote_en: "The teachers and students thoroughly enjoyed the AI workshop. The team from Vedanta Strategies explained things in simple Nepali and English without complicated jargon. Very practical.",
-      quote_ne: "हाम्रा शिक्षक तथा विद्यार्थीहरूले एआई कार्यशाला निकै फलदायी पाए। वेदान्त स्ट्राटेजिजको टिमले बिना कुनै जटिलता सरल नेपाली र अंग्रेजीमा प्रयोगात्मक रूपमा सिकाउनुभयो।",
-      avatar: "RK"
-    },
-    {
-      id: "t-2",
-      author: "Sunita Maharjan",
-      role: "Communications Lead, Valley Community Group",
-      role_en: "Communications Lead, Valley Community Group",
-      role_ne: "सञ्चार अधिकृत, भ्याली कम्युनिटी ग्रुप",
-      type: "Production Client",
-      quote_en: "We attended their specialized workshop at their Bagbazar training hub. The sound quality was crystal clear, the mentor guidance was warm, and the materials delivered were immediately useful.",
-      quote_ne: "हामीले उहाँहरूको बागबजार तालिम हबमा कार्यशालामा भाग लियौं। विषयवस्तु प्रष्ट, प्रशिक्षकको मार्गदर्शन उत्कृष्ट र सामग्रीहरू तत्काल उपयोगी थिए।",
-      avatar: "SM"
-    },
-    {
-      id: "t-3",
-      author: "Bikash Adhikari",
-      role: "Student (AI Tools Batch 14)",
-      role_en: "Student (AI Tools Batch 14)",
-      role_ne: "विद्यार्थी (एआई टुल्स ब्याच १४)",
-      type: "Course Student",
-      quote_en: "I was confused about how to use ChatGPT for my job. The mentor helped me step-by-step on my own laptop. Now I use it daily to draft emails and format Excel sheets.",
-      quote_ne: "कार्यालयको कामका लागि च्याटजीपिटी कसरी प्रयोग गर्ने भन्ने अन्योल थियो। मेन्टरले मेरो आफ्नै ल्यापटपमा हातैले सिकाउनुभयो। अहिले म इमेल र एक्सेलमा दैनिक यसको प्रयोग गर्छु।",
-      avatar: "BA"
-    }
-  ],
+  testimonials: [],
 
   teamMembers: [
     {
@@ -862,120 +928,7 @@ What works much better:
     }
   ],
 
-  partners: [
-    {
-      id: "part-1",
-      name: "Apex Educational Group",
-      name_en: "Apex Educational Group",
-      name_ne: "एपेक्स एजुकेसनल ग्रुप",
-      sub: "Higher Secondary & College",
-      sub_en: "Higher Secondary & College",
-      sub_ne: "उच्च माध्यमिक तथा कलेज",
-      badge: "AEG",
-      logoUrl: "",
-      color: "#172642",
-      bg: "#e2e8f0",
-      website: "https://apexcollege.edu.np"
-    },
-    {
-      id: "part-2",
-      name: "Kathmandu Model College",
-      name_en: "Kathmandu Model College",
-      name_ne: "काठमाडौं मोडल कलेज",
-      sub: "Balkumari & Bagbazar",
-      sub_en: "Balkumari & Bagbazar",
-      sub_ne: "बालकुमारी तथा बागबजार",
-      badge: "KMC",
-      logoUrl: "",
-      color: "#851C2C",
-      bg: "#fce7f3",
-      website: "https://ktmmodelcollege.edu.np"
-    },
-    {
-      id: "part-3",
-      name: "Valley Tech Foundation",
-      name_en: "Valley Tech Foundation",
-      name_ne: "भ्याली टेक फाउन्डेसन",
-      sub: "Skill Development Hub",
-      sub_en: "Skill Development Hub",
-      sub_ne: "सीप विकास केन्द्र",
-      badge: "VTF",
-      logoUrl: "",
-      color: "#0284c7",
-      bg: "#e0f2fe",
-      website: "https://valleytech.org.np"
-    },
-    {
-      id: "part-4",
-      name: "Milestone International College",
-      name_en: "Milestone International College",
-      name_ne: "माइलस्टोन इन्टरनेसनल कलेज",
-      sub: "Balkumari, Lalitpur",
-      sub_en: "Balkumari, Lalitpur",
-      sub_ne: "बालकुमारी, ललितपुर",
-      badge: "MIC",
-      logoUrl: "",
-      color: "#b45309",
-      bg: "#fef3c7",
-      website: "https://milestone.edu.np"
-    },
-    {
-      id: "part-5",
-      name: "Rural Heritage Nepal",
-      name_en: "Rural Heritage Nepal",
-      name_ne: "रुरल हेरिटेज नेपाल",
-      sub: "Cultural Documentation NGO",
-      sub_en: "Cultural Documentation NGO",
-      sub_ne: "सांस्कृतिक अभिलेखीकरण गैरसरकारी संस्था",
-      badge: "RHN",
-      logoUrl: "",
-      color: "#15803d",
-      bg: "#dcfce7",
-      website: "https://ruralheritagenepal.org"
-    },
-    {
-      id: "part-6",
-      name: "Himalayan Naturals D2C",
-      name_en: "Himalayan Naturals D2C",
-      name_ne: "हिमालयन नेचुरल्स",
-      sub: "Organic Brands Nepal",
-      sub_en: "Organic Brands Nepal",
-      sub_ne: "अर्गानिक ब्रान्ड नेपाल",
-      badge: "HND",
-      logoUrl: "",
-      color: "#4f46e5",
-      bg: "#ede9fe",
-      website: "https://himalayannaturals.com.np"
-    },
-    {
-      id: "part-7",
-      name: "TechFin Innovations",
-      name_en: "TechFin Innovations",
-      name_ne: "टेकफिन इनोभेसन्स",
-      sub: "Fintech & Enterprise Systems",
-      sub_en: "Fintech & Enterprise Systems",
-      sub_ne: "फिनटेक तथा इन्टरप्राइज प्रणाली",
-      badge: "TFI",
-      logoUrl: "",
-      color: "#0d9488",
-      bg: "#ccfbf1",
-      website: "https://techfin.com.np"
-    },
-    {
-      id: "part-8",
-      name: "Kathmandu Media Lab",
-      name_en: "Kathmandu Media Lab",
-      name_ne: "काठमाडौं मिडिया ल्याब",
-      sub: "Digital Journalism & Podcasting",
-      sub_en: "Digital Journalism & Podcasting",
-      sub_ne: "डिजिटल पत्रकारिता तथा पोडकास्टिङ",
-      badge: "KML",
-      logoUrl: "",
-      color: "#e11d48",
-      bg: "#ffe4e6",
-      website: "https://medialabnepal.com"
-    }
-  ],
+  partners: [],
 
   siteSettings: {
     siteName: "Vedanta Strategies",
@@ -984,6 +937,7 @@ What works much better:
     primaryPhone: "+977 1-4421098",
     mobilePhone: "+977 9747887598",
     whatsappNumber: "9779747887598",
+    panVatNumber: "",
     address_en: "Bagbazar, Kathmandu 44600, Nepal",
     address_ne: "बागबजार, काठमाडौं ४४६००, नेपाल",
     latitude: 27.7033949,
@@ -1033,19 +987,23 @@ What works much better:
 
   // Media Manager defaults
   media: {
-    heroImage: "/images/hero.jpg",
-    heroImageAlt: "Vedanta Strategies Training Workshop in Kathmandu",
+    heroImage: "/images/hero.webp",
+    heroImageAlt: "AI and digital marketing training session at Vedanta Strategies Bagbazar learning hub in Kathmandu",
     siteLogo: "/images/logo.svg",
     banners: {
-      about: "",
-      training: "",
-      contact: "",
-      gallery: ""
+      about: "/images/studio.webp",
+      training: "/images/hero.webp",
+      services: "/images/studio.webp",
+      portfolio: "/images/studio.webp",
+      team: "/images/hero.webp",
+      blog: "/images/hero.webp",
+      contact: "/images/hero.webp",
+      gallery: "/images/studio.webp"
     },
     galleryPhotos: [
-      { id: "gph-1", url: "/images/hero.jpg", caption: "AI Tools Workshop — Bagbazar", date: "2026" },
-      { id: "gph-2", url: "/images/hero.jpg", caption: "Media Literacy Session", date: "2026" },
-      { id: "gph-3", url: "/images/hero.jpg", caption: "Corporate Bootcamp", date: "2026" }
+      { id: "gph-1", url: "/images/hero.webp", caption: "AI & Digital Tools Workshop at Bagbazar Office", date: "2026" },
+      { id: "gph-2", url: "/images/hero.webp", caption: "Media Literacy & Fact-Checking Interactive Session", date: "2026" },
+      { id: "gph-3", url: "/images/hero.webp", caption: "Personal Laptop Practice & Mentorship Hub", date: "2026" }
     ],
     galleryVideos: []
   }

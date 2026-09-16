@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
 import { pathForPage } from '../lib/seoConfig';
@@ -20,17 +20,6 @@ import {
   Cpu,
   GraduationCap
 } from 'lucide-react';
-
-const partnerLogos = [
-  { name: "Apex Educational Group", sub: "Higher Secondary & College", badge: "AEG", color: "#1C2F4D", bg: "#e2e8f0" },
-  { name: "Kathmandu Model College", sub: "Balkumari & Bagbazar", badge: "KMC", color: "#851C2C", bg: "#fce7f3" },
-  { name: "Valley Tech Foundation", sub: "Skill Development Hub", badge: "VTF", color: "#0284c7", bg: "#e0f2fe" },
-  { name: "Milestone International College", sub: "Balkumari, Lalitpur", badge: "MIC", color: "#b45309", bg: "#fef3c7" },
-  { name: "Rural Heritage Nepal", sub: "Cultural Documentation NGO", badge: "RHN", color: "#15803d", bg: "#dcfce7" },
-  { name: "Himalayan Naturals D2C", sub: "Organic Brands Nepal", badge: "HND", color: "#4f46e5", bg: "#ede9fe" },
-  { name: "TechFin Innovations", sub: "Fintech & Enterprise Systems", badge: "TFI", color: "#0d9488", bg: "#ccfbf1" },
-  { name: "Kathmandu Media Lab", sub: "Digital Journalism & Podcasting", badge: "KML", color: "#e11d48", bg: "#ffe4e6" }
-];
 
 export default function HomePage({
   currentLang,
@@ -58,36 +47,17 @@ export default function HomePage({
   const sitePartners = siteContent?.partners || {};
   const T = (obj, field, fallback = '') => getLangText(obj, field, currentLang) || fallback;
 
-  const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
-  const [heroSearch, setHeroSearch] = useState('');
-
-  const effectivePartners = (partners && partners.length > 0) ? partners : partnerLogos;
+  const effectivePartners = partners || [];
 
   const featuredCourses = courses.filter(c => c.featured).slice(0, 3);
   const recentBlog = blogPosts.slice(0, 3);
-
-  const nextTestimonial = () => {
-    setActiveTestimonialIdx((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setActiveTestimonialIdx((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const currentTestimonial = testimonials[activeTestimonialIdx] || testimonials[0];
-
-  const handleHeroSearchSubmit = (e) => {
-    e.preventDefault();
-    setActivePage('individual-training');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <div>
       {/* 1. HERO — Dual-path hero: Training (left) + Services (right) */}
       <section
         className="hero-dark hero-dual"
-        style={{ backgroundImage: `linear-gradient(135deg, rgba(28, 47, 77, 0.9) 0%, rgba(28, 47, 77, 0.82) 100%), url("${media?.heroImage || "/images/hero.jpg"}")` }}
+        style={{ backgroundImage: `linear-gradient(135deg, rgba(28, 47, 77, 0.9) 0%, rgba(28, 47, 77, 0.82) 100%), url("${media?.heroImage || "/images/hero.webp"}")` }}
       >
         {/* Subtle dot grid texture */}
         <div className="hero-dark-dot-grid" />
@@ -106,10 +76,10 @@ export default function HomePage({
                 <span className="dual-hero-tag">{T(siteHero, 'trnTag', t.hero.trnTag)}</span>
               </div>
 
-              <h2 className="dual-hero-title">
+              <h1 className="dual-hero-title">
                 {T(siteHero, 'title', t.hero.titleStart)}
                 <span className="hero-heading-gold">{T(siteHero, 'titleHighlight', t.hero.titleHighlight)}</span>
-              </h2>
+              </h1>
 
               <p className="dual-hero-sub">{T(siteHero, 'subtitle', t.hero.subtitle)}</p>
 
@@ -365,75 +335,77 @@ export default function HomePage({
 
 
       {/* 6. CLIENT & PARTNER LOGO RUNNING MARQUEE STRIP */}
-      <section className="partner-strip-section">
-        <div className="container" style={{ marginBottom: '28px' }}>
-          <div className="partner-strip-title">
-            {T(sitePartners, 'title', currentLang === 'ne' ? 'नेपालका संस्था तथा व्यवसायहरूको विश्वास' : 'TRUSTED BY ORGANIZATIONS & BUSINESSES ACROSS NEPAL')}
+      {effectivePartners && effectivePartners.length > 0 && (
+        <section className="partner-strip-section">
+          <div className="container" style={{ marginBottom: '28px' }}>
+            <div className="partner-strip-title">
+              {T(sitePartners, 'title', currentLang === 'ne' ? 'नेपालका संस्था तथा व्यवसायहरूको विश्वास' : 'TRUSTED BY ORGANIZATIONS & BUSINESSES ACROSS NEPAL')}
+            </div>
           </div>
-        </div>
 
-        {/* Continuous Running Marquee */}
-        <div className="logo-marquee-wrapper">
-          <div className="logo-marquee-track">
-            {[...effectivePartners, ...effectivePartners].map((partner, idx) => {
-              const partnerName = getLangText(partner, 'name', currentLang) || partner.name;
-              const partnerSub = getLangText(partner, 'sub', currentLang) || partner.sub;
-              const hasLogo = Boolean(partner.logoUrl && partner.logoUrl.trim());
-              return (
-                <div 
-                  key={idx} 
-                  className={`client-logo-item ${hasLogo ? 'has-image-logo' : ''}`}
-                  title={`${partnerName} ${partnerSub ? '- ' + partnerSub : ''}`}
-                  onClick={() => {
-                    if (partner.website) {
-                      window.open(partner.website, '_blank');
-                    }
-                  }}
-                >
-                  {hasLogo ? (
-                    <img 
-                      src={partner.logoUrl} 
-                      alt={partnerName}
-                      className="client-logo-only-img"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        const fallback = e.target.parentElement?.querySelector('.logo-text-fallback');
-                        if (fallback) fallback.style.display = 'flex';
-                      }}
-                    />
-                  ) : (
-                    <>
-                      <div 
-                        className="client-logo-badge" 
-                        style={{ background: partner.bg || '#e2e8f0', color: partner.color || '#1C2F4D' }}
-                      >
-                        {partner.badge || partnerName?.slice(0, 3).toUpperCase()}
-                      </div>
-                      <div>
+          {/* Continuous Running Marquee */}
+          <div className="logo-marquee-wrapper">
+            <div className="logo-marquee-track">
+              {[...effectivePartners, ...effectivePartners].map((partner, idx) => {
+                const partnerName = getLangText(partner, 'name', currentLang) || partner.name;
+                const partnerSub = getLangText(partner, 'sub', currentLang) || partner.sub;
+                const hasLogo = Boolean(partner.logoUrl && partner.logoUrl.trim());
+                return (
+                  <div 
+                    key={idx} 
+                    className={`client-logo-item ${hasLogo ? 'has-image-logo' : ''}`}
+                    title={`${partnerName} ${partnerSub ? '- ' + partnerSub : ''}`}
+                    onClick={() => {
+                      if (partner.website) {
+                        window.open(partner.website, '_blank');
+                      }
+                    }}
+                  >
+                    {hasLogo ? (
+                      <img 
+                        src={partner.logoUrl} 
+                        alt={partnerName}
+                        className="client-logo-only-img"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          const fallback = e.target.parentElement?.querySelector('.logo-text-fallback');
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                    ) : (
+                      <>
+                        <div 
+                          className="client-logo-badge" 
+                          style={{ background: partner.bg || '#e2e8f0', color: partner.color || '#1C2F4D' }}
+                        >
+                          {partner.badge || partnerName?.slice(0, 3).toUpperCase()}
+                        </div>
+                        <div>
+                          <div className="client-logo-text">{partnerName}</div>
+                          {partnerSub && <div className="client-logo-sub">{partnerSub}</div>}
+                        </div>
+                      </>
+                    )}
+
+                    {/* Graceful fallback if image link is broken */}
+                    {hasLogo && (
+                      <div className="logo-text-fallback" style={{ display: 'none', alignItems: 'center', gap: '10px' }}>
+                        <div 
+                          className="client-logo-badge" 
+                          style={{ background: partner.bg || '#e2e8f0', color: partner.color || '#1C2F4D' }}
+                        >
+                          {partner.badge || partnerName?.slice(0, 3).toUpperCase()}
+                        </div>
                         <div className="client-logo-text">{partnerName}</div>
-                        {partnerSub && <div className="client-logo-sub">{partnerSub}</div>}
                       </div>
-                    </>
-                  )}
-
-                  {/* Graceful fallback if image link is broken */}
-                  {hasLogo && (
-                    <div className="logo-text-fallback" style={{ display: 'none', alignItems: 'center', gap: '10px' }}>
-                      <div 
-                        className="client-logo-badge" 
-                        style={{ background: partner.bg || '#e2e8f0', color: partner.color || '#1C2F4D' }}
-                      >
-                        {partner.badge || partnerName?.slice(0, 3).toUpperCase()}
-                      </div>
-                      <div className="client-logo-text">{partnerName}</div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 7. WHY US (Mindrisers Pattern) */}
       <section className="section-py">
@@ -472,78 +444,76 @@ export default function HomePage({
         </div>
       </section>
 
-      {/* 8. TESTIMONIALS — Premium dark section */}
-      <section className="testimonials-section">
-        {/* Dot texture */}
-        <div className="testimonials-section-dot-grid" />
-        {/* Gold top accent */}
-        <div className="testimonials-section-gold-line" />
+      {/* 8. TESTIMONIALS — Managed via Admin Panel */}
+      {testimonials && testimonials.length > 0 && (
+        <section className="testimonials-section">
+          {/* Dot texture */}
+          <div className="testimonials-section-dot-grid" />
+          {/* Gold top accent */}
+          <div className="testimonials-section-gold-line" />
 
-        <div className="container">
-          {/* Header */}
-          <div className="testimonials-header">
-            <div className="hero-badge-location">
-              {T(siteTestimonials, 'badge', t.testimonials.badge)}
+          <div className="container">
+            {/* Header */}
+            <div className="testimonials-header">
+              <div className="hero-badge-location">
+                {T(siteTestimonials, 'badge', t.testimonials.badge)}
+              </div>
+              <h2 className="testimonials-header-title">
+                {T(siteTestimonials, 'title', t.testimonials.title)}
+              </h2>
+              <p className="testimonials-header-subtitle">
+                {T(siteTestimonials, 'subtitle', t.testimonials.subtitle)}
+              </p>
             </div>
-            <h2 className="testimonials-header-title">
-              {T(siteTestimonials, 'title', t.testimonials.title)}
-            </h2>
-            <p className="testimonials-header-subtitle">
-              {T(siteTestimonials, 'subtitle', t.testimonials.subtitle)}
-            </p>
-          </div>
 
-          {/* Testimonial Cards Grid */}
-          <div className="testimonials-grid">
-            {(testimonials.length > 0 ? testimonials.slice(0, 3) : [
-              { id: 't1', author: 'Priya Shrestha', role: 'Digital Marketing Executive', quote_en: 'The AI tools training completely changed how I work. I can now automate tasks that used to take hours. The instructors at Vedanta are genuinely experienced and patient.', quote_ne: 'AI टूल्सको तालिमले मेरो काम गर्ने तरिका पूरै बदल्यो।' },
-              { id: 't2', author: 'Rohan Magar', role: 'School Teacher, Bagbazar', quote_en: 'The school faculty workshop opened my eyes to how AI can be used in teaching. I now use it daily for lesson planning. Highly recommended for all educators.', quote_ne: 'शिक्षक कार्यशालाले मलाई AI को नयाँ संसार देखायो।' },
-              { id: 't3', author: 'Sita Gurung', role: 'E-commerce Entrepreneur', quote_en: 'After completing the Meta Ads course I was able to run profitable campaigns for my online store. The practical approach — bringing real dashboards into the class — is something you don\'t get anywhere else.', quote_ne: 'Meta Ads कोर्स पछि मेरो व्यापार धेरै बढ्यो।' },
-            ]).map((testimonial, i) => {
-              const quote = currentLang === 'ne' ? testimonial.quote_ne || testimonial.quote_en || testimonial.quote : testimonial.quote_en || testimonial.quote;
-              const role = currentLang === 'ne' ? testimonial.role_ne || testimonial.role : testimonial.role_en || testimonial.role;
-              const initials = testimonial.author?.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-              const accentColors = ['#1C2F4D', '#711B1F', '#B68A28'];
-              return (
-                <div key={testimonial.id || i} className="testimonial-card-dark">
-                  {/* Big decorative quote mark */}
-                  <div className="testimonial-quote-mark">"</div>
+            {/* Testimonial Cards Grid */}
+            <div className="testimonials-grid">
+              {testimonials.slice(0, 3).map((testimonial, i) => {
+                const quote = currentLang === 'ne' ? testimonial.quote_ne || testimonial.quote_en || testimonial.quote : testimonial.quote_en || testimonial.quote;
+                const role = currentLang === 'ne' ? testimonial.role_ne || testimonial.role : testimonial.role_en || testimonial.role;
+                const initials = testimonial.author?.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+                const accentColors = ['#1C2F4D', '#711B1F', '#B68A28'];
+                return (
+                  <div key={testimonial.id || i} className="testimonial-card-dark">
+                    {/* Big decorative quote mark */}
+                    <div className="testimonial-quote-mark">"</div>
 
-                  {/* Portrait */}
-                  <div className="testimonial-photo" style={{ background: accentColors[i % 3] }}>
-                    {testimonial.photo ? (
-                      <img src={testimonial.photo} alt={testimonial.author} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                    ) : (
-                      initials
-                    )}
+                    {/* Portrait */}
+                    <div className="testimonial-photo" style={{ background: accentColors[i % 3] }}>
+                      {testimonial.photo ? (
+                        <img src={testimonial.photo} alt={testimonial.author} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      ) : (
+                        initials
+                      )}
+                    </div>
+
+                    {/* Quote */}
+                    <p className="testimonial-quote-text">
+                      "{quote}"
+                    </p>
+
+                    {/* Author */}
+                    <div className="testimonial-author-bar">
+                      <div className="testimonial-author-name">{testimonial.author}</div>
+                      <div className="testimonial-author-role">{role}</div>
+                    </div>
                   </div>
-
-                  {/* Quote */}
-                  <p className="testimonial-quote-text">
-                    "{quote}"
-                  </p>
-
-                  {/* Author */}
-                  <div className="testimonial-author-bar">
-                    <div className="testimonial-author-name">{testimonial.author}</div>
-                    <div className="testimonial-author-role">{role}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Dot navigation */}
-          {testimonials.length > 3 && (
-            <div className="testimonial-dot-nav">
-              {testimonials.map((_, i) => (
-                <button key={i} onClick={() => setActiveTestimonialIdx(i)}
-                  className={`testimonial-dot ${i === activeTestimonialIdx ? 'active' : ''}`} />
-              ))}
+                );
+              })}
             </div>
-          )}
-        </div>
-      </section>
+
+            {/* Dot navigation */}
+            {testimonials.length > 3 && (
+              <div className="testimonial-dot-nav">
+                {testimonials.map((_, i) => (
+                  <button key={i} onClick={() => setActiveTestimonialIdx(i)}
+                    className={`testimonial-dot ${i === activeTestimonialIdx ? 'active' : ''}`} />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
 
       {/* 9. LATEST INSIGHTS & ARTICLES */}

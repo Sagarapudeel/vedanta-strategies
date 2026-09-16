@@ -3,7 +3,7 @@ import { translations } from '../translations';
 import { getLangText } from '../utils/langHelper';
 import { TrendingUp, CheckCircle, ArrowRight, Layers, Target, Award } from 'lucide-react';
 
-export default function PortfolioPage({ currentLang, portfolioItems = [], openLeadModal }) {
+export default function PortfolioPage({ currentLang, portfolioItems = [], openLeadModal, media = {} }) {
   const t = translations[currentLang] || translations.en;
   
   const [selectedPillar, setSelectedPillar] = useState('All');
@@ -14,8 +14,20 @@ export default function PortfolioPage({ currentLang, portfolioItems = [], openLe
     selectedPillar === 'All' || item.pillar.toLowerCase() === selectedPillar.toLowerCase()
   );
 
+  const pageBanner = media?.banners?.portfolio || null;
+
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
+      {pageBanner && (
+        <div style={{ width: '100%', maxHeight: '260px', overflow: 'hidden', marginBottom: '32px' }}>
+          <img
+            src={pageBanner}
+            alt="Portfolio - Vedanta Strategies"
+            style={{ width: '100%', height: '260px', objectFit: 'cover', display: 'block' }}
+            onError={e => { e.target.parentElement.style.display = 'none'; }}
+          />
+        </div>
+      )}
       <div className="container">
         
         {/* Header */}
@@ -28,8 +40,8 @@ export default function PortfolioPage({ currentLang, portfolioItems = [], openLe
           </h1>
           <p className="section-subtitle">
             {currentLang === 'ne' 
-              ? 'हामीले सञ्चालन गरेका व्यावहारिक तालिम ब्याचहरू, अडियो/भिडियो निर्माण र नेपालका संस्थाहरूका लागि चलाइएका मार्केटिङ अभियानका वास्तविक विवरण।'
-              : "A few examples of training cohorts we've conducted, video projects we've produced, and marketing campaigns we've managed in Nepal."
+              ? 'हाम्रो काठमाडौं टिमद्वारा विकसित व्यावहारिक तालिम ढाँचाहरू, स्टुडियो उत्पादन मोडेलहरू र डिजिटल रणनीतिक खाकाहरू।'
+              : "Practical workshop blueprints, studio production frameworks, and digital execution strategies developed by our Kathmandu team."
             }
           </p>
         </div>

@@ -104,7 +104,7 @@ export default function TeamPage({ currentLang, teamMembers = [], openLeadModal,
             >
               <div className="team-photo">
                   {member.photo ? (
-                    <img src={member.photo} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                    <img src={member.photo} alt={`${member.name} - ${member.role || 'Vedanta Strategies Team Member'}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   ) : (
                     (member.avatar || member.name?.slice(0, 2).toUpperCase())
                   )}

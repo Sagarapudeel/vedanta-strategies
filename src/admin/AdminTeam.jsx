@@ -128,7 +128,7 @@ export default function AdminTeam({
             </div>
             {member.role_ne && (
               <div style={{ fontSize: '0.8rem', color: '#f59e0b', marginBottom: '6px' }}>
-                🇳🇵 {member.role_ne}
+                {member.role_ne}
               </div>
             )}
             <div style={{ fontSize: '0.78rem', color: 'var(--accent-blue)', marginBottom: '12px' }}>
@@ -191,7 +191,7 @@ export default function AdminTeam({
                   fontSize: '0.85rem'
                 }}
               >
-                🇬🇧 English Profile
+                English Profile
               </button>
               <button
                 type="button"
@@ -207,7 +207,7 @@ export default function AdminTeam({
                   fontSize: '0.85rem'
                 }}
               >
-                🇳🇵 Nepali Profile (नेपाली)
+                Nepali Profile (नेपाली)
               </button>
             </div>
 

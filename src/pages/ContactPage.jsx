@@ -14,7 +14,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 
-export default function ContactPage({ currentLang, siteSettings, onLeadSubmit }) {
+export default function ContactPage({ currentLang, siteSettings, onLeadSubmit, media = {} }) {
   const t = translations[currentLang] || translations.en;
   
   const [formData, setFormData] = useState({
@@ -48,8 +48,20 @@ export default function ContactPage({ currentLang, siteSettings, onLeadSubmit })
   const mapUrl = siteSettings?.mapsUrl || "https://maps.app.goo.gl/rS7SUHTm1zKXiiYq5";
   const mapEmbed = siteSettings?.mapsEmbed || "https://maps.google.com/maps?q=27.7033949,85.3177065&z=17&output=embed";
 
+  const pageBanner = media?.banners?.contact || null;
+
   return (
     <div className="page-wrapper">
+      {pageBanner && (
+        <div style={{ width: '100%', maxHeight: '260px', overflow: 'hidden', marginBottom: '32px' }}>
+          <img
+            src={pageBanner}
+            alt="Contact Vedanta Strategies - Bagbazar Kathmandu"
+            style={{ width: '100%', height: '260px', objectFit: 'cover', display: 'block' }}
+            onError={e => { e.target.parentElement.style.display = 'none'; }}
+          />
+        </div>
+      )}
       <div className="container">
         
         {/* Header */}

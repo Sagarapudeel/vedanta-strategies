@@ -93,7 +93,8 @@ export default function AdminPartners({
     }
 
     try {
-      const url = await uploadMediaFile(file, 'partners');
+      const partnerContext = `${formData.name_en || formData.name || 'partner-logo'}`;
+      const url = await uploadMediaFile(file, 'partners', partnerContext);
       setFormData((prev) => ({ ...prev, logoUrl: url }));
     } catch (err) {
       alert(err.message || 'Failed to upload partner logo.');
@@ -255,7 +256,7 @@ export default function AdminPartners({
                     </div>
                     {partner.name_ne && (
                       <div style={{ fontSize: '0.82rem', color: '#C59A3F' }}>
-                        🇳🇵 {partner.name_ne}
+                        {partner.name_ne}
                       </div>
                     )}
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
@@ -273,7 +274,7 @@ export default function AdminPartners({
                     </span>
                   ) : (
                     <span style={{ fontSize: '0.75rem', fontWeight: '600', color: '#fbbf24', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '3px 8px', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                      <span>🔤 Text & Monogram Mode</span>
+                      <span>Text & Monogram Mode</span>
                     </span>
                   )}
                 </div>
@@ -465,7 +466,7 @@ export default function AdminPartners({
                 onClick={() => setActiveLangTab('en')}
               >
                 <Globe size={14} color="#C59A3F" />
-                <span>🇬🇧 English Details</span>
+                <span>English Details</span>
               </button>
 
               <button
@@ -474,7 +475,7 @@ export default function AdminPartners({
                 onClick={() => setActiveLangTab('ne')}
               >
                 <Globe size={14} color="#851C2C" />
-                <span>🇳🇵 नेपाली विवरण</span>
+                <span>नेपाली विवरण</span>
               </button>
             </div>
 

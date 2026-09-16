@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { UploadCloud } from 'lucide-react';
 import { uploadMediaFile } from '../lib/uploadMedia';
 
-export default function ImageInput({ label, value, onChange, hint, previewHeight = 160 }) {
+export default function ImageInput({ label, value, onChange, hint, previewHeight = 160, contextName, folder = 'site' }) {
   const fileRef = useRef();
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -10,7 +10,10 @@ export default function ImageInput({ label, value, onChange, hint, previewHeight
   const handleFile = async (file) => {
     if (!file || !file.type.startsWith('image/')) { alert('Please select an image file (JPG, PNG, WebP, SVG)'); return; }
     setUploading(true);
-    try { onChange(await uploadMediaFile(file, 'site')); }
+    try { 
+      const effectiveContext = contextName || label || 'site-asset';
+      onChange(await uploadMediaFile(file, folder, effectiveContext)); 
+    }
     catch (err) { alert(err.message || 'Failed to upload image'); }
     finally { setUploading(false); }
   };
@@ -47,22 +50,46 @@ export default function ImageInput({ label, value, onChange, hint, previewHeight
         <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }} />
       </div>
 
-      <input type="text"
-        value={value?.startsWith('data:') ? '' : (value || '')}
-        onChange={e => onChange(e.target.value)}
-        className="form-input"
-        placeholder="https://... or /images/file.jpg"
-        style={{ marginBottom: '10px' }}
-      />
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+        <input type="text"
+          value={value?.startsWith('data:') ? 'Uploaded local image file' : (value || '')}
+          onChange={e => onChange(e.target.value)}
+          readOnly={value?.startsWith('data:')}
+          className="form-input"
+          placeholder="https://... or /images/file.jpg"
+          style={{ flex: 1 }}
+        />
+        {value && (
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => onChange('')}
+            style={{ padding: '6px 12px', fontSize: '0.75rem', whiteSpace: 'nowrap', color: '#ef4444' }}
+            title="Remove photo"
+          >
+            Clear
+          </button>
+        )}
+      </div>
 
       {value && (
         <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-subtle)', background: '#1e293b', position: 'relative' }}>
           <img src={value} alt="Preview"
             style={{ width: '100%', height: `${previewHeight}px`, objectFit: 'cover', display: 'block' }}
-            onError={e => { e.target.style.display = 'none'; }} />
+            onError={e => {
+              e.target.style.display = 'none';
+              const parent = e.target.parentElement;
+              if (parent) {
+                const errDiv = parent.querySelector('.img-preview-error');
+                if (errDiv) errDiv.style.display = 'flex';
+              }
+            }} />
+          <div className="img-preview-error" style={{ display: 'none', height: `${previewHeight}px`, alignItems: 'center', justifyContent: 'center', color: '#ef4444', fontSize: '0.8rem', padding: '12px', textAlign: 'center' }}>
+            Image could not be loaded. Please re-upload or check URL.
+          </div>
           {value && !value.startsWith('/') && (
             <div style={{ position: 'absolute', top: '8px', left: '8px', background: 'rgba(0,0,0,0.65)', borderRadius: '4px', padding: '2px 8px', fontSize: '0.7rem', color: '#4ade80' }}>
-              ✓ Uploaded
+              ✓ Photo Active
             </div>
           )}
         </div>

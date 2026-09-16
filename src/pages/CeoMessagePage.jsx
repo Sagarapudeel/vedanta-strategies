@@ -24,7 +24,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
       : 'At Vedanta Strategies, our founding purpose has always been crystal clear: to close the painful gap between academic credentials and real, productive workplace skills in Nepal. For too long, students and organizations have invested time in outdated syllabi and hollow buzzwords. We founded Vedanta to create an environment where every trainee learns on their own machine, works through actual live case studies, and leaves with skills they can deploy the very next day. Whether you are an individual wanting to master AI workflows or an educational institution looking to transform your faculty and student readiness, we are deeply committed to your measurable progress.'
   );
 
-  const ceoPhoto = siteContent?.about?.ceoPhoto || '/images/ceo.jpg';
+  const ceoPhoto = siteContent?.about?.ceoPhoto || '/images/ceo.webp';
 
   return (
     <div style={{ paddingTop: '40px', paddingBottom: '96px' }}>
@@ -55,7 +55,7 @@ export default function CeoMessagePage({ currentLang, siteContent, openLeadModal
               <div className="ceo-portrait-frame">
                 <img 
                   src={ceoPhoto} 
-                  alt={`${ceoName} - ${ceoTitle}`} 
+                  alt={`${ceoName} - ${ceoTitle}, Vedanta Strategies Kathmandu`} 
                   className="ceo-img"
                   onError={(e) => {
                     // Fallback to stylized monogram if image link fails
